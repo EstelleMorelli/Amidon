@@ -1,0 +1,116 @@
+@use '../../styles/variables' as v;
+
+.followerscards-wrapper,
+.selftprofil--selfinfos {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  overflow-x: scroll;
+}
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.friendfilterbutton {
+  border-radius: 5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  border: none;
+  &--active {
+    background-color: v.$color-bg;
+    color: v.$color-main-orange;
+    box-shadow: inset 5px 5px 10px 0px grey;
+  }
+}
+
+.booker-picture {
+  border-radius: 50%;
+  position: absolute;
+  width: 4em;
+  height: 4em;
+  object-fit: cover;
+  border: solid 0.4rem;
+  z-index: 1;
+}
+
+.selfprofil {
+  & h4 {
+    text-align: center;
+  }
+  &--selfinfos {
+    &__picture {
+      border-radius: 50%;
+      width: 8rem;
+      height: 8rem;
+      object-fit: cover;
+      padding: 0.2rem;
+    }
+    &__sharecode {
+      text-align: center;
+      padding: 0.5rem;
+    }
+    &__sharecode div {
+      padding: 1rem;
+      background-color: white;
+      border-radius: 5rem;
+    }
+  }
+}
+
+.followerscards-wrapper__profilcard {
+  position: relative;
+  &--delete {
+    background-color: v.$color-bg-transparent;
+    border-radius: 1rem;
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+.selfprofil__deleteAccount {
+  &.button-orange-simple {
+    background-color: red;
+    display: block;
+    margin: auto;
+  }
+  &--text {
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  &--icon {
+    display: inline-block;
+    vertical-align: middle;
+    height: 1 em;
+    padding: 0;
+    margin: 0.4em;
+  }
+}
+
+.addproduct {
+  margin: 1rem auto;
+  &__button {
+    width: fit-content;
+    padding: 0.5rem 1rem;
+    margin: auto;
+    border-radius: 0.5rem;
+    background-color: v.$color-bg;
+    box-shadow: 3px 3px 5px v.$color-bg-shadow,
+      -4px -4px 6px v.$color-bg-highlight;
+    display: flex;
+    justify-content: space-between;
+
+    &--text {
+      margin-left: 0.5rem;
+      color: black;
+    }
+  }
+}

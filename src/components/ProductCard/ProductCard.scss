@@ -1,0 +1,91 @@
+@use '../../styles/variables' as v;
+
+@media screen and (max-device-width: 576px) {
+  .productcard--description {
+    display: none;
+  }
+}
+.productcard {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: white;
+  margin: 0 auto;
+  border-radius: 15%;
+  font-size: 0.6em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+
+  &--picture {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  &--overlay {
+    position: absolute;
+    background-color: white;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    border-radius: 15%;
+    transform: translateY(100%);
+    transition: 0.2s ease-in-out;
+    width: calc(100%);
+  }
+  &:hover .productcard--overlay {
+    transform: translateY(0);
+  }
+  &--header {
+    position: relative;
+    padding: 1em 1.5em;
+    border-radius: 15% 0 0 0;
+    background-color: white;
+    transform: translateY(-100%);
+    transition: 0.2s ease-in-out;
+    width: calc(100%);
+  }
+
+  &--title {
+    display: block;
+    color: black;
+    font-size: 1.5em;
+    // TODO! : Ellipsis ne marche pas, n'affiche qu'un point
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: calc(100%);
+  }
+
+  &--arc {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    bottom: 98%;
+    right: 0;
+    z-index: 1;
+
+    & path {
+      fill: white;
+      d: path('M 40 80 c 22 0 40 -22 40 -40 v 40 Z');
+    }
+  }
+  &:hover .productcard--header {
+    transform: translateY(0);
+  }
+
+  &--description {
+    display: block;
+    margin: 0;
+    padding: 0 1.5em 0.5em;
+    // TODO! : Ellipsis ne marche pas, n'affiche qu'un point
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    color: black;
+    width: calc(100%);
+  }
+}

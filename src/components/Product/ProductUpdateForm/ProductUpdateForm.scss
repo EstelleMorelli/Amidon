@@ -1,0 +1,14 @@
+@use '../../../styles/variables' as v;
+
+textarea {
+  display: block;
+  width: 90%;
+  text-align: center;
+  margin: auto;
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+}

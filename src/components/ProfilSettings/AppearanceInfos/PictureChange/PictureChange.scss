@@ -1,0 +1,25 @@
+@use '../../../../styles/variables' as v;
+
+.picturechange {
+  &--picture {
+    margin: auto;
+    width: 7rem;
+    height: 7rem;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 50%;
+  }
+
+  &--field {
+    display: block;
+    margin: auto;
+  }
+  &--button {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 0.5rem;
+    width: 100%;
+    font-size: 0.8em;
+  }
+}

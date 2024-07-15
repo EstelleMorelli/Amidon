@@ -1,0 +1,59 @@
+@use '../../../../styles/variables' as v;
+
+.desktop {
+  display: none;
+
+  @media (min-width: 576px) {
+    display: block;
+  }
+}
+
+.mobile {
+  @media (min-width: 576px) {
+    display: none;
+  }
+}
+
+.colorchange {
+  margin-top: 3rem;
+
+  &__visual {
+    width: 50%;
+    margin: auto;
+
+    @media (min-width: 576px) {
+      width: 25%;
+    }
+  }
+
+  &__selector {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
+    &--icon {
+      margin: auto;
+    }
+
+    &--input {
+      &--field {
+        opacity: 0;
+      }
+      &--box {
+        margin: auto;
+        border-radius: 0.5rem;
+        width: 4rem;
+        height: 4rem;
+        box-shadow: 3px 3px 5px v.$color-bg-shadow,
+          -4px -4px 6px v.$color-bg-highlight;
+      }
+      &--button {
+        margin: 0.5rem 0;
+
+        &--back {
+          font-size: 0.8em;
+        }
+      }
+    }
+  }
+}

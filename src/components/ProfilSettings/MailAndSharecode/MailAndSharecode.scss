@@ -1,0 +1,23 @@
+@use '../../../styles/variables' as v;
+
+.mailandsharecode {
+  margin-bottom: 1.5rem;
+
+  & h3 {
+    font-weight: normal;
+    font-size: 1em;
+  }
+}
+
+.fakefield {
+  // TODO : les champs avec un petit placeholder sont trop larges mais pas réussi
+  background-color: white;
+  display: inline-block;
+  width: 90%;
+  margin: auto;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border: none;
+  border-radius: 5rem;
+  color: rgb(94, 94, 94);
+}

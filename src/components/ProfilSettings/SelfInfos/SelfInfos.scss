@@ -1,0 +1,31 @@
+@use '../../../styles/variables' as v;
+
+.selfinfos {
+  margin-bottom: 1.5rem;
+
+  &__description {
+    width: 90%;
+    text-align: center;
+    margin: auto;
+    position: relative;
+    z-index: 0;
+
+    &--title {
+      display: block;
+    }
+
+    &--textarea {
+      width: 100%;
+      border: none;
+      border-radius: 1rem;
+      padding: 0.5rem 1rem;
+    }
+
+    &--icon {
+      display: inline;
+      position: absolute;
+      right: 0.5rem;
+      bottom: 10%;
+    }
+  }
+}

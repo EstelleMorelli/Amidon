@@ -1,0 +1,27 @@
+@use '../../styles/variables' as v;
+
+.App {
+  // TODO : résoudre la taille de la page et position fixe/sticky du header.
+  // Header en sticky : devrait marcher et garder la place dans le flow pour avoir le App à 100% du viewport sans marge en bas mais marche pas car il y a un scroll apparmement.
+  // Header en fixed : obligé de mettre une marge en haut de App pour que le début de App soit visible (car header sort du flow) mais du coup comme le body fait 100%
+  margin-top: 5rem;
+  min-height: calc(100vh - (5rem));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media (min-width: 576px) {
+    margin-top: 7rem;
+    min-height: calc(100vh - (7rem));
+  }
+}
+
+.backgroundblur {
+  height: 100vh;
+  width: 100vw;
+  background-color: v.$color-bg-transparent;
+  z-index: 1;
+  position: fixed;
+  left: 0;
+  top: 0;
+}

@@ -1,0 +1,99 @@
+@use 'reset';
+@use 'fonts';
+@use 'variables' as v;
+
+body {
+  font-family: v.$font-simpel;
+  background-color: v.$color-bg;
+  padding: 0 1rem;
+  width: 100vw;
+  height: calc(100vh - (5rem));
+
+  @media (min-width: 576px) {
+    height: calc(100vh - (7rem));
+  }
+}
+
+h1 {
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 500;
+}
+
+.button-orange-simple {
+  background-color: v.$color-main-orange;
+  color: v.$color-bg;
+  border-radius: 5rem;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 5px 5px 10px 0px grey;
+
+  &:active {
+    background-color: v.$color-bg;
+    color: v.$color-main-orange;
+    box-shadow: inset 5px 5px 10px 0px grey;
+  }
+}
+
+.form-full {
+  background-color: v.$color-bg-form;
+  border-radius: 1.5rem;
+  padding: 1.5rem 1.5rem;
+  box-shadow: 5px 5px 10px 0px grey;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+
+  & > * {
+    margin-bottom: 1rem;
+  }
+
+  &__mandatoryfieldswarning {
+    font-size: 0.8em;
+    text-align: center;
+  }
+}
+
+.volumebutton {
+  border-radius: 0.5rem;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: v.$color-bg;
+  box-shadow: 3px 3px 5px v.$color-bg-shadow,
+    -4px -4px 6px v.$color-bg-highlight;
+}
+.volumebutton.active {
+  box-shadow: inset 3px 3px 5px v.$color-bg-shadow,
+    inset -4px -4px 6px v.$color-bg-highlight;
+}
+
+.errorMsg {
+  color: red;
+  margin-bottom: 0;
+}
+
+.productcards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1em;
+  margin: 1rem 2rem;
+  list-style-type: none;
+
+  @media (min-width: 576px) and (max-width: 950px) {
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 2vw;
+    font-size: 0.9em;
+  }
+  @media (min-width: 950px) {
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 2vw;
+    font-size: 1.5vw;
+  }
+}

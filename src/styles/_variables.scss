@@ -1,0 +1,20 @@
+@use 'sass:color';
+
+$color-text: #000000;
+// Tester avec le brun foncé #634523 ou même plus foncé
+$color-light-brown: #7c562c;
+$color-brown: #634523;
+$color-light-orange: #ffb84e;
+$color-main-orange: #d07c00;
+$color-bg-form: #fff3e1;
+$color-bg: #fffaf3;
+$color-bg-transparent: color.scale($color-bg-form, $alpha: -30%);
+$color-bg-shadow: color.scale($color-bg, $blackness: 50%);
+$color-bg-highlight: color.scale($color-bg, $whiteness: 95%);
+
+// Autres couleurs à tester : white / #F5F5F5 / #E9EBEA
+
+$font-simpel: 'Simpel', sans-serif;
+$font-hc: 'Honey Crepes', sans-serif;
+
+$curve: 40;

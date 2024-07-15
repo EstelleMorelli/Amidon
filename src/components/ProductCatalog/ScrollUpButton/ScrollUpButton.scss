@@ -1,0 +1,9 @@
+@use '../../../styles/variables' as v;
+
+.scrollupbutton {
+  background: none;
+  border: none;
+  position: fixed;
+  top: 80vh;
+  left: 1vw;
+}

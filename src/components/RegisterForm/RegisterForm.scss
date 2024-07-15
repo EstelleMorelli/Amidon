@@ -1,0 +1,58 @@
+@use '../../styles/variables' as v;
+
+.registerpage {
+  @media (min-width: 576px) {
+    margin-top: 1rem;
+  }
+}
+
+.registerform {
+  width: 90vw;
+
+  @media (min-width: 576px) {
+    width: 50rem;
+    font-size: 0.9rem;
+  }
+
+  @media (min-width: 576px) and (max-width: 950px) {
+    width: 33rem;
+  }
+
+  &__desktop-flexbox {
+    @media (min-width: 576px) {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    & > * {
+      margin-bottom: 1rem;
+
+      @media (min-width: 576px) {
+        width: 50%;
+      }
+    }
+  }
+
+  &__stayconnected {
+    text-align: center;
+    color: v.$color-main-orange;
+
+    &--box {
+      margin-left: 0.5rem;
+      vertical-align: middle;
+      box-shadow: 2px 2px 5px 0px grey;
+      // TODO : On pourrait enlever le border mais pas prio
+    }
+  }
+  & button {
+    display: block;
+    margin: 0.5rem auto 0;
+  }
+}
+
+.loginlink {
+  display: block;
+  color: v.$color-main-orange;
+  text-align: center;
+  margin: 1rem auto;
+}

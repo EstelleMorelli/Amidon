@@ -1,0 +1,26 @@
+import { Link } from 'react-router-dom';
+import './FAQ.scss';
+import QuestionAnswer from './QuestionAnswer/QuestionAnswer';
+import { useAppDispatch, useAppSelector } from '../../store/hooks-redux';
+import { useEffect } from 'react';
+import getFAQ from '../../store/middlewares/getFAQ';
+
+function FAQ() {
+  const dispatch = useAppDispatch();
+  const faq = useAppSelector((state) => state.appReducer.faq);
+  useEffect(() => {
+    dispatch(getFAQ());
+  }, []);
+
+  return (
+    <div className="faq">
+      <h1>F.A.Q.</h1>
+      {faq.map((qAndA) => (
+        <QuestionAnswer question={qAndA.question} answer={qAndA.response} />
+      ))}
+      <Link to="/">Retour à l'accueil</Link>
+    </div>
+  );
+}
+
+export default FAQ;

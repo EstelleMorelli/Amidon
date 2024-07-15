@@ -1,0 +1,44 @@
+@use '../../styles/variables' as v;
+
+.header {
+  background-color: v.$color-bg;
+  position: fixed;
+  top: 0rem;
+  max-height: 5rem;
+  padding: 1rem 0;
+  width: 100%;
+  z-index: 2;
+
+  @media (min-width: 576px) {
+    max-height: 7rem;
+  }
+
+  &__logo {
+    max-width: 60%;
+    display: inline-block;
+    max-height: 3rem;
+    width: auto;
+
+    @media (min-width: 576px) {
+      height: auto;
+      max-width: 25vw;
+    }
+  }
+}
+
+.searchbar {
+  // TODO : La positionner mieux pour qu'elle ne dépasse pas à droite T_T
+  // TODO : aligner verticalement par rapport au header
+
+  display: inline-block;
+  position: absolute;
+  // TODO : Recalculer peut-être une fois positionnement mieux fait
+  left: 65vw;
+  padding-right: 1rem;
+  vertical-align: middle;
+
+  @media (min-width: 576px) {
+    // TODO : Recalculer peut-être une fois positionnement mieux fait
+    left: 78vw;
+  }
+}

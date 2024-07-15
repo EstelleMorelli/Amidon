@@ -1,0 +1,13 @@
+@use '../../styles/variables' as v;
+
+.profilcard {
+  width: 5rem;
+  text-align: center;
+  padding: 0.5rem;
+  &--picture {
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+  }
+}

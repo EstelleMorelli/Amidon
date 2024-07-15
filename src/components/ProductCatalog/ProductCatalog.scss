@@ -1,0 +1,51 @@
+@use '../../styles/variables' as v;
+
+.friendscards-wrapper {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  justify-content: left;
+  margin: 1rem 0;
+
+  &__add {
+    display: flex;
+    align-items: center;
+    height: 4rem;
+
+    & > * {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.friendfilterbutton {
+  border-radius: 5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  border: none;
+  &--active {
+    background-color: v.$color-bg;
+    color: v.$color-main-orange;
+    box-shadow: inset 5px 5px 10px 0px grey;
+  }
+}
+.friendscards-wrapper__profilcard {
+  position: relative;
+  &--delete {
+    background-color: v.$color-bg-transparent;
+    border-radius: 1rem;
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}

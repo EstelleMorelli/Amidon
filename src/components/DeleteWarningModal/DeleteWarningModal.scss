@@ -1,0 +1,43 @@
+@use '../../styles/variables' as v;
+
+.addfriendmodal {
+  width: 80vw;
+  position: fixed;
+  left: 10vw;
+  top: 7rem;
+  z-index: 2;
+
+  @media (min-width: 576px) {
+    // TODO : Faire un break point pour pas que ça passe à 2 lignes ou alors voir si on peut faire un calc avec la largeur du form définie par fit-content
+    width: 50vw;
+    left: 25vw;
+  }
+
+  & button {
+    background-color: inherit;
+    border: none;
+  }
+  &__button--close {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 0.7rem;
+    top: 0.7rem;
+  }
+
+  &__searchfield {
+    &--button {
+      position: inline;
+    }
+  }
+
+  &__searchresult {
+    margin: auto;
+    width: fit-content;
+
+    &--buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

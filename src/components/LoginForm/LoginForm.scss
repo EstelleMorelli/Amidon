@@ -1,0 +1,40 @@
+@use '../../styles/variables' as v;
+
+.loginpage {
+  margin-top: 4rem;
+
+  @media (min-width: 576px) {
+    margin-top: 1rem;
+  }
+}
+
+.loginform {
+  width: 90vw;
+
+  @media (min-width: 576px) {
+    width: 25rem;
+  }
+
+  &__stayconnected {
+    text-align: center;
+    color: v.$color-main-orange;
+
+    &--box {
+      margin-left: 0.5rem;
+      vertical-align: middle;
+      box-shadow: 2px 2px 5px 0px grey;
+      // TODO : On pourrait enlever le border mais pas prio
+    }
+  }
+  & button {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.registerlink {
+  display: block;
+  color: v.$color-main-orange;
+  text-align: center;
+  margin: 1rem auto;
+}

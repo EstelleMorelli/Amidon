@@ -1,0 +1,16 @@
+@use '../../../styles/variables' as v;
+
+.pricelessfilterbutton {
+  background-color: v.$color-main-orange;
+  color: v.$color-bg;
+  border-radius: 5rem;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+
+  &--active {
+    background-color: v.$color-bg;
+    color: v.$color-main-orange;
+    box-shadow: inset 5px 5px 10px 0px grey;
+  }
+}
