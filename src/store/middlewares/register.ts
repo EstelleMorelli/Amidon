@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 // Importe notre typage de state fait dans le store
 import { RootState } from '../store';
 // Importe notre instance de axios avec la base url préconfiguré
-import { axiosInstance } from '../../utils/axios';
+import axiosInstance from '../../utils/axios';
 import login from './login';
 
 // Notre action asynchrone qui va faire l'appel API

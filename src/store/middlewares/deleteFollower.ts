@@ -2,7 +2,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // Importe notre instance de axios avec la base url préconfiguré et les actions liées au localStorage
-import { axiosInstance } from '../../utils/axios';
+import axiosInstance from '../../utils/axios';
 import getFollowers from './getFollowers';
 import getSelfProducts from './getSelfProducts';
 
