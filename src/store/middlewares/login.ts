@@ -4,10 +4,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 // Importe notre typage de state fait dans le store
 import type { RootState } from '../store';
 
-// Importe notre instance de axios avec la base url préconfiguré et les actions liées au localStorage
-import { addTokenToAxiosInstance, axiosInstance } from '../../utils/axios';
-import { addInfosToStorage } from '../../utils/localStorage';
-
 // Notre action asynchrone qui va faire l'appel API
 const login = createAsyncThunk(
   'user/LOGIN',
@@ -23,18 +19,12 @@ const login = createAsyncThunk(
         password,
       });
       // Appel notre fonction qui met le token dans l'instance Axios pour le renvoyer à chaque requête dans l'entête
-<<<<<<< HEAD
-      addTokenToAxiosInstance(result.data.token);
-      // TODO : décider où on met le token et le mettre là où on a décider
-      addInfosToStorage(result.data.user.id);
-      // On retourne l'objet renvoyé par l'API, ici toutes les infos de l'user, qui iront dans le state
-=======
-const result2 = await axiosInstance.post('/login_check', {
-      email,
-      password,
-    });
 
->>>>>>> 92f6ce2a9e9aab9a3fd7174505e64edd58d00a7c
+      const result2 = await axiosInstance.post('/login_check', {
+        email,
+        password,
+      });
+
       return result.data.user;
     } catch (err: any) {
       // ! TODO : voir comment typer cette erreur
