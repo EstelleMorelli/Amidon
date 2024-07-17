@@ -1,5 +1,5 @@
 export const baseUserPictureURL =
-  'http://amidon.yoan80490-server.eddi.cloud/assets/images/users';
+  'https://amidon.dev-me.fr/Amidon/assets/images/users';
 
 export const baseProductPictureURL =
-  'http://amidon.yoan80490-server.eddi.cloud/assets/images/products';
+  'https://amidon.dev-me.fr/Amidon/assets/images/products/';
