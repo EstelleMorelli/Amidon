@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // Importe notre typage de state fait dans le store
 // Importe notre instance de axios avec la base url préconfiguré
-import { axiosInstance } from '../../utils/axios';
+import axiosInstance from '../../utils/axios';
 import { RootState } from '../store';
 import { actionEmptyImage64 } from '../reducers/appReducer';
 
@@ -25,14 +25,12 @@ const modifyUser = createAsyncThunk(
     const { image64 } = state.appReducer;
     // Pas besoin du chemin complet car on utilise l'axiosInstance qui a déjà notre url de base
     try {
-
       const result = await axiosInstance.put('/profil', {
         image64,
         ...payload,
       });
       thunkAPI.dispatch(actionEmptyImage64());
       return result.data;
-
     } catch (err: any) {
       console.log(err);
       return thunkAPI.rejectWithValue(err.response.data);

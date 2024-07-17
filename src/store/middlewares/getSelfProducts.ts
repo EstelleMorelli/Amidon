@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosInstance } from '../../utils/axios';
+import axiosInstance from '../../utils/axios';
 
 const getSelfProducts = createAsyncThunk('GET_SELF_PRODUCTS', async () => {
   // on fait une requete sur un endpoint privé mais normalement on est connecté donc les header contiennent le token
