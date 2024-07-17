@@ -23,6 +23,10 @@ const login = createAsyncThunk(
         password,
       });
       // Appel notre fonction qui met le token dans l'instance Axios pour le renvoyer à chaque requête dans l'entête
+const result2 = await axiosInstance.post('/login_check', {
+      email,
+      password,
+    });
 
       return result.data.user;
     } catch (err: any) {
