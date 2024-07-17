@@ -17,15 +17,21 @@ interface ProfilFormProps {
       | 'color'
   ) => void;
 }
+
 function ProfilSettings({ changeField }: ProfilFormProps) {
   return (
     <div className="profilsettings">
       <h1>Mes informations</h1>
-      <MailAndSharecode />
-      {/* TODO : changer en une fonction réutilisable */}
-      <SelfInfos changeField={changeField} />
-      <AppearanceInfos changeField={changeField} />
-      <PasswordChange changeField={changeField} />
+      <div className="profilsettings__all">
+        <div className="profilsettings__all--butpassword">
+          <div className="profilsettings__all--butpassword--andappaerance">
+            <MailAndSharecode />
+            <SelfInfos changeField={changeField} />
+          </div>
+          <AppearanceInfos changeField={changeField} />
+        </div>
+        <PasswordChange changeField={changeField} />
+      </div>
     </div>
   );
 }

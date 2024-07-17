@@ -5,6 +5,9 @@ import Field from '../Field/Field';
 import { useAppDispatch, useAppSelector } from '../../store/hooks-redux';
 import register from '../../store/middlewares/register';
 import convertBase64 from '../../store/middlewares/convertBase64';
+import { actionChangeUserStateInfo } from '../../store/reducers/userReducer';
+import { baseUserPictureURL } from '../../utils/data';
+import { actionEmptyImage64 } from '../../store/reducers/appReducer';
 
 interface LoginFormProps {
   changeField: (
@@ -16,6 +19,14 @@ interface LoginFormProps {
 function RegisterForm({ changeField }: LoginFormProps) {
   // stock dans une variable dispatch le Hook useAppDispatch() (version typée du hook useDispatch() de redux) -> C'est ce qui envoie une action au store et exécute le reducer avec l'info de cette action à faire
   const dispatch = useAppDispatch();
+
+  // A l'arrivée sur la page, on vide le password d'userState au cas où l'utilisateur vienne de la page login (mais on garde l'email pour plus de confort) et l'image64 au cas où il revienne d'une autre page, après avoir déjà chargé une image, pour ne pas en avoir 2.
+  useEffect(() => {
+    dispatch(actionEmptyImage64());
+    dispatch(
+      actionChangeUserStateInfo({ newValue: '', fieldName: 'password' })
+    );
+  }, []);
 
   // Fonction qui va mettre à jour le state avec les infos rentrées par l'utilisateur dans les champs, en live
   const handleChangeField =
@@ -118,13 +129,25 @@ function RegisterForm({ changeField }: LoginFormProps) {
             search={false}
             edit={false}
           />
-          <input
-            type="file"
-            placeholder=""
-            required={false}
-            onChange={handleChangePictureField}
-            accept="image/*"
-          />
+          <div className="mediafield">
+            <label className="mediafield--inputlabel">Photo de profil</label>
+            <label
+              htmlFor="file-upload"
+              className="mediafield--filefakeinput button-orange-simple"
+            >
+              Cliquer pour télécharger votre photo
+              <input
+                id="file-upload"
+                className="mediafield--fileinput"
+                type="file"
+                placeholder=""
+                required={false}
+                onChange={handleChangePictureField}
+                accept="image/*"
+              />
+            </label>
+          </div>
+
           <Field
             fieldDisplayedName="Mot de passe"
             type="password"

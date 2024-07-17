@@ -84,14 +84,19 @@ function App() {
     );
   };
 
-  // On récupère le booléan isAddFriendModalOpen du state
+  // On récupère les booléans isAddFriendModalOpen et isWarningMessage du state pour afficher ou pas la div de blur
   const isAddFriendModalOpen = useAppSelector(
     (state) => state.appReducer.isAddFriendModalOpen
+  );
+  const isWarningMessage = useAppSelector(
+    (state) => state.appReducer.isWarninMessage
   );
 
   return (
     <div className="App">
-      {isAddFriendModalOpen && <div className="backgroundblur" />}
+      {(isAddFriendModalOpen || isWarningMessage) && (
+        <div className="backgroundblur" />
+      )}
       <Header />
       {logged && <Nav />}
       <Routes>

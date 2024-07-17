@@ -1,8 +1,11 @@
+import { useAppSelector } from '../../../store/hooks-redux';
 import './MailAndSharecode.scss';
 
 function MailAndSharecode() {
-  const shareCode = '1234567890';
-  const mail = 'marion@marion.com';
+  const shareCode = useAppSelector(
+    (state) => state.userReducer.connectedUser.share_code
+  );
+  const mail = useAppSelector((state) => state.userReducer.connectedUser.email);
 
   return (
     <div className="mailandsharecode form-full">

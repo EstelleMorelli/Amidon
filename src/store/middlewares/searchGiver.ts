@@ -5,7 +5,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 
 // Importe notre instance de axios avec la base url préconfiguré et les actions liées au localStorage
-import axiosInstance from '../../utils/axios';
+import { axiosInstance } from '../../utils/axios';
 
 // Notre action asynchrone qui va faire l'appel API
 const searchGiver = createAsyncThunk(

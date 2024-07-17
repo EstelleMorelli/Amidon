@@ -15,6 +15,11 @@ import unfollow from '../middlewares/unfollow';
 import addProduct from '../middlewares/addProduct';
 import deleteProduct from '../middlewares/deleteProduct';
 
+import deleteProductPicture from '../middlewares/deleteProductPicture';
+
+import logout from '../middlewares/logout';
+
+
 interface ICatalogState {
   friendProducts: IFriendProduct[];
   selfProducts: ISelfProduct[];
@@ -79,24 +84,54 @@ const catalogReducer = createReducer(initialState, (builder) => {
           'Vous avez bien annulé la réservation de ce produit';
       }
     })
-    .addCase(updateProduct.fulfilled, (state) => {
+    .addCase(updateProduct.fulfilled, (state, action) => {
       state.actionMessage =
         'Les informations du produit ont été modifiées avec succès';
+      console.log(action.payload);
+    })
+    .addCase(deleteProductPicture.fulfilled, (state) => {
+      state.actionMessage = 'La photo du produit a bien été supprimée';
     })
     .addCase(addProduct.fulfilled, (state, action) => {
       state.actionMessage = action.payload.message;
+      state.currentProduct.description = '';
+      state.currentProduct.title = '';
+      state.currentProduct.media = [{ url: '' }];
+      state.currentProduct.price = 0;
     })
     .addCase(actionChangeProductStateInfo, (state, action) => {
       state.currentProduct[action.payload.fieldName] = action.payload.newValue;
     })
     .addCase(deleteProduct.fulfilled, (state, action) => {
-      state.actionMessage = action.payload.message;
+      state.currentProduct.description = '';
+      state.currentProduct.title = '';
+      state.currentProduct.media = [{ url: '' }];
+      state.currentProduct.price = 0;
+      // state.actionMessage = action.payload.message;
     })
     .addCase(deleteFollower.fulfilled, () => {
       console.log('Action deleteFollower fullfilled');
     })
     .addCase(unfollow.fulfilled, () => {
       console.log('Action unfollow fullfilled');
+    })
+    .addCase(logout.fulfilled, (state) => {
+      state.actionMessage = '';
+      state.friendProducts = [];
+      state.selfProducts = [];
+      state.currentProduct.booker = null;
+      state.currentProduct.id = 0;
+      state.currentProduct.title = '';
+      state.currentProduct.description = '';
+      state.currentProduct.price = '';
+      state.currentProduct.created_at = '';
+      state.currentProduct.updated_at = null;
+      state.currentProduct.media = [{ url: '' }];
+      state.currentProduct.owner.firstname = '';
+      state.currentProduct.owner.lastname = '';
+      state.currentProduct.owner.id = 0;
+      state.currentProduct.owner.picture = null;
+      state.followers = [];
     });
 });
 

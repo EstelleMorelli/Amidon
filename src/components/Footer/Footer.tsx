@@ -5,12 +5,7 @@ import { Power } from 'react-feather';
 
 // Import des éléments de notre store, fichier réglade d'axios et du localStorage:
 import { useAppDispatch, useAppSelector } from '../../store/hooks-redux';
-import { actionLogout } from '../../store/reducers/userReducer';
-import { removeInfosFromStorage } from '../../utils/localStorage';
-import {
-  actionResetAppReducer,
-  actionToggleIsAddFriendModalOpen,
-} from '../../store/reducers/appReducer';
+import logout from '../../store/middlewares/logout';
 
 function Footer() {
   // stock dans une variable dispatch le Hook useAppDispatch() (version typée du hook useDispatch() de redux) -> C'est ce qui envoie une action au store et exécute le reducer avec l'info de cette action à faire
@@ -22,23 +17,15 @@ function Footer() {
   // On récupère l'élément booléen "logged" du state qui nous permet de savoir si on est connecté ou pas
   const logged = useAppSelector((state) => state.userReducer.logged);
 
-  let isAddFriendModalOpen = useAppSelector(
-    (state) => state.appReducer.isAddFriendModalOpen
-  );
-
   return (
     <footer className={logged ? 'footer' : 'footer footer__unlogged'}>
       {/* On affiche le bouton de déconnexion si "logged" est vrai (=si on est connecté.e) */}
       {logged && (
         <button
+          type="button"
           className="footer__disconnect "
           onClick={() => {
-            dispatch(actionLogout());
-            dispatch(actionResetAppReducer());
-            removeInfosFromStorage();
-            if (isAddFriendModalOpen) {
-              dispatch(actionToggleIsAddFriendModalOpen());
-            }
+            dispatch(logout());
             navigate('/');
           }}
         >

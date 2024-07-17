@@ -7,6 +7,8 @@ import { FormEvent, useEffect, useRef } from 'react';
 // Import des éléments de notre store :
 import { useAppDispatch, useAppSelector } from '../../store/hooks-redux';
 import login from '../../store/middlewares/login';
+import { actionChangeUserStateInfo } from '../../store/reducers/userReducer';
+import { actionEmptyImage64 } from '../../store/reducers/appReducer';
 
 // Interface pour typer les props de notre composant Loginform :
 interface LoginFormProps {
@@ -16,6 +18,14 @@ interface LoginFormProps {
 function LoginForm({ changeField }: LoginFormProps) {
   // stock dans une variable dispatch le Hook useAppDispatch() (version typée du hook useDispatch() de redux) -> C'est ce qui envoie une action au store et exécute le reducer avec l'info de cette action à faire
   const dispatch = useAppDispatch();
+
+  // A l'arrivée sur la page, on vide le password d'userState et l'image64 au cas où l'utilisateur vienne de la page register (mais on garde l'email pour plus de confort ET on peut garder nom, prénom car ils seront écrasés par les valeurs renvoyées par le back au login)
+  useEffect(() => {
+    dispatch(
+      actionChangeUserStateInfo({ newValue: '', fieldName: 'password' })
+    );
+    dispatch(actionEmptyImage64());
+  }, []);
 
   // Fonction qui va mettre à jour le state avec les infos rentrées par l'utilisateur dans les champs, en live
   const handleChangeField = (name: 'email' | 'password') => (value: string) => {

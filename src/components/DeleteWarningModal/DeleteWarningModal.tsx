@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { FormEvent } from 'react';
 import { CheckCircle, XCircle } from 'react-feather';
 import { useAppDispatch } from '../../store/hooks-redux';
+import { actionToggleIsWarningMessage } from '../../store/reducers/appReducer';
 
 interface Props {
   description: string;
-  setIsWarningMessage: React.Dispatch<React.SetStateAction<boolean>>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   deleteAction: any;
   // eslint-disable-next-line react/require-default-props
@@ -15,7 +15,6 @@ interface Props {
 
 function DeleteWarningMessage({
   description,
-  setIsWarningMessage,
   deleteAction,
   actionParam,
   navigateLocation,
@@ -29,9 +28,9 @@ function DeleteWarningMessage({
     if (actionParam !== undefined) {
       dispatch(deleteAction(actionParam));
     } else {
-      dispatch(deleteAction);
+      dispatch(deleteAction());
     }
-    setIsWarningMessage(false);
+    dispatch(actionToggleIsWarningMessage());
     if (navigateLocation) {
       navigate(navigateLocation);
     }
@@ -39,7 +38,7 @@ function DeleteWarningMessage({
 
   const handleSubmitCancellation = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsWarningMessage(false);
+    dispatch(actionToggleIsWarningMessage());
   };
 
   return (

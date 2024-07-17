@@ -5,6 +5,8 @@ import Field from '../Field/Field';
 import { useAppSelector, useAppDispatch } from '../../store/hooks-redux';
 import addProduct from '../../store/middlewares/addProduct';
 import convertBase64 from '../../store/middlewares/convertBase64';
+import { actionResetCurrentProductState } from '../../store/reducers/catalogReducer';
+import { actionResetAppReducer } from '../../store/reducers/appReducer';
 
 interface Props {
   changeField: (value: string, name: 'title' | 'price' | 'description') => void;
@@ -48,7 +50,9 @@ function AddProductForm({ changeField }: Props) {
       description,
       media,
     };
+    setPicturesList(['']);
     dispatch(addProduct(newProductInfos));
+    dispatch(actionResetAppReducer());
     navigate('/mon_profil');
   };
 
@@ -99,7 +103,7 @@ function AddProductForm({ changeField }: Props) {
           placeholder=""
           required={false}
           onChange={handleNewPicture}
-          accept="image/*"
+          accept=".bmp, .jpeg, .jpg, .png, .svg, .webp, .avif"
         />
 
         <button type="submit" className="button-orange-simple">

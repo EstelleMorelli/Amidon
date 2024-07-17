@@ -31,6 +31,11 @@
     flex-direction: column;
     padding: 1rem;
 
+    & p {
+      max-width: 60%;
+      margin: auto;
+    }
+
     &--icon {
       margin: auto;
     }

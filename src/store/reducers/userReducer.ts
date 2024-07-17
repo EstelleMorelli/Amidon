@@ -1,6 +1,7 @@
 import { createReducer, createAction } from '@reduxjs/toolkit';
 import { IFriend, IUser } from '../../@types/user';
 import login from '../middlewares/login';
+import logout from '../middlewares/logout';
 import register from '../middlewares/register';
 import searchGiver from '../middlewares/searchGiver';
 import follow from '../middlewares/follow';
@@ -49,7 +50,6 @@ export const actionChangeUserStateInfo = createAction<{
     | 'description'
     | 'color';
 }>('user/CHANGE_USERINFO');
-export const actionLogout = createAction('user/LOGOUT');
 
 export const actionRegisterNewUser = createAction<{}>('user/REGISTER');
 
@@ -57,10 +57,14 @@ export const actionChangeGiverStateInfo = createAction<{
   newValue: string;
   fieldName: 'lastname' | 'firstname' | 'picture' | 'share_code' | 'color';
 }>('user/CHANGE_GIVERINFO');
+
 export const emptySearchedGiver = createAction('user/EMPTY_GIVERINFO');
+
 export const actionToggleIsCatalogUpdateNeeded = createAction(
   'app/TOOGLE_CATALOGUPDATENEEDED'
 );
+
+export const actionResetGiverInfo = createAction('user/RESET_GIVER');
 
 const userReducer = createReducer(userStateInitial, (builder) => {
   builder
@@ -125,7 +129,8 @@ const userReducer = createReducer(userStateInitial, (builder) => {
         state.msg.push('Échec de la création du compte');
       } */
     })
-    .addCase(actionLogout, (state) => {
+    .addCase(logout.fulfilled, (state) => {
+      state.logged = false;
       state.connectedUser.id = 0;
       state.connectedUser.email = '';
       state.connectedUser.password = '';
@@ -135,11 +140,24 @@ const userReducer = createReducer(userStateInitial, (builder) => {
       state.connectedUser.description = '';
       state.connectedUser.color = '';
       state.connectedUser.share_code = '';
-      state.logged = false;
+      state.searchedGiver.giver_id = null;
+      state.searchedGiver.firstname = '';
+      state.searchedGiver.lastname = '';
+      state.searchedGiver.picture = '';
+      state.searchedGiver.share_code = '';
+      state.searchedGiver.color = '';
+      state.msg = null;
     })
-
     .addCase(actionChangeGiverStateInfo, (state, action) => {
       state.searchedGiver[action.payload.fieldName] = action.payload.newValue;
+    })
+    .addCase(actionResetGiverInfo, (state) => {
+      state.searchedGiver.color = '';
+      state.searchedGiver.firstname = '';
+      state.searchedGiver.giver_id = 0;
+      state.searchedGiver.lastname = '';
+      state.searchedGiver.picture = '';
+      state.searchedGiver.share_code = '';
     })
     .addCase(searchGiver.fulfilled, (state, action) => {
       state.searchedGiver.giver_id = action.payload.id;
@@ -193,10 +211,11 @@ const userReducer = createReducer(userStateInitial, (builder) => {
     .addCase(modifyUser.pending, () => {
       console.log('Action modifyUser pending');
     })
-    .addCase(modifyUser.rejected, () => {
+    .addCase(modifyUser.rejected, (state) => {
       console.log('Action modifyUser rejected');
-    });
-  /* .addCase(deleteUser.fulfilled, () => {
+      state.connectedUser.password = '';
+    })
+    .addCase(deleteUser.fulfilled, () => {
       console.log('Action deleteUser fullfilled');
     })
     .addCase(deleteUser.pending, () => {
@@ -204,7 +223,7 @@ const userReducer = createReducer(userStateInitial, (builder) => {
     })
     .addCase(deleteUser.rejected, () => {
       console.log('Action deleteUser rejected');
-    }) */
+    });
 });
 
 export default userReducer;

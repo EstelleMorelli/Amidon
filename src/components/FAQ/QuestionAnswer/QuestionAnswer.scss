@@ -1,1 +1,42 @@
 @use '../../../styles/variables' as v;
+
+.question-answer {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+
+  .question {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: v.$color-brown; // Utilisation de la variable SCSS pour la couleur principale
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #ecf0f1;
+    }
+
+    .triangle-icon {
+      transition: transform 0.3s ease;
+      transform: rotate(90deg); // Position par défaut à 90°
+      &.open {
+        transform: rotate(180deg); // Position ouverte à 180°
+      }
+    }
+  }
+
+  .answer {
+    margin-left: 20px;
+    color: v.$color-brown; // Utilisation de la variable SCSS pour la couleur principale
+    padding: 10px 0;
+  }
+}

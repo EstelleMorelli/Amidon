@@ -1,18 +1,26 @@
-import { Link } from 'react-router-dom';
-import './Error.scss';
+// 404.tsx
 
-function Error() {
+import React from 'react';
+import './Error.scss';
+import LogoFace from '../../assets/logos/amidon_faceicon_transparent.png';
+
+const Error404: React.FC = () => {
   return (
-    <div className="error">
-      <p>
-        <span> 404 NOT FOUND </span>
-        Oups, une erreur est survenue ! La page demandée n &rsquo; existe pas...
-      </p>
-      <Link to="/">
-        <h2 className="error"> Retourner à la page d &rsquo; accueil</h2>
-      </Link>
+    <div className="container">
+      <div className="content">
+        <h1 className="title">Erreur 404</h1>
+        <p className="subtitle">La page que vous recherchez est introuvable.</p>
+        <img
+          className="logoface"
+          src={LogoFace}
+          alt="logo-amidon"
+        />
+        <a href="/" className="link">
+          Retour à la page d'accueil
+        </a>
+      </div>
     </div>
   );
-}
+};
 
-export default Error;
+export default Error404;

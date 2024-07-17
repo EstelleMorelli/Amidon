@@ -16,6 +16,10 @@ import { IFriendProduct, IProduct } from '../../@types/product';
 import { actionToggleIsCatalogUpdateNeeded } from '../../store/reducers/userReducer';
 import getFollowers from '../../store/middlewares/getFollowers';
 import DeleteWarningMessage from '../DeleteWarningModal/DeleteWarningModal';
+import {
+  actionEmptyImage64,
+  actionToggleIsWarningMessage,
+} from '../../store/reducers/appReducer';
 
 function ProductCatalog() {
   const dispatch = useAppDispatch();
@@ -23,11 +27,10 @@ function ProductCatalog() {
   useEffect(() => {
     dispatch(getProductsCatalog());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    console.log('le premier rendu');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const [friendToDelete, setFriendToDelete] = useState(0);
-  const [isWarningMessage, setIsWarningMessage] = useState(false);
 
   const friends = useAppSelector(
     (state) => state.catalogReducer.friendProducts
@@ -74,6 +77,10 @@ function ProductCatalog() {
     productsToDisplay = sortProductsByCreatedAt(productsToDisplay);
   }
 
+  const isWarningMessage = useAppSelector(
+    (state) => state.appReducer.isWarninMessage
+  );
+
   return (
     <div className="productcatalog">
       <div className="friendscards-wrapper">
@@ -93,14 +100,13 @@ function ProductCatalog() {
               className="friendscards-wrapper__profilcard--delete"
               onClick={() => {
                 setFriendToDelete(friend.id);
-                setIsWarningMessage(true);
+                dispatch(actionToggleIsWarningMessage());
               }}
             >
               <X />
             </button>
             {isWarningMessage && (
               <DeleteWarningMessage
-                setIsWarningMessage={setIsWarningMessage}
                 description="supprimer cet ami donneur"
                 deleteAction={unfollow}
                 actionParam={friendToDelete}

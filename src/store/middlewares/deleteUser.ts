@@ -2,8 +2,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // Importe notre instance de axios avec la base url préconfiguré et les actions liées au localStorage
-import axiosInstance from '../../utils/axios';
-import { actionLogout } from '../reducers/userReducer';
+import { axiosInstance } from '../../utils/axios';
+import logout from './logout';
 
 // Notre action asynchrone qui va faire l'appel API
 const deleteUser = createAsyncThunk(
@@ -12,7 +12,7 @@ const deleteUser = createAsyncThunk(
   async (_, thunkAPI) => {
     // Pas besoin du chemin complet car on utilise l'axiosInstance qui a déjà notre url de base
     await axiosInstance.delete(`/profil`);
-    return thunkAPI.dispatch(actionLogout());
+    return thunkAPI.dispatch(logout());
   }
 );
 

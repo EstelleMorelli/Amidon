@@ -1,0 +1,28 @@
+@use '../../styles/variables' as v;
+
+.picturezoom {
+  height: 79vh;
+  width: 90vw;
+  margin: auto;
+  background-color: v.$color-bg-transparent;
+  border-radius: 2rem;
+  z-index: 2;
+  position: absolute;
+  top: 5rem;
+  left: 1.2rem;
+  &--picture {
+    border-radius: 2rem;
+    margin: auto;
+    width: 100%;
+  }
+}
+.closingButton {
+  background-color: v.$color-light-orange;
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+}

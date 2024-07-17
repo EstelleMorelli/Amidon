@@ -3,7 +3,7 @@
 .friendscards-wrapper {
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
+  overflow-x: auto;
   justify-content: left;
   margin: 1rem 0;
 
@@ -16,12 +16,6 @@
       margin-right: 0.5rem;
     }
   }
-}
-
-.filters {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
 }
 
 .friendfilterbutton {

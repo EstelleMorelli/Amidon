@@ -10,7 +10,7 @@ function DateFilterButton({ setCreatedAtSort, createdAtSort }: Props) {
     setCreatedAtSort(!createdAtSort);
   };
   return (
-    <div className="datefilterbutton">
+    <div className="datefilterbutton filters__button">
       <button
         className={`datesortbutton ${
           createdAtSort ? 'datesortbutton--active' : ''

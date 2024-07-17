@@ -20,8 +20,8 @@ function Presentation() {
           ></img>
           <div className="presentation__intro--text">
             <h4>
-              La nouvelle plateform de dons d'objets entre amis,
-              <strong> privee</strong>, <strong> simple</strong> et
+              La nouvelle plateforme de dons d'objets <br />
+              <strong> entre amis</strong>,<strong> simple</strong> et
               <strong> pratique</strong> !
             </h4>
             <p>

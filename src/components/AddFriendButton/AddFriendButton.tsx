@@ -2,6 +2,7 @@ import './AddFriendButton.scss';
 import { UserPlus } from 'react-feather';
 import { useAppDispatch } from '../../store/hooks-redux';
 import { actionToggleIsAddFriendModalOpen } from '../../store/reducers/appReducer';
+import { actionChangeGiverStateInfo } from '../../store/reducers/userReducer';
 
 function AddFriendButton() {
   // stock dans une variable dispatch le Hook useAppDispatch() (version typée du hook useDispatch() de redux) -> C'est ce qui envoie une action au store et exécute le reducer avec l'info de cette action à faire

@@ -11,7 +11,7 @@ function PricelessFilterButton({ setPricelessFilter, pricelessFilter }: Props) {
   };
   return (
     <button
-      className={`pricelessfilterbutton ${
+      className={`pricelessfilterbutton filters__button ${
         pricelessFilter ? 'pricelessfilterbutton--active' : ''
       }`}
       type="button"

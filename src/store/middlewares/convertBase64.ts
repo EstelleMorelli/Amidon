@@ -23,7 +23,6 @@ const convertBase64 = createAsyncThunk(
       };
       // rejectWithValue('Error, rejectedWithValue');
     });
-    console.log(promise);
     return promise;
   }
 );

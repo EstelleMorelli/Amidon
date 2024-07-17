@@ -1,10 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import axiosInstance from '../../utils/axios';
+import { axiosInstance } from '../../utils/axios';
 
 interface Props {
   id: number;
-  infos: { title: string; price: string; description: string };
+  infos: {
+    title: string;
+    price: string;
+    description: string;
+    media: {
+      image64: string;
+    }[];
+  };
 }
 const updateProduct = createAsyncThunk(
   'catalog/UPDATE_PRODUCT',
@@ -14,6 +21,7 @@ const updateProduct = createAsyncThunk(
       title: payload.infos.title,
       description: payload.infos.description,
       price: Number(payload.infos.price),
+      media: payload.infos.media,
     });
   }
 );

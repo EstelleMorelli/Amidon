@@ -12,3 +12,15 @@ textarea {
   border-radius: 1rem;
   padding: 0.5rem 1rem;
 }
+.product--picture__wrapper {
+  position: static;
+}
+
+.deleteImageButton {
+  position: absolute;
+  background-color: v.$color-bg-transparent;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+}

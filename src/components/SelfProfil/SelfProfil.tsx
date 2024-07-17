@@ -13,14 +13,17 @@ import deleteFollower from '../../store/middlewares/deleteFollower';
 import { baseUserPictureURL } from '../../utils/data';
 import ScrollUpButton from '../ProductCatalog/ScrollUpButton/ScrollUpButton';
 import deleteUser from '../../store/middlewares/deleteUser';
+import { actionToggleIsWarningMessage } from '../../store/reducers/appReducer';
 
 function SelfProfil() {
   const [followerToDelete, setFollowerToDelete] = useState(0);
-  const [isWarningMessage, setIsWarningMessage] = useState(false);
   const [modalName, setModalName] = useState('');
   const [selectedFollower, setSelectedFollower] = useState<null | number>(null);
   const connectedUser = useAppSelector(
     (state) => state.userReducer.connectedUser
+  );
+  const isWarningMessage = useAppSelector(
+    (state) => state.appReducer.isWarninMessage
   );
   const dispatch = useAppDispatch();
 
@@ -67,85 +70,100 @@ function SelfProfil() {
 
   return (
     <div className="selfprofil">
-      <div className="selftprofil--selfinfos">
-        <img
-          className="selfprofil--selfinfos__picture"
-          src={`${baseUserPictureURL}/${connectedUser.picture}`}
-          alt="votre profil"
-        />
-        <div className="selfprofil--selfinfos__sharecode">
-          <h3>Mon code de partage :</h3>
-          <div>{connectedUser.share_code}</div>
-          <Link to="/mon_profil/parametre">Modifier mon profil</Link>
-        </div>
-      </div>
-      <h1>Mes produits</h1>
-      <div className="addproduct">
-        <Link
-          className="addproduct__button"
-          to="/produit/ajouter"
-          style={{ textDecoration: 'none' }}
-        >
-          <div>
-            <Plus color="black" />
-          </div>
-          <span className="addproduct__button--text">Ajouter un produit</span>
-        </Link>
-      </div>
-      {followers.length > 0 && (
-        <h4>
-          Filtrer mes produits réservés, <br /> par ami suivant mon profil :
-        </h4>
-      )}
-      <div className="followerscards-wrapper">
-        {followers &&
-          followers.map((follower) => (
-            <div
-              key={follower.id}
-              className="followerscards-wrapper__profilcard"
+      <div className="selfprofil--desktop">
+        <div className="selfprofil--selfinfos">
+          <img
+            className="selfprofil--selfinfos__picture"
+            src={`${baseUserPictureURL}/${connectedUser.picture}`}
+            alt="votre profil"
+          />
+          <div className="selfprofil--selfinfos__sharecode">
+            <h3>Mon code de partage :</h3>
+            <div>{connectedUser.share_code}</div>
+            <Link
+              className="selfprofil--selfinfos__link"
+              to="/mon_profil/parametre"
             >
-              <button
-                type="button"
-                className="followerscards-wrapper__profilcard--delete"
-                onClick={() => {
-                  setFollowerToDelete(follower.id);
-                  setModalName('follower');
-                  setIsWarningMessage(true);
-                }}
-              >
-                <X />
-              </button>
-              {modalName === 'follower' && isWarningMessage && (
-                <DeleteWarningMessage
-                  setIsWarningMessage={setIsWarningMessage}
-                  description="supprimer ce follower"
-                  deleteAction={deleteFollower}
-                  actionParam={followerToDelete}
-                  navigateLocation="/mon_profil"
-                />
-              )}
-              <div
-                className={`friendfilterbutton ${
-                  selectedFollower === follower.id
-                    ? 'friendfilterbutton--active'
-                    : ''
-                }`}
-                onClick={() => handleFollowerFilter(follower)}
-                // Cela informe les technologies d'assistance que cela divse comporte comme un bouton
-                role="button"
-                // Cela rend le divfocusable à l'aide du clavier.
-                tabIndex={0}
-                // OnKeyDown permet aux lecteurs d'écran de faire l'action de cliquer car une div n'est normalement pas clicable avec ces appareils
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter' || event.key === ' ') {
-                    handleFollowerFilter(follower);
-                  }
-                }}
-              >
-                <ProfilCard key={follower.id} friend={follower} />
+              Modifier mon profil
+            </Link>
+          </div>
+        </div>
+        <div className="selfprofil--myproducts">
+          <h1>Mes produits</h1>
+          <div className="addproduct">
+            <Link
+              className="addproduct__button"
+              to="/produit/ajouter"
+              style={{ textDecoration: 'none' }}
+            >
+              <div>
+                <Plus color="black" />
               </div>
+              <span className="addproduct__button--text">
+                Ajouter un produit
+              </span>
+            </Link>
+          </div>
+        </div>
+        <div className="selfprofil--followers">
+          {followers.length > 0 && (
+            <h4>
+              Filtrer mes produits réservés, <br className="desktop-only-br" />
+              par ami suivant mon profil :
+            </h4>
+          )}
+          <div className="followerscards-wrapper">
+            <div className="followerscards-wrapper-flexbox">
+              {followers &&
+                followers.map((follower) => (
+                  <div
+                    key={follower.id}
+                    className="followerscards-wrapper__profilcard"
+                  >
+                    <button
+                      type="button"
+                      className="followerscards-wrapper__profilcard--delete"
+                      onClick={() => {
+                        setFollowerToDelete(follower.id);
+                        setModalName('follower');
+                        dispatch(actionToggleIsWarningMessage());
+                      }}
+                    >
+                      <X />
+                    </button>
+                    {modalName === 'follower' && isWarningMessage && (
+                      <DeleteWarningMessage
+                        description="supprimer ce follower"
+                        deleteAction={deleteFollower}
+                        actionParam={followerToDelete}
+                        navigateLocation="/mon_profil"
+                      />
+                    )}
+                    <div
+                      className={`friendfilterbutton ${
+                        selectedFollower === follower.id
+                          ? 'friendfilterbutton--active'
+                          : ''
+                      }`}
+                      onClick={() => handleFollowerFilter(follower)}
+                      // Cela informe les technologies d'assistance que cela divse comporte comme un bouton
+                      role="button"
+                      // Cela rend le divfocusable à l'aide du clavier.
+                      tabIndex={0}
+                      // OnKeyDown permet aux lecteurs d'écran de faire l'action de cliquer car une div n'est normalement pas clicable avec ces appareils
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          handleFollowerFilter(follower);
+                        }
+                      }}
+                    >
+                      <ProfilCard key={follower.id} friend={follower} />
+                    </div>
+                  </div>
+                ))}
             </div>
-          ))}
+          </div>
+        </div>
       </div>
       <div className="productcards-wrapper">
         {productsToDisplay &&
@@ -175,7 +193,7 @@ function SelfProfil() {
         className="selfprofil__deleteAccount button-orange-simple"
         onClick={() => {
           setModalName('account');
-          setIsWarningMessage(true);
+          dispatch(actionToggleIsWarningMessage());
         }}
       >
         <Trash2 className="selfprofil__deleteAccount--icon" />
@@ -183,7 +201,6 @@ function SelfProfil() {
       </button>
       {isWarningMessage && modalName === 'account' && (
         <DeleteWarningMessage
-          setIsWarningMessage={setIsWarningMessage}
           description="supprimer votre compte"
           deleteAction={deleteUser}
           navigateLocation="/"

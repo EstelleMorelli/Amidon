@@ -4,8 +4,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 // Importe notre typage de state fait dans le store
 import { RootState } from '../store';
 // Importe notre instance de axios avec la base url préconfiguré
-import axiosInstance from '../../utils/axios';
+import { axiosInstance } from '../../utils/axios';
 import login from './login';
+import { actionEmptyImage64 } from '../reducers/appReducer';
 
 // Notre action asynchrone qui va faire l'appel API
 const register = createAsyncThunk('user/REGISTER', async (_, thunkAPI) => {
@@ -16,6 +17,7 @@ const register = createAsyncThunk('user/REGISTER', async (_, thunkAPI) => {
   const { image64 } = state.appReducer;
   // Pas besoin du chemin complet car on utilise l'axiosInstance qui a déjà notre url de base
   try {
+    console.log(image64);
     await axiosInstance.post('/register', {
       email,
       password,
@@ -24,6 +26,7 @@ const register = createAsyncThunk('user/REGISTER', async (_, thunkAPI) => {
       picture,
       image64,
     });
+    thunkAPI.dispatch(actionEmptyImage64());
     // Si on a bien eu une response, on ne retourne pas les data mais l'action login qui elle retournera les data
     return thunkAPI.dispatch(login());
     // Si on a un échec de la requête, on force un retour qui renvoi la partie data de la réponse (où on a mis les messages d'erreurs et le champs problématique dans l'API)

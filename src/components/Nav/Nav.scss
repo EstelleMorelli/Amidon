@@ -18,19 +18,42 @@
 
   @media (min-width: 576px) {
     // TODO : aligner la nav vs le header de façon pas définie au visuel
-    top: 1.5rem;
-    left: 25vw;
-    width: 60vw;
-    padding: 0;
+    top: 0;
+    left: calc(25vw + 1rem);
+    width: 70vw;
     box-shadow: none;
     background-color: transparent;
-    margin-bottom: 0;
+    padding: 1.5rem 0;
+    margin: 1.5rem 0 1rem;
+    // 48px et la hauteur max du logo selon sa largeur max
+    max-height: 48px;
+    align-items: center;
+  }
+
+  &__item {
+    @media (min-width: 576px) {
+      font-size: calc(0.3em + 1.2vw);
+      display: block;
+    }
+
+    &.volumebutton {
+      @media (min-width: 576px) {
+        width: fit-content;
+        height: fit-content;
+        padding: 0.5em;
+
+        align-items: flex-start;
+      }
+    }
+
+    &--button {
+      border: none;
+      background-color: transparent;
+    }
   }
 }
-
 .mobile-only {
   @media (min-width: 576px) {
-    // TODO : comment faire prévaloir cette règle
     display: none;
   }
 }

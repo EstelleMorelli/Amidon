@@ -1,17 +1,138 @@
 @use '../../styles/variables' as v;
 
-.followerscards-wrapper,
-.selftprofil--selfinfos {
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  overflow-x: scroll;
+.selfprofil {
+  &--desktop {
+    @media (min-width: 576px) {
+      display: flex;
+      align-items: flex-start;
+      width: calc(100vw - 2rem);
+    }
+  }
+
+  &--selfinfos {
+    @media (min-width: 576px) {
+      &__sharecode {
+        width: max-content;
+      }
+    }
+    &__picture {
+      border-radius: 50%;
+      width: 8rem;
+      height: 8rem;
+      object-fit: cover;
+      padding: 0.2rem;
+      margin: auto;
+    }
+    &__sharecode {
+      text-align: center;
+      padding: 0.5rem;
+    }
+    &__sharecode div {
+      padding: 1rem;
+      background-color: white;
+      border-radius: 5rem;
+    }
+
+    &__link {
+      display: block;
+      margin: 0.5rem 0;
+      color: v.$color-main-orange;
+    }
+  }
+
+  &--myproducts {
+    @media (min-width: 576px) {
+      margin: 0 3em;
+      & h1 {
+        width: max-content;
+      }
+    }
+  }
+
+  &--followers {
+    & h4 {
+      text-align: center;
+      @media (min-width: 576px) {
+        text-align: left;
+      }
+    }
+    @media (min-width: 576px) {
+      margin-top: 1em;
+      overflow-x: hidden;
+    }
+  }
+
+  &__deleteAccount {
+    &.button-orange-simple {
+      background-color: red;
+      display: block;
+      margin: 2em auto 0;
+    }
+    &--text {
+      display: inline-block;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    &--icon {
+      display: inline-block;
+      vertical-align: middle;
+      height: 1 em;
+      padding: 0;
+      margin: 0.4em;
+    }
+  }
 }
 
-.filters {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+.desktop-only-br {
+  display: none;
+}
+
+.addproduct {
+  margin: 1rem auto;
+  &__button {
+    width: fit-content;
+    padding: 0.5rem 1rem;
+    margin: auto;
+    border-radius: 0.5rem;
+    background-color: v.$color-bg;
+    box-shadow: 3px 3px 5px v.$color-bg-shadow,
+      -4px -4px 6px v.$color-bg-highlight;
+    display: flex;
+    justify-content: space-between;
+
+    &--text {
+      margin-left: 0.5rem;
+      color: black;
+    }
+  }
+  @media (min-width: 576px) {
+    width: max-content;
+  }
+}
+
+.followerscards-wrapper {
+  overflow-x: auto;
+
+  &-flexbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+  }
+
+  &__profilcard {
+    position: relative;
+
+    &--delete {
+      background-color: v.$color-bg-transparent;
+      border-radius: 1rem;
+      width: 2rem;
+      height: 2rem;
+      border: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
 }
 
 .friendfilterbutton {
@@ -35,82 +156,4 @@
   object-fit: cover;
   border: solid 0.4rem;
   z-index: 1;
-}
-
-.selfprofil {
-  & h4 {
-    text-align: center;
-  }
-  &--selfinfos {
-    &__picture {
-      border-radius: 50%;
-      width: 8rem;
-      height: 8rem;
-      object-fit: cover;
-      padding: 0.2rem;
-    }
-    &__sharecode {
-      text-align: center;
-      padding: 0.5rem;
-    }
-    &__sharecode div {
-      padding: 1rem;
-      background-color: white;
-      border-radius: 5rem;
-    }
-  }
-}
-
-.followerscards-wrapper__profilcard {
-  position: relative;
-  &--delete {
-    background-color: v.$color-bg-transparent;
-    border-radius: 1rem;
-    width: 2rem;
-    height: 2rem;
-    border: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-}
-
-.selfprofil__deleteAccount {
-  &.button-orange-simple {
-    background-color: red;
-    display: block;
-    margin: auto;
-  }
-  &--text {
-    display: inline-block;
-    text-align: center;
-    text-transform: uppercase;
-  }
-  &--icon {
-    display: inline-block;
-    vertical-align: middle;
-    height: 1 em;
-    padding: 0;
-    margin: 0.4em;
-  }
-}
-
-.addproduct {
-  margin: 1rem auto;
-  &__button {
-    width: fit-content;
-    padding: 0.5rem 1rem;
-    margin: auto;
-    border-radius: 0.5rem;
-    background-color: v.$color-bg;
-    box-shadow: 3px 3px 5px v.$color-bg-shadow,
-      -4px -4px 6px v.$color-bg-highlight;
-    display: flex;
-    justify-content: space-between;
-
-    &--text {
-      margin-left: 0.5rem;
-      color: black;
-    }
-  }
 }

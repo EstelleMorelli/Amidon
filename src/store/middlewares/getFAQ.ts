@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 // Importe notre typage de state fait dans le store
-import axiosInstance from '../../utils/axios';
+import { axiosInstance } from '../../utils/axios';
 
 const getFAQ = createAsyncThunk('GET_FAQ', async () => {
   // on fait une requete sur un endpoint privé mais normalement on est connecté donc les header contiennent le token

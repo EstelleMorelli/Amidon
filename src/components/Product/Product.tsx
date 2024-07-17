@@ -9,8 +9,11 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks-redux';
 import getProductDetail from '../../store/middlewares/getProductDetail';
 import bookAProduct from '../../store/middlewares/bookAProduct';
 import deleteProduct from '../../store/middlewares/deleteProduct';
+
+import { baseProductPictureURL, baseUserPictureURL } from '../../utils/data';
+import { actionOpenPictureZoom } from '../../store/reducers/appReducer';
+import PictureZoom from '../PictureZoomModal/PictureZoomModal';
 import DeleteWarningMessage from '../DeleteWarningModal/DeleteWarningModal';
-import { baseProductPictureURL } from '../../utils/data';
 
 interface Props {
   changeField: (value: string, name: 'title' | 'price' | 'description') => void;
@@ -19,6 +22,15 @@ interface Props {
 function Product({ changeField }: Props) {
   const dispatch = useAppDispatch();
   const [isWarningMessage, setIsWarningMessage] = useState(false);
+  const isPictureZoomOpen = useAppSelector(
+    (state) => state.appReducer.pictureZoom.isPictureZoomOpen
+  );
+  const currentPictureForZoom = useAppSelector(
+    (state) => state.appReducer.pictureZoom.currentPicture
+  );
+  const handlePictureZoom = (currentPicture: string) => {
+    dispatch(actionOpenPictureZoom({ currentPicture }));
+  };
   const actionMessage = useAppSelector(
     (state) => state.catalogReducer.actionMessage
   );
@@ -32,7 +44,7 @@ function Product({ changeField }: Props) {
   useEffect(() => {
     dispatch(getProductDetail(idNumber));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, idNumber]);
   const product = useAppSelector(
     (state) => state.catalogReducer.currentProduct
   );
@@ -58,36 +70,22 @@ function Product({ changeField }: Props) {
         {product.owner.picture && (
           <img
             className="product--owner__picture"
-            src={product.owner.picture}
+            src={`${baseUserPictureURL}/${product.owner.picture}`}
             alt="ami"
           />
         )}
       </div>
-      {product.media[0] && (
-        <img
-          className="product--picture__main"
-          key={product.media[0].url}
-          src={`${baseProductPictureURL}/${product.media[0].url}`} //! TODO a vérifier
-          alt=""
-        />
-      )}
-      <div className="product--pictures">
-        {product.media &&
-          product.media.slice(1).map((picture) => (
-            <img
-              key={picture.url}
-              src={`${baseProductPictureURL}/${picture.url}`} //! TODO a vérifier
-              alt=""
-            />
-          ))}
-      </div>
       <div className="product--product-infos">
         {connectedUserId === product.owner.id ? (
           <div>
-            <ProductUpdateForm changeField={changeField} productId={idNumber} />
+            <ProductUpdateForm
+              changeField={changeField}
+              productId={idNumber}
+              medias={product.media}
+            />
           </div>
         ) : (
-          <FixedProductInfos product={product} />
+          <FixedProductInfos product={product} medias={product.media} />
         )}
       </div>
       {actionMessage && <p style={{ color: 'green' }}> {actionMessage} </p>}

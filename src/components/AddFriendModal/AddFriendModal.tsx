@@ -7,7 +7,11 @@ import Field from '../Field/Field';
 import ProfilCard from '../ProfilCard/ProfilCard';
 import './AddFriendModal.scss';
 import follow from '../../store/middlewares/follow';
-import { emptySearchedGiver } from '../../store/reducers/userReducer';
+import {
+  actionChangeGiverStateInfo,
+  actionResetGiverInfo,
+  emptySearchedGiver,
+} from '../../store/reducers/userReducer';
 
 interface LoginFormProps {
   changeField: (
@@ -23,6 +27,7 @@ function AddFriendModal({ changeField }: LoginFormProps) {
   // Au click, on toggle le booléan isAddFriendModalOpen
   const handleXBtnClick = () => {
     dispatch(actionToggleIsAddFriendModalOpen());
+    dispatch(actionResetGiverInfo());
   };
 
   // Fonction qui va mettre à jour le state avec les infos rentrées par l'utilisateur dans les champs, en live

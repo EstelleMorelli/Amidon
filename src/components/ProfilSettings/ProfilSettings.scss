@@ -1,1 +1,24 @@
 @use '../../styles/variables' as v;
+
+.profilsettings {
+  max-width: 90vw;
+  margin: auto;
+
+  &__all {
+    @media (min-width: 768px) {
+      display: flex;
+      flex-direction: column;
+
+      &--butpassword {
+        display: flex;
+        flex-direction: row;
+
+        &--andappaerance {
+          display: flex;
+          flex-direction: column;
+          margin-right: 1.5rem;
+        }
+      }
+    }
+  }
+}

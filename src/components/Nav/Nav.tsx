@@ -20,7 +20,7 @@ function Nav() {
         to="/"
         style={{ textDecoration: 'none' }}
       >
-        <div className=" mobile-only">
+        <div className="mobile-only">
           <Home color="black" />
         </div>
         <span className="desktop-only">Accueil</span>
@@ -30,7 +30,7 @@ function Nav() {
         to="/mon_profil"
         style={{ textDecoration: 'none' }}
       >
-        <div className=" mobile-only">
+        <div className="mobile-only">
           <User color="black" />
         </div>
         <span className="desktop-only">Mon Profil</span>
@@ -42,7 +42,7 @@ function Nav() {
         <button
           type="button"
           onClick={handleAddFriendBtnClick}
-          className="desktop-only"
+          className="nav__item--button desktop-only"
         >
           Ajouter un ami
         </button>
@@ -52,7 +52,7 @@ function Nav() {
         to="/produit/ajouter"
         style={{ textDecoration: 'none' }}
       >
-        <div className=" mobile-only">
+        <div className="mobile-only">
           <Plus color="black" />
         </div>
         <span className="desktop-only">Ajouter un produit</span>

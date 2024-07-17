@@ -6,13 +6,19 @@
 .product--pictures {
   display: flex;
   justify-content: center;
+  overflow-x: scroll;
 }
 
-.product--pictures img {
-  width: 30%;
+.product--pictures__item {
+  width: 100%;
   padding: 0.5rem;
-  max-height: 5rem;
+  max-height: 6rem;
   object-fit: cover;
+  border: none;
+  background-color: v.$color-bg;
+  img {
+    margin: auto;
+  }
 }
 
 .product--picture__main {
