@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosInstance } from '../../utils/axios';
+import axiosInstance from '../../utils/axios';
 // Importe notre typage de state fait dans le store
 import type { RootState } from '../store';
 
