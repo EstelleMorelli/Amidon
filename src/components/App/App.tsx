@@ -89,7 +89,7 @@ function App() {
     (state) => state.appReducer.isAddFriendModalOpen
   );
   const isWarningMessage = useAppSelector(
-    (state) => state.appReducer.isWarninMessage
+    (state) => state.appReducer.isWarningMessage
   );
 
   return (

@@ -75,6 +75,7 @@ function Product({ changeField }: Props) {
           />
         )}
       </div>
+      {actionMessage && <p style={{ color: 'green' }}> {actionMessage} </p>}
       <div className="product--product-infos">
         {connectedUserId === product.owner.id ? (
           <div>
@@ -88,7 +89,6 @@ function Product({ changeField }: Props) {
           <FixedProductInfos product={product} medias={product.media} />
         )}
       </div>
-      {actionMessage && <p style={{ color: 'green' }}> {actionMessage} </p>}
       {product.booker ? (
         <>
           <p> Ce produit est déjà réservé </p>

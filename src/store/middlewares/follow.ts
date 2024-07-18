@@ -18,10 +18,15 @@ const follow = createAsyncThunk(
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const { giver_id } = state.userReducer.searchedGiver;
     // Pas besoin du chemin complet car on utilise l'axiosInstance qui a déjà notre url de base
-    await axiosInstance.post(`/user/giver`, {
-      giver_id,
-    });
-    return thunkAPI.dispatch(getProductsCatalog());
+    try {
+      await axiosInstance.post(`/user/giver`, {
+        giver_id,
+      });
+      return thunkAPI.dispatch(getProductsCatalog());
+    } catch (err: any) {
+      const result: string | string[] = err.response.data.errors;
+      return thunkAPI.rejectWithValue(result);
+    }
   }
 );
 

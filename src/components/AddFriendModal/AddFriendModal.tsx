@@ -1,5 +1,5 @@
-import { FormEvent } from 'react';
-import { CheckCircle, XCircle, X } from 'react-feather';
+import { FormEvent, useEffect } from 'react';
+import { CheckCircle, XCircle, X, Check } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../store/hooks-redux';
 import searchGiver from '../../store/middlewares/searchGiver';
 import { actionToggleIsAddFriendModalOpen } from '../../store/reducers/appReducer';
@@ -8,9 +8,9 @@ import ProfilCard from '../ProfilCard/ProfilCard';
 import './AddFriendModal.scss';
 import follow from '../../store/middlewares/follow';
 import {
-  actionChangeGiverStateInfo,
   actionResetGiverInfo,
-  emptySearchedGiver,
+  actionEmptySearchedGiver,
+  actionEmptyUserMsg,
 } from '../../store/reducers/userReducer';
 
 interface LoginFormProps {
@@ -23,6 +23,10 @@ interface LoginFormProps {
 function AddFriendModal({ changeField }: LoginFormProps) {
   // stock dans une variable dispatch le Hook useAppDispatch() (version typée du hook useDispatch() de redux) -> C'est ce qui envoie une action au store et exécute le reducer avec l'info de cette action à faire
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(actionEmptyUserMsg());
+  }, []);
 
   // Au click, on toggle le booléan isAddFriendModalOpen
   const handleXBtnClick = () => {
@@ -46,6 +50,9 @@ function AddFriendModal({ changeField }: LoginFormProps) {
     (state) => state.userReducer.searchedGiver.firstname
   );
 
+  const errorMsg = useAppSelector((state) => state.userReducer.errorMsg);
+  const okMsg = useAppSelector((state) => state.userReducer.okMsg);
+
   const handleSubmitSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(searchGiver());
@@ -58,7 +65,7 @@ function AddFriendModal({ changeField }: LoginFormProps) {
 
   const handleSubmitCancellation = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(emptySearchedGiver());
+    dispatch(actionEmptySearchedGiver());
   };
 
   return (
@@ -88,6 +95,26 @@ function AddFriendModal({ changeField }: LoginFormProps) {
           />
         </div>
       </form>
+      {errorMsg && (
+        <div className="msgBox">
+          {errorMsg.map((errorMsg) => (
+            <p key={errorMsg} className="errorMsg">
+              <X size={15} className="errorMsg--icon" />
+              <span className="errorMsg--text">{errorMsg}</span>
+            </p>
+          ))}
+        </div>
+      )}
+      {okMsg && (
+        <div className="msgBox">
+          {okMsg.map((okMsg) => (
+            <p key={okMsg} className="okMsg">
+              <Check size={15} className="okMsg--icon" />
+              <span className="okMsg--text">{okMsg}</span>
+            </p>
+          ))}
+        </div>
+      )}
       {firstname && (
         <div className="addfriendmodal__searchresult">
           <ProfilCard friend={searchedGiver} />

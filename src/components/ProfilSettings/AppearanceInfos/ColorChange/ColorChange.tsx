@@ -18,8 +18,6 @@ function ColorChange({ changeField }: ColorChangeProps) {
     (state) => state.catalogReducer.selfProducts
   );
 
-  const picture = DefaultPicture;
-
   const color = useAppSelector(
     (state) => state.userReducer.connectedUser.color
   );
@@ -73,8 +71,8 @@ function ColorChange({ changeField }: ColorChangeProps) {
               Cliquer pour changer la couleur d&#39;ombre sur les vignettes des
               produits et de réservation
             </p>
-            <ArrowDown className="colorchange__selector--icon mobile" />
-            <ArrowRight className="colorchange__selector--icon desktop" />
+            <ArrowDown className="colorchange__selector--icon desktop" />
+            <ArrowRight className="colorchange__selector--icon mobile" />
             <div
               className="colorchange__selector--input--box"
               style={{ backgroundColor: color }}

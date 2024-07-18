@@ -1,7 +1,7 @@
 // import { Children } from 'react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, X } from 'react-feather';
+import { ArrowLeft, Check, X } from 'react-feather';
 import unfollow from '../../store/middlewares/unfollow';
 import AddFriendButton from '../AddFriendButton/AddFriendButton';
 import ProfilCard from '../ProfilCard/ProfilCard';
@@ -13,13 +13,10 @@ import ProductCard from '../ProductCard/ProductCard';
 import { useAppDispatch, useAppSelector } from '../../store/hooks-redux';
 import getProductsCatalog from '../../store/middlewares/getProductsCatalog';
 import { IFriendProduct, IProduct } from '../../@types/product';
-import { actionToggleIsCatalogUpdateNeeded } from '../../store/reducers/userReducer';
-import getFollowers from '../../store/middlewares/getFollowers';
 import DeleteWarningMessage from '../DeleteWarningModal/DeleteWarningModal';
-import {
-  actionEmptyImage64,
-  actionToggleIsWarningMessage,
-} from '../../store/reducers/appReducer';
+import { actionToggleIsWarningMessage } from '../../store/reducers/appReducer';
+import { actionEmptyCatalogMsg } from '../../store/reducers/catalogReducer';
+import { actionEmptyUserMsg } from '../../store/reducers/userReducer';
 
 function ProductCatalog() {
   const dispatch = useAppDispatch();
@@ -28,7 +25,12 @@ function ProductCatalog() {
     dispatch(getProductsCatalog());
     // eslint-disable-next-line react-hooks/exhaustive-deps
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    dispatch(actionEmptyCatalogMsg());
+    dispatch(actionEmptyUserMsg());
   }, []);
+
+  const errorMsg = useAppSelector((state) => state.catalogReducer.errorMsg);
+  const okMsg = useAppSelector((state) => state.catalogReducer.okMsg);
 
   const [friendToDelete, setFriendToDelete] = useState(0);
 
@@ -78,11 +80,31 @@ function ProductCatalog() {
   }
 
   const isWarningMessage = useAppSelector(
-    (state) => state.appReducer.isWarninMessage
+    (state) => state.appReducer.isWarningMessage
   );
 
   return (
     <div className="productcatalog">
+      {errorMsg && (
+        <div className="msgBox">
+          {errorMsg.map((errorMsg) => (
+            <p key={errorMsg} className="errorMsg">
+              <X size={15} className="errorMsg--icon" />
+              <span className="errorMsg--text">{errorMsg}</span>
+            </p>
+          ))}
+        </div>
+      )}
+      {okMsg && (
+        <div className="msgBox">
+          {okMsg.map((okMsg) => (
+            <p key={okMsg} className="okMsg">
+              <Check size={15} className="okMsg--icon" />
+              <span className="okMsg--text">{okMsg}</span>
+            </p>
+          ))}
+        </div>
+      )}
       <div className="friendscards-wrapper">
         <div className="friendscards-wrapper__add">
           <AddFriendButton /> {/* Bouton pour ajouter un ami */}

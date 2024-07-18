@@ -1,7 +1,12 @@
 @use '../../../styles/variables' as v;
 
 .mailandsharecode {
-  margin-bottom: 1.5rem;
+  &.form-full {
+    margin-bottom: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    width: 100%;
+  }
 
   & h3 {
     font-weight: normal;

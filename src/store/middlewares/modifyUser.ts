@@ -32,8 +32,8 @@ const modifyUser = createAsyncThunk(
       thunkAPI.dispatch(actionEmptyImage64());
       return result.data;
     } catch (err: any) {
-      console.log(err);
-      return thunkAPI.rejectWithValue(err.response.data);
+      const result: string | string[] = err.response.data.errors;
+      return thunkAPI.rejectWithValue(result);
     }
   }
 );

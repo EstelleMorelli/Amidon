@@ -9,12 +9,11 @@ const Error404: React.FC = () => {
     <div className="container">
       <div className="content">
         <h1 className="title">Erreur 404</h1>
-        <p className="subtitle">La page que vous recherchez est introuvable.</p>
-        <img
-          className="logoface"
-          src={LogoFace}
-          alt="logo-amidon"
-        />
+        <p className="subtitle">
+          La page que vous recherchez est introuvable ou vous ne pouvez pas la
+          voir car vous n'êtes pas connecté.
+        </p>
+        <img className="logoface" src={LogoFace} alt="logo-amidon" />
         <a href="/" className="link">
           Retour à la page d'accueil
         </a>

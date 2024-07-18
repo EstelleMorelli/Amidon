@@ -12,7 +12,8 @@ interface IUserState {
   logged: boolean;
   connectedUser: IUser;
   searchedGiver: IFriend;
-  msg: null | string[];
+  errorMsg: string[];
+  okMsg: string[];
 }
 
 export const userStateInitial: IUserState = {
@@ -36,7 +37,8 @@ export const userStateInitial: IUserState = {
     share_code: '',
     color: '',
   },
-  msg: null,
+  errorMsg: [],
+  okMsg: [],
 };
 
 export const actionChangeUserStateInfo = createAction<{
@@ -58,7 +60,9 @@ export const actionChangeGiverStateInfo = createAction<{
   fieldName: 'lastname' | 'firstname' | 'picture' | 'share_code' | 'color';
 }>('user/CHANGE_GIVERINFO');
 
-export const emptySearchedGiver = createAction('user/EMPTY_GIVERINFO');
+export const actionEmptySearchedGiver = createAction('user/EMPTY_GIVERINFO');
+
+export const actionEmptyUserMsg = createAction('user/EMPTY_MSG');
 
 export const actionToggleIsCatalogUpdateNeeded = createAction(
   'app/TOOGLE_CATALOGUPDATENEEDED'
@@ -72,8 +76,8 @@ const userReducer = createReducer(userStateInitial, (builder) => {
       state.connectedUser[action.payload.fieldName] = action.payload.newValue;
       // TODO : réfléchir au fait que le mot de passe est visible dans le state Redux
     })
-
     .addCase(login.fulfilled, (state, action) => {
+      console.log('Action login fullfilled');
       state.connectedUser.id = action.payload.id;
       state.connectedUser.firstname = action.payload.firstname;
       state.connectedUser.lastname = action.payload.lastname;
@@ -83,28 +87,37 @@ const userReducer = createReducer(userStateInitial, (builder) => {
       state.connectedUser.picture = action.payload.picture;
       state.connectedUser.password = '';
       state.logged = true;
-      state.msg = null;
-      console.log('Action login fullfilled');
+      state.errorMsg = [];
+      state.okMsg = [];
     })
     .addCase(login.pending, () => {
       console.log('Action login pending');
     })
-    .addCase(login.rejected, () => {
+    .addCase(login.rejected, (state, action) => {
       console.log('Action login rejected');
-      // On vide le msg du state au cas où ce n'est pas la 1ère fois que la requête est rejected
-      /* state.msg = [];
-      if (action.payload) {
-        action.payload.errors.map((error: any) => {
-          state.msg?.push(error);
+      const response = action.payload;
+      // On vide les msg du state au cas où ce n'est pas la 1ère fois que la requête est rejected
+      state.errorMsg = [];
+      state.okMsg = [];
+      // Si la ou les erreurs sont bien parmi celles définies dans l'API, on rempli le tableau msg du state avec les erreurs
+      if (typeof response === 'string') {
+        state.errorMsg.push(response);
+      }
+      // Sinon, si le tableau d'erreur existe, on stocke ses valeurs dans state.msg
+      else if (response) {
+        const responseArray = Object.values(response);
+        responseArray.map((error: string) => {
+          state.errorMsg.push(error);
         });
       }
       // Sinon, on rempli msg du state avec un message générique
       else {
-        state.msg.push('Échec de la connexion');
-        */
+        state.errorMsg.push('Échec de la connexion.');
+      }
     })
     .addCase(register.fulfilled, (state) => {
-      state.msg = null;
+      state.errorMsg = [];
+      state.okMsg = [];
       console.log('Action register fullfilled');
     })
     .addCase(register.pending, () => {
@@ -112,22 +125,26 @@ const userReducer = createReducer(userStateInitial, (builder) => {
     })
     .addCase(register.rejected, (state, action) => {
       console.log('Action register rejected');
-      /* 
-      // console.log(action.payload);
+      const response = action.payload;
       // On vide le msg du state au cas où ce n'est pas la 1ère fois que la requête est rejected
-      state.msg = [];
+      state.errorMsg = [];
+      state.okMsg = [];
       // Si la ou les erreurs sont bien parmi celles définies dans l'API, on rempli le tableau msg du state avec les erreurs
-      // TODO : voir comment typer l'action.payload
-      console.log(action.payload);
-      if (action.payload) {
-        action.payload.errors.map((error: any) => {
-          state.msg?.push(error);
+      // Si c'est une string (cas de l'email déjà existant), on la stock
+      if (typeof response === 'string') {
+        state.errorMsg.push(response);
+      }
+      // Sinon, si le tableau d'erreur existe, on stocke ses valeurs dans state.msg
+      else if (response) {
+        const responseArray = Object.values(response);
+        responseArray.map((error: string) => {
+          state.errorMsg.push(error);
         });
       }
       // Sinon, on rempli msg du state avec un message générique
       else {
-        state.msg.push('Échec de la création du compte');
-      } */
+        state.errorMsg.push('Échec de la création du compte.');
+      }
     })
     .addCase(logout.fulfilled, (state) => {
       state.logged = false;
@@ -146,7 +163,8 @@ const userReducer = createReducer(userStateInitial, (builder) => {
       state.searchedGiver.picture = '';
       state.searchedGiver.share_code = '';
       state.searchedGiver.color = '';
-      state.msg = null;
+      state.errorMsg = [];
+      state.okMsg = [];
     })
     .addCase(actionChangeGiverStateInfo, (state, action) => {
       state.searchedGiver[action.payload.fieldName] = action.payload.newValue;
@@ -160,43 +178,77 @@ const userReducer = createReducer(userStateInitial, (builder) => {
       state.searchedGiver.share_code = '';
     })
     .addCase(searchGiver.fulfilled, (state, action) => {
+      console.log('Action searchedGiver fullfilled');
       state.searchedGiver.giver_id = action.payload.id;
       state.searchedGiver.firstname = action.payload.firstname;
       state.searchedGiver.lastname = action.payload.lastname;
       state.searchedGiver.picture = action.payload.picture;
-      state.msg = null;
-      console.log('Action searchedGiver fullfilled');
+      state.errorMsg = [];
+      state.okMsg = [];
     })
     .addCase(searchGiver.pending, () => {
       console.log('Action searchedGiver pending');
     })
     .addCase(searchGiver.rejected, (state, action) => {
       console.log('Action searchedGiver rejected');
-      state.msg = [];
-      if (action.error.message) {
-        state.msg.push('Échec de la recherche de donneur.');
+      const response = action.payload;
+      // On vide le msg du state au cas où ce n'est pas la 1ère fois que la requête est rejected
+      state.errorMsg = [];
+      state.okMsg = [];
+      // Si la ou les erreurs sont bien parmi celles définies dans l'API, on rempli le tableau msg du state avec les erreurs
+      if (typeof response === 'string') {
+        state.errorMsg.push(response);
+      }
+      // Sinon, si le tableau d'erreur existe, on stocke ses valeurs dans state.msg
+      else if (response) {
+        const responseArray = Object.values(response);
+        responseArray.map((error: string) => {
+          state.errorMsg.push(error);
+        });
+      }
+      // Sinon, on rempli msg du state avec un message générique
+      else {
+        state.errorMsg.push('Échec de la recherche de donneur.');
       }
     })
     .addCase(follow.fulfilled, (state) => {
+      console.log('Action follow fullfilled');
+      state.errorMsg = [];
+      state.okMsg = [];
       state.searchedGiver.giver_id = null;
       state.searchedGiver.firstname = '';
       state.searchedGiver.lastname = '';
       state.searchedGiver.picture = '';
       state.searchedGiver.share_code = '';
-      state.msg = null;
-      console.log('Action follow fullfilled');
+      state.okMsg.push('Vous avez bien ajouté ce donneur.');
     })
     .addCase(follow.pending, () => {
       console.log('Action follow pending');
     })
     .addCase(follow.rejected, (state, action) => {
       console.log('Action follow rejected');
-      state.msg = [];
-      if (action.error.message) {
-        state.msg.push("Échec de l'ajout du donneur.");
+      const response = action.payload;
+      // On vide le msg du state au cas où ce n'est pas la 1ère fois que la requête est rejected
+      state.errorMsg = [];
+      state.okMsg = [];
+      // Si la ou les erreurs sont bien parmi celles définies dans l'API, on rempli le tableau msg du state avec les erreurs
+      // Si c'est une string (cas de l'email déjà existant), on la stock
+      if (typeof response === 'string') {
+        state.errorMsg.push(response);
+      }
+      // Sinon, si le tableau d'erreur existe, on stocke ses valeurs dans state.msg
+      else if (response) {
+        const responseArray = Object.values(response);
+        responseArray.map((error: string) => {
+          state.errorMsg.push(error);
+        });
+      }
+      // Sinon, on rempli msg du state avec un message générique
+      else {
+        state.errorMsg.push("Échec de l'ajout du donneur");
       }
     })
-    .addCase(emptySearchedGiver, (state) => {
+    .addCase(actionEmptySearchedGiver, (state) => {
       state.searchedGiver.giver_id = null;
       state.searchedGiver.firstname = '';
       state.searchedGiver.lastname = '';
@@ -204,25 +256,73 @@ const userReducer = createReducer(userStateInitial, (builder) => {
     })
     .addCase(modifyUser.fulfilled, (state, action) => {
       console.log('Action modifyUser fullfilled');
-      state.msg = null;
+      state.errorMsg = [];
+      state.okMsg = [];
       state.connectedUser.picture = action.payload.picture;
       state.connectedUser.password = '';
+      state.okMsg.push('Profil bien mis à jour.');
     })
     .addCase(modifyUser.pending, () => {
       console.log('Action modifyUser pending');
     })
-    .addCase(modifyUser.rejected, (state) => {
+    .addCase(modifyUser.rejected, (state, action) => {
       console.log('Action modifyUser rejected');
       state.connectedUser.password = '';
+      const response = action.payload;
+      // On vide le msg du state au cas où ce n'est pas la 1ère fois que la requête est rejected
+      state.errorMsg = [];
+      state.okMsg = [];
+      // Si la ou les erreurs sont bien parmi celles définies dans l'API, on rempli le tableau msg du state avec les erreurs
+      // Si c'est une string (cas de l'email déjà existant), on la stock
+      if (typeof response === 'string') {
+        state.errorMsg.push(response);
+      }
+      // Sinon, si le tableau d'erreur existe, on stocke ses valeurs dans state.msg
+      else if (response) {
+        const responseArray = Object.values(response);
+        responseArray.map((error: string) => {
+          state.errorMsg.push(error);
+        });
+      }
+      // Sinon, on rempli msg du state avec un message générique
+      else {
+        state.errorMsg.push('Échec de la modification du profil.');
+      }
     })
-    .addCase(deleteUser.fulfilled, () => {
+    .addCase(deleteUser.fulfilled, (state) => {
       console.log('Action deleteUser fullfilled');
+      state.errorMsg = [];
+      state.okMsg = [];
     })
     .addCase(deleteUser.pending, () => {
       console.log('Action deleteUser pending');
     })
-    .addCase(deleteUser.rejected, () => {
+    .addCase(deleteUser.rejected, (state, action) => {
       console.log('Action deleteUser rejected');
+      const response = action.payload;
+      // On vide le msg du state au cas où ce n'est pas la 1ère fois que la requête est rejected
+      state.errorMsg = [];
+      state.okMsg = [];
+      // Si la ou les erreurs sont bien parmi celles définies dans l'API, on rempli le tableau msg du state avec les erreurs
+      // Si c'est une string (cas de l'email déjà existant), on la stock
+      if (typeof response === 'string') {
+        state.errorMsg.push(response);
+      }
+      // Sinon, si le tableau d'erreur existe, on stocke ses valeurs dans state.msg
+      else if (response) {
+        const responseArray = Object.values(response);
+        responseArray.map((error: string) => {
+          state.errorMsg.push(error);
+        });
+      }
+      // Sinon, on rempli msg du state avec un message générique
+      else {
+        state.errorMsg.push('Échec de la suppression du compte.');
+      }
+    })
+    .addCase(actionEmptyUserMsg, (state) => {
+      state.errorMsg = [];
+      state.okMsg = [];
     });
 });
 

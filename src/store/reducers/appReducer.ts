@@ -8,25 +8,19 @@ import register from '../middlewares/register';
 
 interface IAppState {
   isAddFriendModalOpen: boolean;
-
+  isWarningMessage: boolean;
   pictureZoom: {
     isPictureZoomOpen: boolean;
     currentPicture: string;
   };
-
-  isWarninMessage: boolean;
-
   image64: string[];
   faq: IQandA[];
 }
 
 const initialState: IAppState = {
   isAddFriendModalOpen: false,
-
+  isWarningMessage: false,
   pictureZoom: { isPictureZoomOpen: false, currentPicture: '' },
-
-  isWarninMessage: false,
-
   image64: [],
   faq: [],
 };
@@ -54,7 +48,7 @@ const appReducer = createReducer(initialState, (builder) => {
       state.faq = [];
       state.image64 = [];
       state.isAddFriendModalOpen = false;
-      state.isWarninMessage = false;
+      state.isWarningMessage = false;
     })
     .addCase(actionEmptyImage64, (state) => {
       state.image64 = [];
@@ -76,26 +70,25 @@ const appReducer = createReducer(initialState, (builder) => {
     })
 
     .addCase(actionToggleIsWarningMessage, (state) => {
-      state.isWarninMessage = !state.isWarninMessage;
+      state.isWarningMessage = !state.isWarningMessage;
     })
     .addCase(convertBase64.fulfilled, (state, action) => {
       state.image64.push(String(action.payload));
-
     })
-    .addCase(convertBase64.pending, (state, action) => {
+    .addCase(convertBase64.pending, () => {
       console.log('Action convertBase64 pending');
     })
-    .addCase(convertBase64.rejected, (state, action) => {
+    .addCase(convertBase64.rejected, () => {
       console.log('Action convertBase64 rejected');
     })
     .addCase(getFAQ.fulfilled, (state, action) => {
       console.log('Action getFAQ fullfilled');
       state.faq = action.payload;
     })
-    .addCase(getFAQ.pending, (state, action) => {
+    .addCase(getFAQ.pending, () => {
       console.log('Action getFAQ pending');
     })
-    .addCase(getFAQ.rejected, (state, action) => {
+    .addCase(getFAQ.rejected, () => {
       console.log('Action getFAQ rejected');
     })
     .addCase(logout.fulfilled, (state) => {

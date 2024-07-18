@@ -1,7 +1,7 @@
 import './SelfProfil.scss';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Plus, Trash2, X } from 'react-feather';
+import { Check, Plus, Trash2, X } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../store/hooks-redux';
 import DeleteWarningMessage from '../DeleteWarningModal/DeleteWarningModal';
 import ProfilCard from '../ProfilCard/ProfilCard';
@@ -14,6 +14,7 @@ import { baseUserPictureURL } from '../../utils/data';
 import ScrollUpButton from '../ProductCatalog/ScrollUpButton/ScrollUpButton';
 import deleteUser from '../../store/middlewares/deleteUser';
 import { actionToggleIsWarningMessage } from '../../store/reducers/appReducer';
+import { actionEmptyCatalogMsg } from '../../store/reducers/catalogReducer';
 
 function SelfProfil() {
   const [followerToDelete, setFollowerToDelete] = useState(0);
@@ -23,7 +24,7 @@ function SelfProfil() {
     (state) => state.userReducer.connectedUser
   );
   const isWarningMessage = useAppSelector(
-    (state) => state.appReducer.isWarninMessage
+    (state) => state.appReducer.isWarningMessage
   );
   const dispatch = useAppDispatch();
 
@@ -40,14 +41,13 @@ function SelfProfil() {
   );
   // Récupération des followers depuis le state pour l'affichage des ProfilCard
   const followers = useAppSelector((state) => state.catalogReducer.followers);
+
+  // On relance le rendu quand la liste de follower a changé (suite à une suppression)
   useEffect(() => {
     dispatch(getFollowers());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  // On relance le rendu quand la liste de follower a changé (suite à une suppression)
-  useEffect(() => {
+    dispatch(actionEmptyCatalogMsg());
     dispatch(getSelfProducts());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // On parcours les produit pour placer en premier ceux qui sont bookés dans le tableau productsBookedSort et ensuite ceux qui ne le sont pas. On applatit le résultat avec la fonction flat() pour n'obtenir qu'un seul tableau.
@@ -68,8 +68,31 @@ function SelfProfil() {
     productsToDisplay = [...productsBookedSort];
   }
 
+  const errorMsg = useAppSelector((state) => state.catalogReducer.errorMsg);
+  const okMsg = useAppSelector((state) => state.catalogReducer.okMsg);
+
   return (
     <div className="selfprofil">
+      {errorMsg && (
+        <div className="msgBox">
+          {errorMsg.map((errorMsg) => (
+            <p key={errorMsg} className="errorMsg">
+              <X size={15} className="errorMsg--icon" />
+              <span className="errorMsg--text">{errorMsg}</span>
+            </p>
+          ))}
+        </div>
+      )}
+      {okMsg && (
+        <div className="msgBox">
+          {okMsg.map((okMsg) => (
+            <p key={okMsg} className="okMsg">
+              <Check size={15} className="okMsg--icon" />
+              <span className="okMsg--text">{okMsg}</span>
+            </p>
+          ))}
+        </div>
+      )}
       <div className="selfprofil--desktop">
         <div className="selfprofil--selfinfos">
           <img
@@ -80,10 +103,7 @@ function SelfProfil() {
           <div className="selfprofil--selfinfos__sharecode">
             <h3>Mon code de partage :</h3>
             <div>{connectedUser.share_code}</div>
-            <Link
-              className="selfprofil--selfinfos__link"
-              to="/mon_profil/parametre"
-            >
+            <Link className="link" to="/mon_profil/parametre">
               Modifier mon profil
             </Link>
           </div>

@@ -5,7 +5,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 const convertBase64 = createAsyncThunk(
   'app/CONVERT_BASE64',
 
-  async (file: Blob) => {
+  async (file: Blob, thunkAPI) => {
     const promise = new Promise((resolve) => {
       let fileInfo;
       let baseURL: string | ArrayBuffer | null = '';

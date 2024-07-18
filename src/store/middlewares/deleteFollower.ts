@@ -11,16 +11,21 @@ const deleteFollower = createAsyncThunk(
   'user/DELETEFOLLOW',
 
   async (follower_id: number, thunkAPI) => {
-    // Pas besoin du chemin complet car on utilise l'axiosInstance qui a déjà notre url de base
-    await axiosInstance.delete(`/user/follower`, {
-      data: { follower_id },
-    });
-    // const actions = () => {
+    try {
+      // Pas besoin du chemin complet car on utilise l'axiosInstance qui a déjà notre url de base
+      await axiosInstance.delete(`/user/follower`, {
+        data: { follower_id },
+      });
+      // const actions = () => {
 
-    // }
-    return (
-      thunkAPI.dispatch(getFollowers()), thunkAPI.dispatch(getSelfProducts())
-    );
+      // }
+      return (
+        thunkAPI.dispatch(getFollowers()), thunkAPI.dispatch(getSelfProducts())
+      );
+    } catch (err: any) {
+      const result: string | string[] = err.response.data.errors;
+      return thunkAPI.rejectWithValue(result);
+    }
   }
 );
 

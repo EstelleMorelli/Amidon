@@ -17,7 +17,6 @@ const register = createAsyncThunk('user/REGISTER', async (_, thunkAPI) => {
   const { image64 } = state.appReducer;
   // Pas besoin du chemin complet car on utilise l'axiosInstance qui a déjà notre url de base
   try {
-    console.log(image64);
     await axiosInstance.post('/register', {
       email,
       password,
@@ -31,8 +30,8 @@ const register = createAsyncThunk('user/REGISTER', async (_, thunkAPI) => {
     return thunkAPI.dispatch(login());
     // Si on a un échec de la requête, on force un retour qui renvoi la partie data de la réponse (où on a mis les messages d'erreurs et le champs problématique dans l'API)
   } catch (err: any) {
-    // TODO : voir comment typer cette erreur
-    return thunkAPI.rejectWithValue(err.response.data);
+    const result: string | string[] = err.response.data.errors;
+    return thunkAPI.rejectWithValue(result);
   }
 });
 export default register;

@@ -24,7 +24,9 @@ function FAQ() {
           answer={qAndA.response}
         />
       ))}
-      <Link to="/">Retour à l'accueil</Link>
+      <Link to="/" className="link">
+        Retour à l'accueil
+      </Link>
     </div>
   );
 }

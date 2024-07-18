@@ -1,6 +1,6 @@
 import './AddProductForm.scss';
 import { useNavigate } from 'react-router-dom';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import Field from '../Field/Field';
 import { useAppSelector, useAppDispatch } from '../../store/hooks-redux';
 import addProduct from '../../store/middlewares/addProduct';
@@ -16,6 +16,9 @@ function AddProductForm({ changeField }: Props) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [picturesList, setPicturesList] = useState(['']);
+  useEffect(() => {
+    dispatch(actionResetCurrentProductState());
+  }, []);
   const description = useAppSelector(
     (state) => state.catalogReducer.currentProduct.description
   );
@@ -63,9 +66,12 @@ function AddProductForm({ changeField }: Props) {
     }
   };
   return (
-    <div className="addproductform">
+    <div className="addproductpage">
       <h1> Ajouter un produit </h1>
-      <form className="form-full" onSubmit={handleSubmitAddProduct}>
+      <form
+        className="addproductform form-full"
+        onSubmit={handleSubmitAddProduct}
+      >
         <Field
           fieldDisplayedName="Title"
           value={title}
@@ -76,13 +82,16 @@ function AddProductForm({ changeField }: Props) {
           edit
           onChange={handleChangeField('title')}
         />
-        <textarea
-          name="description"
-          rows={5}
-          placeholder="Veuillez saisir une description de votre objet et décrire son état."
-          required
-          onChange={handleChangeDescriptionField}
-        />
+        <div className="descriptionfield">
+          <label className="mediafield--inputlabel">Description</label>
+          <textarea
+            name="description"
+            rows={5}
+            placeholder="Veuillez saisir une description de votre objet et décrire son état."
+            required
+            onChange={handleChangeDescriptionField}
+          />
+        </div>
         <Field
           fieldDisplayedName="Price"
           value={price}
@@ -93,19 +102,35 @@ function AddProductForm({ changeField }: Props) {
           edit
           onChange={handleChangeField('price')}
         />
-        <ul style={{ listStyleType: 'none', textAlign: 'left' }}>
-          {picturesList.map((picture) => (
-            <li key={picture}>{picture}</li>
-          ))}
-        </ul>
-        <input
-          type="file"
-          placeholder=""
-          required={false}
-          onChange={handleNewPicture}
-          accept=".bmp, .jpeg, .jpg, .png, .svg, .webp, .avif"
-        />
-
+        <div className="mediafield">
+          <label className="mediafield--inputlabel">Photo(s)</label>
+          <ul
+            style={{
+              listStyleType: 'none',
+              textAlign: 'center',
+              padding: '0',
+            }}
+          >
+            {picturesList.map((picture) => (
+              <li key={picture}>{picture}</li>
+            ))}
+          </ul>
+          <label
+            htmlFor="file-upload"
+            className="mediafield--filefakeinput button-orange-simple"
+          >
+            Cliquer pour télécharger votre photo
+            <input
+              id="file-upload"
+              className="mediafield--fileinput"
+              type="file"
+              placeholder=""
+              required={false}
+              onChange={handleNewPicture}
+              accept=".bmp, .jpeg, .jpg, .png, .svg, .webp, .avif"
+            />
+          </label>
+        </div>
         <button type="submit" className="button-orange-simple">
           VALIDER
         </button>

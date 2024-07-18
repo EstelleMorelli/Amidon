@@ -16,6 +16,7 @@ import convertBase64 from '../../../store/middlewares/convertBase64';
 import addProduct from '../../../store/middlewares/addProduct';
 import { useNavigate } from 'react-router-dom';
 import getProductDetail from '../../../store/middlewares/getProductDetail';
+import { actionResetCurrentProductState } from '../../../store/reducers/catalogReducer';
 
 interface Props {
   changeField: (value: string, name: 'title' | 'price' | 'description') => void;
@@ -66,13 +67,13 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
   );
   const handlePictureDelete = (urlToRemove: string) => {
     dispatch(deleteProductPicture({ id: productId, url: urlToRemove }));
+    dispatch(actionResetCurrentProductState());
     dispatch(getProductDetail(productId));
   };
   const handleNewPicture = (event: ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files[0]) {
       setPicturesList([...picturesList, event.target.files[0].name]);
       dispatch(convertBase64(event.target.files[0]));
-      setPicturesList(['']);
     }
   };
   const pictures = useAppSelector((state) => state.appReducer.image64);
@@ -88,6 +89,7 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
     };
     setPicturesList(['']);
     dispatch(actionResetAppReducer());
+    dispatch(actionResetCurrentProductState());
     dispatch(updateProduct(newProductInfos));
     dispatch(getProductDetail(productId));
   };
@@ -95,12 +97,24 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
   return (
     <div className="productupdateform">
       {mediasToDisplay[0] && (
-        <img
-          className="product--picture__main"
-          key={mediasToDisplay[0].url}
-          src={`${baseProductPictureURL}/${medias[0].url}`}
-          alt=""
-        />
+        <div className="mainpicture__wrapper">
+          <button
+            type="button"
+            data-url={mediasToDisplay[0].url}
+            className="deleteImageButton"
+            onClick={() => {
+              handlePictureDelete(mediasToDisplay[0].url);
+            }}
+          >
+            <X />
+          </button>
+          <img
+            className="product--picture__main"
+            key={mediasToDisplay[0].url}
+            src={`${baseProductPictureURL}/${medias[0].url}`}
+            alt=""
+          />
+        </div>
       )}
       <div className="product--pictures">
         {mediasToDisplay &&
