@@ -22,7 +22,7 @@ const follow = createAsyncThunk(
       await axiosInstance.post(`/user/giver`, {
         giver_id,
       });
-      return thunkAPI.dispatch(getProductsCatalog());
+      return await thunkAPI.dispatch(getProductsCatalog());
     } catch (err: any) {
       const result: string | string[] = err.response.data.errors;
       return thunkAPI.rejectWithValue(result);

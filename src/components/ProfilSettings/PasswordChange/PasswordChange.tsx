@@ -56,6 +56,7 @@ function PasswordChange({ changeField }: PasswordFormProps) {
         <div className="passwordchange__fields">
           <Field
             fieldDisplayedName="Mot de passe actuel"
+            instructions="Minimum 8 caractères dont 1 majuscule et 1 caractère spécial"
             type="password"
             onChange={(value: string) => setOldPassword(value)}
             placeholder=""
@@ -66,6 +67,7 @@ function PasswordChange({ changeField }: PasswordFormProps) {
           ></Field>
           <Field
             fieldDisplayedName="Nouveau mot de passe"
+            instructions="Minimum 8 caractères dont 1 majuscule et 1 caractère spécial"
             type="password"
             onChange={handleChangeField('password')}
             placeholder=""
@@ -77,6 +79,7 @@ function PasswordChange({ changeField }: PasswordFormProps) {
           ></Field>
           <Field
             fieldDisplayedName="Confirmer le nouveau mot de passe"
+            instructions="Minimum 8 caractères dont 1 majuscule et 1 caractère spécial"
             type="password"
             onChange={(value: string) => setConfirmationPassword(value)}
             placeholder=""

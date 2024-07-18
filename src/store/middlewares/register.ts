@@ -27,7 +27,7 @@ const register = createAsyncThunk('user/REGISTER', async (_, thunkAPI) => {
     });
     thunkAPI.dispatch(actionEmptyImage64());
     // Si on a bien eu une response, on ne retourne pas les data mais l'action login qui elle retournera les data
-    return thunkAPI.dispatch(login());
+    return await thunkAPI.dispatch(login());
     // Si on a un échec de la requête, on force un retour qui renvoi la partie data de la réponse (où on a mis les messages d'erreurs et le champs problématique dans l'API)
   } catch (err: any) {
     const result: string | string[] = err.response.data.errors;

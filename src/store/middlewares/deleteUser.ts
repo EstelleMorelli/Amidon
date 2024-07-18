@@ -13,7 +13,7 @@ const deleteUser = createAsyncThunk(
     // Pas besoin du chemin complet car on utilise l'axiosInstance qui a déjà notre url de base
     try {
       await axiosInstance.delete(`/profil`);
-      return thunkAPI.dispatch(logout());
+      return await thunkAPI.dispatch(logout());
     } catch (err: any) {
       const result: string | string[] = err.response.data.errors;
       console.log(result);

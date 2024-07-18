@@ -4,6 +4,7 @@ import { Edit, Search } from 'react-feather';
 
 interface FieldProps {
   fieldDisplayedName: string;
+  instructions?: string;
   value: string;
   type: string;
   placeholder: string;
@@ -15,6 +16,7 @@ interface FieldProps {
 
 function Field({
   fieldDisplayedName,
+  instructions,
   value,
   type,
   placeholder,
@@ -38,6 +40,9 @@ function Field({
           {fieldDisplayedName}
           {required === true && <span aria-label="required">* </span>}
         </label>
+        {instructions && (
+          <p className="field__instructions">({instructions})</p>
+        )}
         <div className="field__inputcontainer">
           {/* Div caché du display et des screen readers pour faire la largeur de l'input selon le placeholder */}
           <div

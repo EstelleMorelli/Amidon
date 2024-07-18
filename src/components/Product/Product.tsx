@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { Trash2 } from 'react-feather';
+import { Trash2, X } from 'react-feather';
 import BookButton from './BookButton/BookButton';
 import FixedProductInfos from './FixedProductInfos/FixedProductInfos';
 import './Product.scss';
@@ -11,9 +11,13 @@ import bookAProduct from '../../store/middlewares/bookAProduct';
 import deleteProduct from '../../store/middlewares/deleteProduct';
 
 import { baseProductPictureURL, baseUserPictureURL } from '../../utils/data';
-import { actionOpenPictureZoom } from '../../store/reducers/appReducer';
+import {
+  actionOpenPictureZoom,
+  actionToggleIsWarningMessage,
+} from '../../store/reducers/appReducer';
 import PictureZoom from '../PictureZoomModal/PictureZoomModal';
 import DeleteWarningMessage from '../DeleteWarningModal/DeleteWarningModal';
+import { actionEmptyCatalogMsg } from '../../store/reducers/catalogReducer';
 
 interface Props {
   changeField: (value: string, name: 'title' | 'price' | 'description') => void;
@@ -21,22 +25,6 @@ interface Props {
 
 function Product({ changeField }: Props) {
   const dispatch = useAppDispatch();
-  const [isWarningMessage, setIsWarningMessage] = useState(false);
-  const isPictureZoomOpen = useAppSelector(
-    (state) => state.appReducer.pictureZoom.isPictureZoomOpen
-  );
-  const currentPictureForZoom = useAppSelector(
-    (state) => state.appReducer.pictureZoom.currentPicture
-  );
-  const handlePictureZoom = (currentPicture: string) => {
-    dispatch(actionOpenPictureZoom({ currentPicture }));
-  };
-  const actionMessage = useAppSelector(
-    (state) => state.catalogReducer.actionMessage
-  );
-  const connectedUserId = useAppSelector(
-    (state) => state.userReducer.connectedUser.id
-  );
   // Récupération de l'id de l'objet grace au paramètre id de l'URL
   const { id } = useParams();
   const idNumber = Number(id);
@@ -45,6 +33,14 @@ function Product({ changeField }: Props) {
     dispatch(getProductDetail(idNumber));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, idNumber]);
+
+  const isWarningMessage = useAppSelector(
+    (state) => state.appReducer.isWarningMessage
+  );
+  const connectedUserId = useAppSelector(
+    (state) => state.userReducer.connectedUser.id
+  );
+
   const product = useAppSelector(
     (state) => state.catalogReducer.currentProduct
   );
@@ -75,7 +71,6 @@ function Product({ changeField }: Props) {
           />
         )}
       </div>
-      {actionMessage && <p style={{ color: 'green' }}> {actionMessage} </p>}
       <div className="product--product-infos">
         {connectedUserId === product.owner.id ? (
           <div>
@@ -111,7 +106,7 @@ function Product({ changeField }: Props) {
           type="button"
           className="product__deleteButton button-orange-simple"
           onClick={() => {
-            setIsWarningMessage(true);
+            dispatch(actionToggleIsWarningMessage());
           }}
         >
           {' '}

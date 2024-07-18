@@ -1,12 +1,19 @@
 import './AddProductForm.scss';
 import { useNavigate } from 'react-router-dom';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import Field from '../Field/Field';
 import { useAppSelector, useAppDispatch } from '../../store/hooks-redux';
 import addProduct from '../../store/middlewares/addProduct';
 import convertBase64 from '../../store/middlewares/convertBase64';
-import { actionResetCurrentProductState } from '../../store/reducers/catalogReducer';
-import { actionResetAppReducer } from '../../store/reducers/appReducer';
+import {
+  actionEmptyCatalogMsg,
+  actionResetCurrentProductState,
+} from '../../store/reducers/catalogReducer';
+import {
+  actionEmptyImage64,
+  actionResetAppReducer,
+} from '../../store/reducers/appReducer';
+import { X } from 'react-feather';
 
 interface Props {
   changeField: (value: string, name: 'title' | 'price' | 'description') => void;
@@ -14,7 +21,17 @@ interface Props {
 
 function AddProductForm({ changeField }: Props) {
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(actionEmptyCatalogMsg());
+    dispatch(actionEmptyImage64());
+  }, []);
+
+  const errorMsg = useAppSelector((state) => state.catalogReducer.errorMsg);
+  const okMsg = useAppSelector((state) => state.catalogReducer.okMsg);
+
   const navigate = useNavigate();
+
   const [picturesList, setPicturesList] = useState(['']);
   useEffect(() => {
     dispatch(actionResetCurrentProductState());
@@ -56,8 +73,18 @@ function AddProductForm({ changeField }: Props) {
     setPicturesList(['']);
     dispatch(addProduct(newProductInfos));
     dispatch(actionResetAppReducer());
-    navigate('/mon_profil');
   };
+
+  // On crée un élément "fixe" qui ne se redéclenche pas au rechargement des composants
+  const renderCount = useRef(0);
+  renderCount.current += 1;
+
+  // On ne fait la redirection que si le msgOk (venant du fulfilled) n'est pas vide
+  useEffect(() => {
+    if (renderCount.current > 2) {
+      navigate('/mon_profil');
+    }
+  }, [okMsg]);
 
   const handleNewPicture = (event: ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files[0]) {
@@ -73,17 +100,19 @@ function AddProductForm({ changeField }: Props) {
         onSubmit={handleSubmitAddProduct}
       >
         <Field
-          fieldDisplayedName="Title"
+          fieldDisplayedName="Titre du produit"
+          instructions="Entre 1 et 100 caractères"
           value={title}
           type="text"
           placeholder="Veuillez saisir un titre"
-          required={false}
+          required={true}
           search={false}
           edit
           onChange={handleChangeField('title')}
         />
         <div className="descriptionfield">
           <label className="mediafield--inputlabel">Description</label>
+          <p className="field__instructions">(Entre 1 et 2000 caractères)</p>
           <textarea
             name="description"
             rows={5}
@@ -93,7 +122,9 @@ function AddProductForm({ changeField }: Props) {
           />
         </div>
         <Field
-          fieldDisplayedName="Price"
+          fieldDisplayedName="Prix"
+          instructions="Laissez 0 pour proposer votre produit en don.
+          Max 1000€"
           value={price}
           type="number"
           placeholder="0"
@@ -131,6 +162,16 @@ function AddProductForm({ changeField }: Props) {
             />
           </label>
         </div>
+        {errorMsg && (
+          <div className="msgBox">
+            {errorMsg.map((errorMsg) => (
+              <p key={errorMsg} className="errorMsg">
+                <X size={15} className="errorMsg--icon" />
+                <span className="errorMsg--text">{errorMsg}</span>
+              </p>
+            ))}
+          </div>
+        )}
         <button type="submit" className="button-orange-simple">
           VALIDER
         </button>

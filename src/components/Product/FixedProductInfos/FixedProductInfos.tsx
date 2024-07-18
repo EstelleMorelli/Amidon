@@ -25,7 +25,7 @@ function FixedProductInfos({ product, medias }: Props) {
   );
   return (
     <div className="fixedproductinfos">
-      {medias[0] && (
+      {medias.length !== 0 && (
         <img
           className="product--picture__main"
           key={medias[0].url}
@@ -34,13 +34,12 @@ function FixedProductInfos({ product, medias }: Props) {
         />
       )}
       <div className="product--pictures">
-        {medias.slice(1) &&
+        {medias.slice(1).length !== 0 &&
           medias.slice(1).map((picture) => (
             <button
               className="product--pictures__item"
               type="button"
               key={picture.url}
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               onClick={() => handlePictureZoom(picture.url!)}
             >
               <img

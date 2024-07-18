@@ -20,6 +20,7 @@ function SelfProfil() {
   const [followerToDelete, setFollowerToDelete] = useState(0);
   const [modalName, setModalName] = useState('');
   const [selectedFollower, setSelectedFollower] = useState<null | number>(null);
+
   const connectedUser = useAppSelector(
     (state) => state.userReducer.connectedUser
   );

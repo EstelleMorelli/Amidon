@@ -20,7 +20,8 @@ const deleteFollower = createAsyncThunk(
 
       // }
       return (
-        thunkAPI.dispatch(getFollowers()), thunkAPI.dispatch(getSelfProducts())
+        await thunkAPI.dispatch(getFollowers()),
+        await thunkAPI.dispatch(getSelfProducts())
       );
     } catch (err: any) {
       const result: string | string[] = err.response.data.errors;

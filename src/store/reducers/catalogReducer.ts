@@ -65,6 +65,10 @@ export const actionResetCurrentProductState = createAction(
   'catalog/RESET_CURRENT_PRODUCT'
 );
 
+export const actionErrorLastPictureDeleteMessage = createAction(
+  'catalog/ERR_PICTURE_DELETE'
+);
+
 const catalogReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actionResetCurrentProductState, (state) => {
@@ -89,6 +93,11 @@ const catalogReducer = createReducer(initialState, (builder) => {
       state.followers = action.payload;
       state.actionMessage = '';
     })
+    .addCase(actionErrorLastPictureDeleteMessage, (state) => {
+      state.errorMsg.push(
+        "Vous ne pouvez pas supprimer l'unique photo de votre produit, ajoutez en une nouvelle avant de supprimer celle-ci"
+      );
+    })
     .addCase(bookAProduct.fulfilled, (state, action) => {
       if (action.payload) {
         state.currentProduct.booker = action.payload;
@@ -100,29 +109,111 @@ const catalogReducer = createReducer(initialState, (builder) => {
       }
     })
     .addCase(updateProduct.fulfilled, (state, action) => {
-      state.actionMessage =
-        'Les informations du produit ont été modifiées avec succès';
-      console.log(action.payload);
+      console.log('Action updateProduct fullfilled');
+      state.errorMsg = [];
+      state.okMsg = [];
+      state.okMsg.push(
+        'Les informations du produit ont été modifiées avec succès'
+      );
+    })
+    .addCase(updateProduct.pending, () => {
+      console.log('Action updateProduct pending');
+    })
+    .addCase(updateProduct.rejected, (state, action) => {
+      console.log('Action updateProduct rejected');
+      const response = action.payload;
+      // On vide le msg du state au cas où ce n'est pas la 1ère fois que la requête est rejected
+      state.errorMsg = [];
+      state.okMsg = [];
+      // Si la ou les erreurs sont bien parmi celles définies dans l'API, on rempli le tableau msg du state avec les erreurs
+      if (typeof response === 'string') {
+        state.errorMsg.push(response);
+      }
+      // Sinon, si le tableau d'erreur existe, on stocke ses valeurs dans state.msg
+      else if (response) {
+        const responseArray = Object.values(response);
+        responseArray.map((error: string) => {
+          state.errorMsg.push(error);
+        });
+      }
+      // Sinon, on rempli msg du state avec un message générique
+      else {
+        state.errorMsg.push('Échec de la recherche de donneur.');
+      }
     })
     .addCase(deleteProductPicture.fulfilled, (state) => {
       state.actionMessage = 'La photo du produit a bien été supprimée';
     })
-    .addCase(addProduct.fulfilled, (state, action) => {
-      state.actionMessage = action.payload.message;
+    .addCase(addProduct.fulfilled, (state) => {
+      console.log('Action addProduct fullfilled');
       state.currentProduct.description = '';
       state.currentProduct.title = '';
       state.currentProduct.media = [{ url: '' }];
       state.currentProduct.price = 0;
+      state.errorMsg = [];
+      state.okMsg.push('Le produit a bien été ajouté');
+    })
+    .addCase(addProduct.pending, () => {
+      console.log('Action addProduct pending');
+    })
+    .addCase(addProduct.rejected, (state, action) => {
+      console.log('Action addProduct rejected');
+      const response = action.payload;
+      // On vide le msg du state au cas où ce n'est pas la 1ère fois que la requête est rejected
+      state.errorMsg = [];
+      // Si la ou les erreurs sont bien parmi celles définies dans l'API, on rempli le tableau msg du state avec les erreurs
+      if (typeof response === 'string') {
+        state.errorMsg.push(response);
+      }
+      // Sinon, si le tableau d'erreur existe, on stocke ses valeurs dans state.msg
+      else if (response) {
+        const responseArray = Object.values(response);
+        responseArray.map((error: string) => {
+          state.errorMsg.push(error);
+        });
+      }
+      // Sinon, on rempli msg du state avec un message générique
+      else {
+        state.errorMsg.push('Échec de la recherche de donneur.');
+      }
     })
     .addCase(actionChangeProductStateInfo, (state, action) => {
       state.currentProduct[action.payload.fieldName] = action.payload.newValue;
     })
     .addCase(deleteProduct.fulfilled, (state, action) => {
+      console.log('Action deleteProduct fullfilled');
       state.currentProduct.description = '';
       state.currentProduct.title = '';
       state.currentProduct.media = [{ url: '' }];
       state.currentProduct.price = 0;
+      state.errorMsg = [];
+      state.okMsg = [];
       // state.actionMessage = action.payload.message;
+    })
+    .addCase(deleteProduct.pending, () => {
+      console.log('Action deleteProduct pending');
+    })
+    .addCase(deleteProduct.rejected, (state, action) => {
+      console.log('Action deleteProduct rejected');
+      const response = action.payload;
+      // On vide le msg du state au cas où ce n'est pas la 1ère fois que la requête est rejected
+      state.errorMsg = [];
+      state.okMsg = [];
+      // Si la ou les erreurs sont bien parmi celles définies dans l'API, on rempli le tableau msg du state avec les erreurs
+      if (typeof response === 'string') {
+        state.errorMsg.push(response);
+      }
+      // Sinon, si le tableau d'erreur existe, on stocke ses valeurs dans state.msg
+      else if (response) {
+        const responseArray = Object.values(response);
+        responseArray.map((error: string) => {
+          state.errorMsg.push(error);
+        });
+      }
+      // Sinon, on rempli msg du state avec un message générique
+      else {
+        state.errorMsg.push('Échec de la recherche de donneur.');
+      }
     })
     .addCase(deleteFollower.fulfilled, (state) => {
       console.log('Action deleteFollower fullfilled');

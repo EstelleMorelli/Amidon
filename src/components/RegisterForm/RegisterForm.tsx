@@ -105,6 +105,7 @@ function RegisterForm({ changeField }: LoginFormProps) {
         <div className="registerform__desktop-flexbox">
           <Field
             fieldDisplayedName="Nom"
+            instructions="Entre 2 et 50 caractères"
             type="text"
             placeholder="Merci de saisir votre nom de famille"
             value={lastname}
@@ -115,6 +116,7 @@ function RegisterForm({ changeField }: LoginFormProps) {
           />
           <Field
             fieldDisplayedName="Prénom"
+            instructions="Entre 2 et 50 caractères"
             type="text"
             placeholder="Votre prénom"
             value={firstname}
@@ -154,6 +156,7 @@ function RegisterForm({ changeField }: LoginFormProps) {
 
           <Field
             fieldDisplayedName="Mot de passe"
+            instructions="Minimum 8 caractères dont 1 majuscule et 1 caractère spécial"
             type="password"
             placeholder="Saisir un mot de passe"
             onChange={handleChangeField('password')}
@@ -164,6 +167,7 @@ function RegisterForm({ changeField }: LoginFormProps) {
           />
           <Field
             fieldDisplayedName="Confirmation du mot de passe"
+            instructions="Minimum 8 caractères dont 1 majuscule et 1 caractère spécial"
             type="password"
             placeholder="Merci de confirmer le mot de passe saisi"
             onChange={setPasswordCheck}

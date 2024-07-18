@@ -20,17 +20,16 @@
     justify-content: space-between;
     align-items: center;
     transition: background-color 0.3s ease;
+  }
+  &:hover {
+    background-color: #ecf0f1;
+  }
 
-    &:hover {
-      background-color: #ecf0f1;
-    }
-
-    .triangle-icon {
-      transition: transform 0.3s ease;
-      transform: rotate(90deg); // Position par défaut à 90°
-      &.open {
-        transform: rotate(180deg); // Position ouverte à 180°
-      }
+  .triangle-icon {
+    transition: transform 0.3s ease;
+    transform: rotate(90deg); // Position par défaut à 90°
+    &.open {
+      transform: rotate(180deg); // Position ouverte à 180°
     }
   }
 

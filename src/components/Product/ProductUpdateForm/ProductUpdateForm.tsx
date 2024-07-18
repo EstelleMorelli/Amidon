@@ -1,11 +1,12 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { X } from 'react-feather';
+import { Check, X } from 'react-feather';
 import Field from '../../Field/Field';
 import './ProductUpdateForm.scss';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks-redux';
 import updateProduct from '../../../store/middlewares/updateProduct';
 import { baseProductPictureURL } from '../../../utils/data';
 import {
+  actionEmptyImage64,
   actionOpenPictureZoom,
   actionResetAppReducer,
 } from '../../../store/reducers/appReducer';
@@ -13,10 +14,12 @@ import PictureZoom from '../../PictureZoomModal/PictureZoomModal';
 
 import deleteProductPicture from '../../../store/middlewares/deleteProductPicture';
 import convertBase64 from '../../../store/middlewares/convertBase64';
-import addProduct from '../../../store/middlewares/addProduct';
-import { useNavigate } from 'react-router-dom';
 import getProductDetail from '../../../store/middlewares/getProductDetail';
-import { actionResetCurrentProductState } from '../../../store/reducers/catalogReducer';
+import {
+  actionEmptyCatalogMsg,
+  actionErrorLastPictureDeleteMessage,
+  actionResetCurrentProductState,
+} from '../../../store/reducers/catalogReducer';
 
 interface Props {
   changeField: (value: string, name: 'title' | 'price' | 'description') => void;
@@ -28,15 +31,19 @@ interface Props {
 function ProductUpdateForm({ changeField, productId, medias }: Props) {
   // stock dans une variable dispatch le Hook useAppDispatch() (version typée du hook useDispatch() de redux) -> C'est ce qui envoie une action au store et exécute le reducer avec l'info de cette action à faire
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(actionEmptyCatalogMsg());
+    dispatch(actionEmptyImage64());
+  }, []);
+
+  const errorMsg = useAppSelector((state) => state.catalogReducer.errorMsg);
+  const okMsg = useAppSelector((state) => state.catalogReducer.okMsg);
+
   const [picturesList, setPicturesList] = useState(['']);
-  const [mediasToDisplay, setMediasToDisplay] = useState(medias);
   useEffect(() => {
     dispatch(getProductDetail(productId));
   }, []);
-  useEffect(() => {
-    setMediasToDisplay(medias);
-  }, [medias]);
   const description = useAppSelector(
     (state) => state.catalogReducer.currentProduct.description
   );
@@ -65,10 +72,16 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
   const currentPictureForZoom = useAppSelector(
     (state) => state.appReducer.pictureZoom.currentPicture
   );
+  const actionMessage = useAppSelector(
+    (state) => state.catalogReducer.actionMessage
+  );
   const handlePictureDelete = (urlToRemove: string) => {
-    dispatch(deleteProductPicture({ id: productId, url: urlToRemove }));
-    dispatch(actionResetCurrentProductState());
-    dispatch(getProductDetail(productId));
+    if (medias.slice(1).length === 0) {
+      dispatch(actionErrorLastPictureDeleteMessage());
+    } else {
+      dispatch(deleteProductPicture({ id: productId, url: urlToRemove }));
+      dispatch(actionResetCurrentProductState());
+    }
   };
   const handleNewPicture = (event: ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files[0]) {
@@ -96,28 +109,29 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
 
   return (
     <div className="productupdateform">
-      {mediasToDisplay[0].url && (
+      {medias.length !== 0 && (
         <div className="mainpicture__wrapper">
           <button
             type="button"
+            data-url={medias[0].url}
             className="deleteImageButton"
             onClick={() => {
-              handlePictureDelete(mediasToDisplay[0].url!);
+              handlePictureDelete(medias[0].url!);
             }}
           >
             <X />
           </button>
           <img
             className="product--picture__main"
-            key={mediasToDisplay[0].url}
+            key={medias[0].url}
             src={`${baseProductPictureURL}/${medias[0].url}`}
             alt=""
           />
         </div>
       )}
       <div className="product--pictures">
-        {mediasToDisplay.slice(1) &&
-          mediasToDisplay.slice(1).map((picture) => (
+        {medias.slice(1).length !== 0 &&
+          medias.slice(1).map((picture) => (
             <div key={picture.url} className="product--picture__wrapper">
               <button
                 type="button"
@@ -145,9 +159,21 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
           ))}
       </div>
       {isPictureZoomOpen && <PictureZoom picture={currentPictureForZoom} />}
+      {actionMessage && <p style={{ color: 'green' }}> {actionMessage} </p>}
+      {errorMsg && (
+        <div className="msgBox">
+          {errorMsg.map((errorMsg) => (
+            <p key={errorMsg} className="errorMsg">
+              <X size={15} className="errorMsg--icon" />
+              <span className="errorMsg--text">{errorMsg}</span>
+            </p>
+          ))}
+        </div>
+      )}
       <form className="form-full" onSubmit={handleSubmitUpdateProduct}>
         <Field
           fieldDisplayedName="Titre de l'annonce"
+          instructions="Entre 1 et 100 caractères"
           type="text"
           onChange={handleChangeField('title')}
           placeholder=""
@@ -158,11 +184,13 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
         />
         <Field
           fieldDisplayedName="Prix proposé (privilégier les dons !)"
+          instructions="Laissez 0 pour proposer votre produit en don. 
+          Max 1000€"
           type="text"
           onChange={handleChangeField('price')}
           placeholder=""
           value={price}
-          required={false}
+          required
           search={false}
           edit
           // TBC s'il faudra mettre true ou si ça marche tout seul car la BDD met 0 par défaut si null, au cas où l'utilisateur supprime le zéro mis par défaut
@@ -171,6 +199,7 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
           <label htmlFor="description">
             <span>Description :</span>
           </label>
+          <p className="field__instructions">(Entre 1 et 2000 caractères)</p>
           <textarea
             id="description"
             name="description"
@@ -191,7 +220,16 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
           onChange={handleNewPicture}
           accept=".bmp, .jpeg, .jpg, .png, .svg, .webp, .avif"
         />
-
+        {okMsg && (
+          <div className="msgBox">
+            {okMsg.map((okMsg) => (
+              <p key={okMsg} className="okMsg">
+                <Check size={15} className="okMsg--icon" />
+                <span className="okMsg--text">{okMsg}</span>
+              </p>
+            ))}
+          </div>
+        )}
         <button type="submit">Valider les modifications</button>
       </form>
     </div>
