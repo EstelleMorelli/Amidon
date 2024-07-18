@@ -96,14 +96,13 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
 
   return (
     <div className="productupdateform">
-      {mediasToDisplay[0] && (
+      {mediasToDisplay[0].url && (
         <div className="mainpicture__wrapper">
           <button
             type="button"
-            data-url={mediasToDisplay[0].url}
             className="deleteImageButton"
             onClick={() => {
-              handlePictureDelete(mediasToDisplay[0].url);
+              handlePictureDelete(mediasToDisplay[0].url!);
             }}
           >
             <X />
@@ -117,7 +116,7 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
         </div>
       )}
       <div className="product--pictures">
-        {mediasToDisplay &&
+        {mediasToDisplay.slice(1) &&
           mediasToDisplay.slice(1).map((picture) => (
             <div key={picture.url} className="product--picture__wrapper">
               <button
@@ -125,7 +124,7 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
                 data-url={picture.url}
                 className="deleteImageButton"
                 onClick={(event) => {
-                  handlePictureDelete(event.currentTarget.dataset.url);
+                  handlePictureDelete(event.currentTarget.dataset.url!);
                 }}
               >
                 <X />
@@ -134,7 +133,7 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
                 className="product--pictures__item"
                 type="button"
                 key={picture.url}
-                onClick={() => handlePictureZoom(picture.url)}
+                onClick={() => handlePictureZoom(picture.url!)}
               >
                 <img
                   src={`${baseProductPictureURL}/${picture.url}`}

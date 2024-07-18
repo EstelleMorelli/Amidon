@@ -34,13 +34,14 @@ function FixedProductInfos({ product, medias }: Props) {
         />
       )}
       <div className="product--pictures">
-        {medias &&
+        {medias.slice(1) &&
           medias.slice(1).map((picture) => (
             <button
               className="product--pictures__item"
               type="button"
               key={picture.url}
-              onClick={() => handlePictureZoom(picture.url)}
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              onClick={() => handlePictureZoom(picture.url!)}
             >
               <img
                 src={`${baseProductPictureURL}/${picture.url}`}

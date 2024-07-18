@@ -121,7 +121,6 @@ function Product({ changeField }: Props) {
       )}
       {isWarningMessage && (
         <DeleteWarningMessage
-          setIsWarningMessage={setIsWarningMessage}
           description="supprimer ce produit"
           deleteAction={deleteProduct}
           actionParam={idNumber}
