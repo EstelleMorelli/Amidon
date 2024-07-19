@@ -82,7 +82,6 @@ function ProductCatalog() {
   const isWarningMessage = useAppSelector(
     (state) => state.appReducer.isWarningMessage
   );
-
   return (
     <div className="productcatalog">
       {errorMsg && (

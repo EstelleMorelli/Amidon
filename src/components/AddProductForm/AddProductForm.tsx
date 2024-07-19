@@ -20,6 +20,7 @@ interface Props {
 }
 
 function AddProductForm({ changeField }: Props) {
+  // stock dans une variable dispatch le Hook useAppDispatch() (version typée du hook useDispatch() de redux) -> C'est ce qui envoie une action au store et exécute le reducer avec l'info de cette action à faire
   const dispatch = useAppDispatch();
 
   useEffect(() => {

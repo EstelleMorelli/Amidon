@@ -76,8 +76,7 @@ function SelfInfos({ changeField }: SelfInfosFormProps) {
             edit={true}
           ></Field>
         </div>
-
-        <p className="selfinfos__description">
+        <div className="selfinfos__description">
           <label htmlFor="description">
             <span className="selfinfos__description--title">Description :</span>
           </label>
@@ -93,7 +92,7 @@ function SelfInfos({ changeField }: SelfInfosFormProps) {
           <span className="selfinfos__description--icon">
             <Edit />
           </span>
-        </p>
+        </div>
         <button className="button-orange-simple" type="submit">
           Modifier les informations
         </button>

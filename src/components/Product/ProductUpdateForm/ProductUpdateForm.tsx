@@ -11,7 +11,6 @@ import {
   actionResetAppReducer,
 } from '../../../store/reducers/appReducer';
 import PictureZoom from '../../PictureZoomModal/PictureZoomModal';
-
 import deleteProductPicture from '../../../store/middlewares/deleteProductPicture';
 import convertBase64 from '../../../store/middlewares/convertBase64';
 import getProductDetail from '../../../store/middlewares/getProductDetail';
@@ -182,6 +181,20 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
           search={false}
           edit
         />
+
+        <div>
+          <label htmlFor="description">
+            <span>Description :</span>
+          </label>
+          <p className="field__instructions">(Entre 1 et 2000 caractères)</p>
+          <textarea
+            id="description"
+            name="description"
+            rows={5}
+            value={description}
+            onChange={handleChangeDescriptionField}
+          />
+        </div>
         <Field
           fieldDisplayedName="Prix proposé (privilégier les dons !)"
           instructions="Laissez 0 pour proposer votre produit en don. 
@@ -195,31 +208,31 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
           edit
           // TBC s'il faudra mettre true ou si ça marche tout seul car la BDD met 0 par défaut si null, au cas où l'utilisateur supprime le zéro mis par défaut
         />
-        <p>
-          <label htmlFor="description">
-            <span>Description :</span>
+        <div className="mediafield">
+          <label className="mediafield--inputlabel">Photo(s)</label>
+          <ul
+            style={{ listStyleType: 'none', textAlign: 'center', padding: '0' }}
+          >
+            {picturesList.map((picture) => (
+              <li key={picture}>{picture}</li>
+            ))}
+          </ul>
+          <label
+            htmlFor="file-upload"
+            className="mediafield--filefakeinput button-orange-simple"
+          >
+            Cliquer pour télécharger votre photo
+            <input
+              id="file-upload"
+              className="mediafield--fileinput"
+              type="file"
+              placeholder=""
+              required={false}
+              onChange={handleNewPicture}
+              accept=".bmp, .jpeg, .jpg, .png, .svg, .webp, .avif"
+            />
           </label>
-          <p className="field__instructions">(Entre 1 et 2000 caractères)</p>
-          <textarea
-            id="description"
-            name="description"
-            rows={5}
-            value={description}
-            onChange={handleChangeDescriptionField}
-          />
-        </p>
-        <ul style={{ listStyleType: 'none', textAlign: 'left' }}>
-          {picturesList.map((picture) => (
-            <li key={picture}>{picture}</li>
-          ))}
-        </ul>
-        <input
-          type="file"
-          placeholder=""
-          required={false}
-          onChange={handleNewPicture}
-          accept=".bmp, .jpeg, .jpg, .png, .svg, .webp, .avif"
-        />
+        </div>
         {okMsg && (
           <div className="msgBox">
             {okMsg.map((okMsg) => (
@@ -230,7 +243,20 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
             ))}
           </div>
         )}
-        <button type="submit">Valider les modifications</button>
+        {errorMsg && (
+          <div className="msgBox">
+            {errorMsg.map((errorMsg) => (
+              <p key={errorMsg} className="errorMsg">
+                <X size={15} className="errorMsg--icon" />
+                <span className="errorMsg--text">{errorMsg}</span>
+              </p>
+            ))}
+          </div>
+        )}
+        <button type="submit" className="button-orange-simple">
+          Valider les modifications
+        </button>
+
       </form>
     </div>
   );

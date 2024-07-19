@@ -37,22 +37,22 @@ function Presentation() {
               ajouter vos amis grâce à leurs codes donneur et réserver
               facilement les objets dont ils se séparent.
             </p>
+            <div className="presentation__links">
+              <Link
+                to="/connexion"
+                className="button-orange-simple presentation__links--button"
+              >
+                Se connecter
+              </Link>
+              <Link
+                to="/inscription"
+                className="button-orange-simple presentation__links--button"
+              >
+                S'inscrire
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="presentation__links">
-        <Link
-          to="/connexion"
-          className="button-orange-simple presentation__links--button"
-        >
-          Se connecter
-        </Link>
-        <Link
-          to="/inscription"
-          className="button-orange-simple presentation__links--button"
-        >
-          S'inscrire
-        </Link>
       </div>
     </div>
   );

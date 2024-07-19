@@ -37,7 +37,9 @@
   justify-content: space-around;
   margin: auto;
   &__picture {
-    max-width: 6rem;
+    width: 7rem;
+    height: 7rem;
+    object-fit: cover;
     text-align: center;
     padding: 0.5rem;
     border-radius: 50%;

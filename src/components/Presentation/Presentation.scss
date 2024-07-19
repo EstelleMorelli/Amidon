@@ -1,12 +1,19 @@
 @use '../../styles/variables' as v;
 
 .presentation {
+  @media (min-width: 576px) {
+    width: 60vw;
+    margin: auto;
+  }
+
   &__intro {
+    margin-bottom: 1em;
+
     @media (min-width: 576px) {
       display: flex;
       align-items: center;
-      width: 80vw;
-      margin: auto;
+      width: 55vw;
+      margin: 0 auto 1em;
     }
 
     &--logoface {
@@ -20,13 +27,17 @@
     }
 
     &--logotext {
-      width: 50vw;
+      width: 35vw;
       margin: 2rem auto 1rem;
     }
 
     &--text {
       text-align: center;
       font-size: 0.9em;
+
+      @media (min-width: 576px) {
+        font-size: 1.2em;
+      }
 
       & p {
         margin-top: 0.7rem;
@@ -52,6 +63,11 @@
       margin: 0 0.5rem;
       width: 40vw;
       font-size: 0.8em;
+
+      @media (min-width: 576px) {
+        font-size: 1em;
+        width: 40%;
+      }
     }
   }
 }

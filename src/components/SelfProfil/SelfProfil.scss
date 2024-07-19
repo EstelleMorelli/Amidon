@@ -129,19 +129,6 @@
   }
 }
 
-.friendfilterbutton {
-  border-radius: 5rem;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  border: none;
-  &--active {
-    background-color: v.$color-bg;
-    color: v.$color-main-orange;
-    box-shadow: inset 5px 5px 10px 0px grey;
-  }
-}
-
 .booker-picture {
   border-radius: 50%;
   position: absolute;
