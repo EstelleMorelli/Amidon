@@ -27,7 +27,7 @@ function Presentation() {
             <p>
               <span>Vous déménagez ou changez de déco ?</span> <br />
               Pas besoin d'envoyer des photos de vos objets à tous vos groupes.
-              Créer un compte, ajouter vos objets et partager votre code donneur
+              Créez un compte, ajoutez vos objets et partagez votre code donneur
               avec vos amis. Ils pourront facilement voir vos dons et faire des
               réservations.
             </p>
