@@ -16,11 +16,18 @@
   border-radius: 1rem;
   box-shadow: 5px 5px 10px 0px grey;
 
+  @media (min-width: 576px) and (max-width: 949px) {
+    width: 65vw;
+  }
+
+  @media (min-width: 949px) {
+    width: 60vw;
+  }
+
   @media (min-width: 576px) {
     // TODO : aligner la nav vs le header de façon pas définie au visuel
     top: 0;
-    left: calc(25vw + 1rem);
-    width: 70vw;
+    left: calc(20vw + 1.5rem);
     box-shadow: none;
     background-color: transparent;
     padding: 1.5rem 0;
@@ -32,8 +39,12 @@
 
   &__item {
     @media (min-width: 576px) {
-      font-size: calc(0.3em + 1.2vw);
+      font-size: calc(0.3em + 1vw);
       display: block;
+
+      &.active {
+        transform: scale(0.96);
+      }
     }
 
     &.volumebutton {

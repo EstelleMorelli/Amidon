@@ -1,1 +1,39 @@
 @use '../../styles/variables' as v;
+
+.addproductpage {
+  margin: auto;
+  @media (min-width: 576px) {
+    margin-top: 1rem;
+  }
+}
+
+.addproductform {
+  width: 90vw;
+
+  @media (min-width: 576px) {
+    width: 40rem;
+    font-size: 0.9rem;
+  }
+  @media (min-width: 576px) and (max-width: 950px) {
+    width: 33rem;
+  }
+
+  &.form-full {
+    margin: 1em 0;
+  }
+
+  & button {
+    display: block;
+    margin: 0.5rem auto 0;
+  }
+}
+
+.descriptionfield {
+  font-size: 3vw;
+  width: 90%;
+  margin: auto;
+
+  @media (min-width: 576px) {
+    font-size: 1em;
+  }
+}

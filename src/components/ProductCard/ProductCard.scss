@@ -58,6 +58,14 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     width: calc(100%);
+
+    @media (min-width: 576px) and (max-width: 950px) {
+      font-size: 0.8rem;
+    }
+
+    @media (min-width: 950px) {
+      font-size: 1rem;
+    }
   }
 
   &--arc {

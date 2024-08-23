@@ -5,9 +5,12 @@ import Field from '../Field/Field';
 import { useAppDispatch, useAppSelector } from '../../store/hooks-redux';
 import register from '../../store/middlewares/register';
 import convertBase64 from '../../store/middlewares/convertBase64';
-import { actionChangeUserStateInfo } from '../../store/reducers/userReducer';
-import { baseUserPictureURL } from '../../utils/data';
+import {
+  actionChangeUserStateInfo,
+  actionEmptyUserMsg,
+} from '../../store/reducers/userReducer';
 import { actionEmptyImage64 } from '../../store/reducers/appReducer';
+import { X } from 'react-feather';
 
 interface LoginFormProps {
   changeField: (
@@ -26,6 +29,7 @@ function RegisterForm({ changeField }: LoginFormProps) {
     dispatch(
       actionChangeUserStateInfo({ newValue: '', fieldName: 'password' })
     );
+    dispatch(actionEmptyUserMsg());
   }, []);
 
   // Fonction qui va mettre à jour le state avec les infos rentrées par l'utilisateur dans les champs, en live
@@ -49,7 +53,7 @@ function RegisterForm({ changeField }: LoginFormProps) {
     (state) => state.userReducer.connectedUser.lastname
   );
 
-  const msg = useAppSelector((state) => state.userReducer.msg);
+  const errorMsg = useAppSelector((state) => state.userReducer.errorMsg);
   const logged = useAppSelector((state) => state.userReducer.logged);
 
   // On créer un state local pour le check de password car pas besoin ailleur
@@ -101,6 +105,7 @@ function RegisterForm({ changeField }: LoginFormProps) {
         <div className="registerform__desktop-flexbox">
           <Field
             fieldDisplayedName="Nom"
+            instructions="Entre 2 et 50 caractères"
             type="text"
             placeholder="Merci de saisir votre nom de famille"
             value={lastname}
@@ -111,6 +116,7 @@ function RegisterForm({ changeField }: LoginFormProps) {
           />
           <Field
             fieldDisplayedName="Prénom"
+            instructions="Entre 2 et 50 caractères"
             type="text"
             placeholder="Votre prénom"
             value={firstname}
@@ -143,13 +149,14 @@ function RegisterForm({ changeField }: LoginFormProps) {
                 placeholder=""
                 required={false}
                 onChange={handleChangePictureField}
-                accept="image/*"
+                accept=".bmp, .jpeg, .jpg, .png, .svg, .webp, .avif"
               />
             </label>
           </div>
 
           <Field
             fieldDisplayedName="Mot de passe"
+            instructions="Minimum 8 caractères dont 1 majuscule et 1 caractère spécial"
             type="password"
             placeholder="Saisir un mot de passe"
             onChange={handleChangeField('password')}
@@ -160,6 +167,7 @@ function RegisterForm({ changeField }: LoginFormProps) {
           />
           <Field
             fieldDisplayedName="Confirmation du mot de passe"
+            instructions="Minimum 8 caractères dont 1 majuscule et 1 caractère spécial"
             type="password"
             placeholder="Merci de confirmer le mot de passe saisi"
             onChange={setPasswordCheck}
@@ -171,9 +179,21 @@ function RegisterForm({ changeField }: LoginFormProps) {
         </div>
 
         {passwordFitErrorMsg && (
-          <p className="errorMsg">{passwordFitErrorMsg}</p>
+          <p className="errorMsg">
+            <X size={15} className="errorMsg--icon" />{' '}
+            <span className="errorMsg--text">{passwordFitErrorMsg}</span>
+          </p>
         )}
-        {msg && <p className="errorMsg">{msg}</p>}
+        {errorMsg && (
+          <div className="msgBox">
+            {errorMsg.map((errorMsg) => (
+              <p key={errorMsg} className="errorMsg">
+                <X size={15} className="errorMsg--icon" />
+                <span className="errorMsg--text">{errorMsg}</span>
+              </p>
+            ))}
+          </div>
+        )}
 
         {/* Masquage de la fonctionnalité "rester connecté" */}
         {/* <p className="registerform__stayconnected">
@@ -192,7 +212,7 @@ function RegisterForm({ changeField }: LoginFormProps) {
         </button>
       </form>
 
-      <Link to="/connexion" className="loginlink">
+      <Link to="/connexion" className="link">
         J&#39;ai déjà un compte
       </Link>
     </div>

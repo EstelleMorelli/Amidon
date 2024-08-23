@@ -1,21 +1,42 @@
 import './AddProductForm.scss';
 import { useNavigate } from 'react-router-dom';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import Field from '../Field/Field';
 import { useAppSelector, useAppDispatch } from '../../store/hooks-redux';
 import addProduct from '../../store/middlewares/addProduct';
 import convertBase64 from '../../store/middlewares/convertBase64';
-import { actionResetCurrentProductState } from '../../store/reducers/catalogReducer';
-import { actionResetAppReducer } from '../../store/reducers/appReducer';
+import {
+  actionEmptyCatalogMsg,
+  actionResetCurrentProductState,
+} from '../../store/reducers/catalogReducer';
+import {
+  actionEmptyImage64,
+  actionResetAppReducer,
+} from '../../store/reducers/appReducer';
+import { X } from 'react-feather';
 
 interface Props {
   changeField: (value: string, name: 'title' | 'price' | 'description') => void;
 }
 
 function AddProductForm({ changeField }: Props) {
+  // stock dans une variable dispatch le Hook useAppDispatch() (version typée du hook useDispatch() de redux) -> C'est ce qui envoie une action au store et exécute le reducer avec l'info de cette action à faire
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(actionEmptyCatalogMsg());
+    dispatch(actionEmptyImage64());
+  }, []);
+
+  const errorMsg = useAppSelector((state) => state.catalogReducer.errorMsg);
+  const okMsg = useAppSelector((state) => state.catalogReducer.okMsg);
+
   const navigate = useNavigate();
+
   const [picturesList, setPicturesList] = useState(['']);
+  useEffect(() => {
+    dispatch(actionResetCurrentProductState());
+  }, []);
   const description = useAppSelector(
     (state) => state.catalogReducer.currentProduct.description
   );
@@ -53,8 +74,18 @@ function AddProductForm({ changeField }: Props) {
     setPicturesList(['']);
     dispatch(addProduct(newProductInfos));
     dispatch(actionResetAppReducer());
-    navigate('/mon_profil');
   };
+
+  // On crée un élément "fixe" qui ne se redéclenche pas au rechargement des composants
+  const renderCount = useRef(0);
+  renderCount.current += 1;
+
+  // On ne fait la redirection que si le msgOk (venant du fulfilled) n'est pas vide
+  useEffect(() => {
+    if (renderCount.current > 2) {
+      navigate('/mon_profil');
+    }
+  }, [okMsg]);
 
   const handleNewPicture = (event: ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files[0]) {
@@ -63,28 +94,38 @@ function AddProductForm({ changeField }: Props) {
     }
   };
   return (
-    <div className="addproductform">
+    <div className="addproductpage">
       <h1> Ajouter un produit </h1>
-      <form className="form-full" onSubmit={handleSubmitAddProduct}>
+      <form
+        className="addproductform form-full"
+        onSubmit={handleSubmitAddProduct}
+      >
         <Field
-          fieldDisplayedName="Title"
+          fieldDisplayedName="Titre du produit"
+          instructions="Entre 1 et 100 caractères"
           value={title}
           type="text"
           placeholder="Veuillez saisir un titre"
-          required={false}
+          required={true}
           search={false}
           edit
           onChange={handleChangeField('title')}
         />
-        <textarea
-          name="description"
-          rows={5}
-          placeholder="Veuillez saisir une description de votre objet et décrire son état."
-          required
-          onChange={handleChangeDescriptionField}
-        />
+        <div className="descriptionfield">
+          <label className="mediafield--inputlabel">Description</label>
+          <p className="field__instructions">(Entre 1 et 2000 caractères)</p>
+          <textarea
+            name="description"
+            rows={5}
+            placeholder="Veuillez saisir une description de votre objet et décrire son état."
+            required
+            onChange={handleChangeDescriptionField}
+          />
+        </div>
         <Field
-          fieldDisplayedName="Price"
+          fieldDisplayedName="Prix"
+          instructions="Laissez 0 pour proposer votre produit en don.
+          Max 1000€"
           value={price}
           type="number"
           placeholder="0"
@@ -93,19 +134,45 @@ function AddProductForm({ changeField }: Props) {
           edit
           onChange={handleChangeField('price')}
         />
-        <ul style={{ listStyleType: 'none', textAlign: 'left' }}>
-          {picturesList.map((picture) => (
-            <li key={picture}>{picture}</li>
-          ))}
-        </ul>
-        <input
-          type="file"
-          placeholder=""
-          required={false}
-          onChange={handleNewPicture}
-          accept=".bmp, .jpeg, .jpg, .png, .svg, .webp, .avif"
-        />
-
+        <div className="mediafield">
+          <label className="mediafield--inputlabel">Photo(s)</label>
+          <ul
+            style={{
+              listStyleType: 'none',
+              textAlign: 'center',
+              padding: '0',
+            }}
+          >
+            {picturesList.map((picture) => (
+              <li key={picture}>{picture}</li>
+            ))}
+          </ul>
+          <label
+            htmlFor="file-upload"
+            className="mediafield--filefakeinput button-orange-simple"
+          >
+            Cliquer pour télécharger votre photo
+            <input
+              id="file-upload"
+              className="mediafield--fileinput"
+              type="file"
+              placeholder=""
+              required={false}
+              onChange={handleNewPicture}
+              accept=".bmp, .jpeg, .jpg, .png, .svg, .webp, .avif"
+            />
+          </label>
+        </div>
+        {errorMsg && (
+          <div className="msgBox">
+            {errorMsg.map((errorMsg) => (
+              <p key={errorMsg} className="errorMsg">
+                <X size={15} className="errorMsg--icon" />
+                <span className="errorMsg--text">{errorMsg}</span>
+              </p>
+            ))}
+          </div>
+        )}
         <button type="submit" className="button-orange-simple">
           VALIDER
         </button>

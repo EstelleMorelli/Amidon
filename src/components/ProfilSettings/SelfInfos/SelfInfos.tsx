@@ -52,6 +52,7 @@ function SelfInfos({ changeField }: SelfInfosFormProps) {
         <div>
           <Field
             fieldDisplayedName="Prénom"
+            instructions="Entre 2 et 50 caractères"
             type="text"
             placeholder=""
             value={firstname}
@@ -65,6 +66,7 @@ function SelfInfos({ changeField }: SelfInfosFormProps) {
         <div>
           <Field
             fieldDisplayedName="Nom"
+            instructions="Entre 2 et 50 caractères"
             type="text"
             placeholder=""
             value={lastname}
@@ -74,11 +76,11 @@ function SelfInfos({ changeField }: SelfInfosFormProps) {
             edit={true}
           ></Field>
         </div>
-
-        <p className="selfinfos__description">
+        <div className="selfinfos__description">
           <label htmlFor="description">
             <span className="selfinfos__description--title">Description :</span>
           </label>
+          <p className="field__instructions">(Maximum 500 caractères)</p>
           <textarea
             className="selfinfos__description--textarea"
             id="description"
@@ -90,7 +92,7 @@ function SelfInfos({ changeField }: SelfInfosFormProps) {
           <span className="selfinfos__description--icon">
             <Edit />
           </span>
-        </p>
+        </div>
         <button className="button-orange-simple" type="submit">
           Modifier les informations
         </button>

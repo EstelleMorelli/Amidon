@@ -3,13 +3,25 @@ import Field from '../../Field/Field';
 import './PasswordChange.scss';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks-redux';
 import modifyUser from '../../../store/middlewares/modifyUser';
-import { actionChangeUserStateInfo } from '../../../store/reducers/userReducer';
+import {
+  actionChangeUserStateInfo,
+  actionEmptyUserMsg,
+} from '../../../store/reducers/userReducer';
+import { Check, X } from 'react-feather';
 interface PasswordFormProps {
   changeField: (value: string, name: 'password') => void;
 }
 function PasswordChange({ changeField }: PasswordFormProps) {
   // stock dans une variable dispatch le Hook useAppDispatch() (version typée du hook useDispatch() de redux) -> C'est ce qui envoie une action au store et exécute le reducer avec l'info de cette action à faire
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setOldPassword('');
+    setConfirmationPassword('');
+    dispatch(
+      actionChangeUserStateInfo({ newValue: '', fieldName: 'password' })
+    );
+  }, []);
 
   const handleChangeField = (name: 'password') => (value: string) => {
     changeField(value, name);
@@ -21,25 +33,22 @@ function PasswordChange({ changeField }: PasswordFormProps) {
 
   const [oldPassword, setOldPassword] = useState('');
   const [confirmationPassword, setConfirmationPassword] = useState('');
+  const [passwordFitErrorMsg, setPasswordFitErrorMsg] = useState('');
 
   const handleSubmitChangePassword = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    dispatch(actionEmptyUserMsg());
     if (newPassword === confirmationPassword) {
       const infos = { password: oldPassword, newPassword };
       console.log(infos);
+      setPasswordFitErrorMsg('');
       dispatch(modifyUser(infos));
       setOldPassword('');
       setConfirmationPassword('');
+    } else {
+      setPasswordFitErrorMsg('Les mots de passe ne correspondent pas.');
     }
   };
-
-  useEffect(() => {
-    setOldPassword('');
-    setConfirmationPassword('');
-    dispatch(
-      actionChangeUserStateInfo({ newValue: '', fieldName: 'password' })
-    );
-  }, []);
 
   return (
     <div className="passwordchange">
@@ -47,6 +56,7 @@ function PasswordChange({ changeField }: PasswordFormProps) {
         <div className="passwordchange__fields">
           <Field
             fieldDisplayedName="Mot de passe actuel"
+            instructions="Minimum 8 caractères dont 1 majuscule et 1 caractère spécial"
             type="password"
             onChange={(value: string) => setOldPassword(value)}
             placeholder=""
@@ -57,6 +67,7 @@ function PasswordChange({ changeField }: PasswordFormProps) {
           ></Field>
           <Field
             fieldDisplayedName="Nouveau mot de passe"
+            instructions="Minimum 8 caractères dont 1 majuscule et 1 caractère spécial"
             type="password"
             onChange={handleChangeField('password')}
             placeholder=""
@@ -68,6 +79,7 @@ function PasswordChange({ changeField }: PasswordFormProps) {
           ></Field>
           <Field
             fieldDisplayedName="Confirmer le nouveau mot de passe"
+            instructions="Minimum 8 caractères dont 1 majuscule et 1 caractère spécial"
             type="password"
             onChange={(value: string) => setConfirmationPassword(value)}
             placeholder=""
@@ -77,6 +89,12 @@ function PasswordChange({ changeField }: PasswordFormProps) {
             edit={true}
           ></Field>
         </div>
+        {passwordFitErrorMsg && (
+          <p className="errorMsg">
+            <X size={15} className="errorMsg--icon" />{' '}
+            <span className="errorMsg--text">{passwordFitErrorMsg}</span>
+          </p>
+        )}
         <button className="button-orange-simple" type="submit">
           Modifier le mot de passe
         </button>

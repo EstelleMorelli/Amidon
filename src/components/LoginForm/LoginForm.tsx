@@ -7,8 +7,12 @@ import { FormEvent, useEffect, useRef } from 'react';
 // Import des éléments de notre store :
 import { useAppDispatch, useAppSelector } from '../../store/hooks-redux';
 import login from '../../store/middlewares/login';
-import { actionChangeUserStateInfo } from '../../store/reducers/userReducer';
+import {
+  actionChangeUserStateInfo,
+  actionEmptyUserMsg,
+} from '../../store/reducers/userReducer';
 import { actionEmptyImage64 } from '../../store/reducers/appReducer';
+import { X } from 'react-feather';
 
 // Interface pour typer les props de notre composant Loginform :
 interface LoginFormProps {
@@ -25,6 +29,7 @@ function LoginForm({ changeField }: LoginFormProps) {
       actionChangeUserStateInfo({ newValue: '', fieldName: 'password' })
     );
     dispatch(actionEmptyImage64());
+    dispatch(actionEmptyUserMsg());
   }, []);
 
   // Fonction qui va mettre à jour le state avec les infos rentrées par l'utilisateur dans les champs, en live
@@ -39,7 +44,7 @@ function LoginForm({ changeField }: LoginFormProps) {
   const password = useAppSelector(
     (state) => state.userReducer.connectedUser.password
   );
-  const msg = useAppSelector((state) => state.userReducer.msg);
+  const errorMsg = useAppSelector((state) => state.userReducer.errorMsg);
   const logged = useAppSelector((state) => state.userReducer.logged);
 
   // On utilise le hook useNavigate de react-router-dom qui permet de naviguer sans recharger la page
@@ -79,7 +84,7 @@ function LoginForm({ changeField }: LoginFormProps) {
           required={true}
           search={false}
           edit={false}
-        ></Field>
+        />
         <Field
           fieldDisplayedName="Mot de passe"
           type="password"
@@ -89,8 +94,17 @@ function LoginForm({ changeField }: LoginFormProps) {
           required={true}
           search={false}
           edit={false}
-        ></Field>
-        {msg && <p className="errorMsg">{msg}</p>}
+        />
+        {errorMsg && (
+          <div className="msgBox">
+            {errorMsg.map((errorMsg) => (
+              <p key={errorMsg} className="errorMsg">
+                <X size={15} className="errorMsg--icon" />
+                <span className="errorMsg--text">{errorMsg}</span>
+              </p>
+            ))}
+          </div>
+        )}
         {/* Masquage de la fonctionnalité "rester connecté" */}
         {/* <p className="loginform__stayconnected">
           <label htmlFor="stayconnected">
@@ -107,7 +121,7 @@ function LoginForm({ changeField }: LoginFormProps) {
           Se connecter
         </button>
       </form>
-      <Link to="/inscription" className="registerlink">
+      <Link to="/inscription" className="link">
         Créer un compte
       </Link>
     </div>
