@@ -1,19 +1,5 @@
 @use '../../../../styles/variables' as v;
 
-.desktop {
-  display: none;
-
-  @media (min-width: 576px) {
-    display: block;
-  }
-}
-
-.mobile {
-  @media (min-width: 576px) {
-    display: none;
-  }
-}
-
 .colorchange {
   margin-top: 3rem;
 

@@ -60,9 +60,8 @@ function SelfInfos({ changeField }: SelfInfosFormProps) {
             required={false}
             search={false}
             edit={true}
-          ></Field>
+          />
         </div>
-
         <div>
           <Field
             fieldDisplayedName="Nom"
@@ -74,7 +73,7 @@ function SelfInfos({ changeField }: SelfInfosFormProps) {
             required={false}
             search={false}
             edit={true}
-          ></Field>
+          />
         </div>
         <div className="selfinfos__description">
           <label htmlFor="description">
