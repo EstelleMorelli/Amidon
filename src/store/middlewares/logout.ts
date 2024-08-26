@@ -5,10 +5,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 
 // Notre action asynchrone qui va faire l'appel API
-const logout = createAsyncThunk(
-  'user/LOGOUT',
-
-  async () => {}
-);
+const logout = createAsyncThunk('user/LOGOUT', async () => {});
 
 export default logout;

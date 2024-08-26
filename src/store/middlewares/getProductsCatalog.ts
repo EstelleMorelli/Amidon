@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-// Importe notre typage de state fait dans le store
 import axiosInstance from '../../utils/axios';
 
 const getProductsCatalog = createAsyncThunk(

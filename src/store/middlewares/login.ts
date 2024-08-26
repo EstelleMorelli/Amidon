@@ -28,8 +28,10 @@ const login = createAsyncThunk(
 
       return result.data.user;
     } catch (err: any) {
-      // ! TODO : voir comment typer cette erreur
-      return thunkAPI.rejectWithValue(err.response.data);
+      const result: string | string[] = err.response.data.errors;
+      return thunkAPI.rejectWithValue(result);
+      // Ou ligne suivante sans la ligne 31-32:
+      // return thunkAPI.rejectWithValue(err.response.data);
     }
   }
 );
