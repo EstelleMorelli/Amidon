@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 // VERSION LOCALE
 
 // // On créé une instance axios (comme un duplicata) avec la base url pré configuré pour ne pas la répéter à chaque fois
@@ -22,7 +24,7 @@
 
 // VERSION PROD INFOMANIAK
 
-on créé une instance axios (comme un duplicata) avec la base url pré configuré pour ne pas la répéter à chaque fois
+// on créé une instance axios (comme un duplicata) avec la base url pré configuré pour ne pas la répéter à chaque fois
 const axiosInstance = axios.create({
   baseURL: 'https://amidon.dev-me.fr/Amidon/public/api/',
   withCredentials: true,
