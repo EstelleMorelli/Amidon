@@ -20,7 +20,6 @@ import axios from 'axios';
 
 // export default axiosInstance;
 
-// import axios from 'axios';
 
 // VERSION PROD INFOMANIAK
 
