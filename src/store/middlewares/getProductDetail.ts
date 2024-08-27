@@ -8,6 +8,7 @@ const getProductDetail = createAsyncThunk(
     const result = await axiosInstance.get(`/product/${id}`);
     // on a recup le tableau des produits qui forme le catalogue, on le return pour l'ajouter au payload de l'action fulfilled pour que le reducer les place dans le state
     return result.data.product;
+    // TODO! return.data; dans le dossier save
   }
 );
 

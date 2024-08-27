@@ -35,7 +35,6 @@ const login = createAsyncThunk(
       return result.data.user;
     } catch (err: any) {
       const result: string | string[] = err.response.data.errors;
-
       return thunkAPI.rejectWithValue(result);
       // Ou ligne suivante sans la ligne 37-39:
       // return thunkAPI.rejectWithValue(err.response.data);
