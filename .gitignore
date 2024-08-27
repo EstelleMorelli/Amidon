@@ -26,7 +26,7 @@ dist-ssr
 .dist/*
 
 #Connexion to back params
-.src/utils/axios.ts
-.src/utils/data.ts
-.src/store/middlewares/login.ts
-.src/store/middlewares/logout.ts
+src/utils/axios.ts
+src/utils/data.ts
+src/store/middlewares/login.ts
+src/store/middlewares/logout.ts
