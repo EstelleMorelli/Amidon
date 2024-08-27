@@ -1,4 +1,5 @@
 // VERSION LOCALE
+
 // export const baseUserPictureURL =
 //   // 'http://amidon.yoan80490-server.eddi.cloud/assets/images/users';
 //   'http://localhost/Spe/projet-4-aide-o-tri-back/public/assets/images/users';
@@ -6,6 +7,7 @@
 // export const baseProductPictureURL =
 //   // 'http://amidon.yoan80490-server.eddi.cloud/assets/images/products';
 //   'http://localhost/Spe/projet-4-aide-o-tri-back/public/assets/images/products';
+
 
 
 
