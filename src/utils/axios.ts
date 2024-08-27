@@ -7,9 +7,4 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-// Version pour un back en localhost
-// const axiosInstance = axios.create({
-// baseURL: 'http://localhost/Spe/projet-4-aide-o-tri-back/public/api/',
-// });
-
 export default axiosInstance;
