@@ -5,7 +5,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 import axiosInstance from '../../utils/axios';
 
-// À décommenter pour usage en local
+// À DÉCOMMENTER POUR UN USAGE EN LOCAL - COMMENTER POUR INFOMANIAK
 // import { addTokenToAxiosInstance } from '../../utils/axios';
 
 // Notre action asynchrone qui va faire l'appel API
@@ -23,7 +23,7 @@ const login = createAsyncThunk(
         password,
       });
 
-      // À décommenter pour usage en local
+      // À DÉCOMMENTER POUR UN USAGE EN LOCAL - COMMENTER POUR INFOMANIAK
       // Appel notre fonction qui met le token envoyé par le back dans l'instance Axios pour le renvoyer à chaque requête dans l'entête
       // addTokenToAxiosInstance(result.data.token);
 
