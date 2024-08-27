@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
-import { Trash2, X } from 'react-feather';
+import { useEffect } from 'react';
+import { Trash2 } from 'react-feather';
 import BookButton from './BookButton/BookButton';
 import FixedProductInfos from './FixedProductInfos/FixedProductInfos';
 import './Product.scss';
@@ -10,14 +10,9 @@ import getProductDetail from '../../store/middlewares/getProductDetail';
 import bookAProduct from '../../store/middlewares/bookAProduct';
 import deleteProduct from '../../store/middlewares/deleteProduct';
 
-import { baseProductPictureURL, baseUserPictureURL } from '../../utils/data';
-import {
-  actionOpenPictureZoom,
-  actionToggleIsWarningMessage,
-} from '../../store/reducers/appReducer';
-import PictureZoom from '../PictureZoomModal/PictureZoomModal';
+import { baseUserPictureURL } from '../../utils/data';
+import { actionToggleIsWarningMessage } from '../../store/reducers/appReducer';
 import DeleteWarningMessage from '../DeleteWarningModal/DeleteWarningModal';
-import { actionEmptyCatalogMsg } from '../../store/reducers/catalogReducer';
 
 interface Props {
   changeField: (value: string, name: 'title' | 'price' | 'description') => void;

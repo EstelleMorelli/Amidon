@@ -47,6 +47,7 @@ function AddProductForm({ changeField }: Props) {
     state.catalogReducer.currentProduct.price.toString()
   );
   const pictures = useAppSelector((state) => state.appReducer.image64);
+
   const handleChangeField =
     (name: 'title' | 'price' | 'description') => (value: string) => {
       changeField(value, name);
@@ -59,20 +60,32 @@ function AddProductForm({ changeField }: Props) {
     changeField(event.target.value, 'description');
   };
 
+  // Au changement de l'input type=file, s'il y a bien un fichier, on met à jour la liste des photos téléchargées et on dispatch l'action de conversion en base64
+  const handleNewPicture = (event: ChangeEvent<HTMLInputElement>): void => {
+    if (event.target.files && event.target.files[0]) {
+      setPicturesList([...picturesList, event.target.files[0].name]);
+      dispatch(convertBase64(event.target.files[0]));
+    }
+  };
+
   // A la soumission du formulaire, on empêche de renvoyer une requête http (car on est Single Page Application) et on dispatche l'action de change (qui va envoyer les infos par l'API et modifier l'utilisateur dans la BDD)
   const handleSubmitAddProduct = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // On récupère dans media, un tableau d'objets {image64 : le texte base 64} qui contient les chaines base64 de toutes les photos téléchargées (pictures = le tableau base64 du state d'appReducer)
     const media = pictures.map((picture) => {
       return { image64: picture };
     });
+    // On agrège avec les autres infos produits venant du state de catalogReducer (champs contrôlés du formulaire)
     const newProductInfos = {
       title,
       price,
       description,
       media,
     };
-    setPicturesList(['']);
+    // pour pouvoir dispatch l'action addProduct avec ces infos en argument
     dispatch(addProduct(newProductInfos));
+    // On vide la picturesList locale et le AppReducer pour repartir à zéro après l'envoi du formulaire et l'appel API d'ajout du produit
+    setPicturesList(['']);
     dispatch(actionResetAppReducer());
   };
 
@@ -87,12 +100,6 @@ function AddProductForm({ changeField }: Props) {
     }
   }, [okMsg]);
 
-  const handleNewPicture = (event: ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.files && event.target.files[0]) {
-      setPicturesList([...picturesList, event.target.files[0].name]);
-      dispatch(convertBase64(event.target.files[0]));
-    }
-  };
   return (
     <div className="addproductpage">
       <h1> Ajouter un produit </h1>

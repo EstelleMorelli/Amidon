@@ -5,6 +5,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 import axiosInstance from '../../utils/axios';
 
+// À DÉCOMMENTER POUR UN USAGE EN LOCAL - COMMENTER POUR INFOMANIAK
+// import { addTokenToAxiosInstance } from '../../utils/axios';
+
 // Notre action asynchrone qui va faire l'appel API
 const login = createAsyncThunk(
   'user/LOGIN',
@@ -19,18 +22,21 @@ const login = createAsyncThunk(
         email,
         password,
       });
-      // Appel notre fonction qui met le token dans l'instance Axios pour le renvoyer à chaque requête dans l'entête
+
+      // À DÉCOMMENTER POUR UN USAGE EN LOCAL - COMMENTER POUR INFOMANIAK
+      // Appel notre fonction qui met le token envoyé par le back dans l'instance Axios pour le renvoyer à chaque requête dans l'entête
+      // addTokenToAxiosInstance(result.data.token);
 
       const result2 = await axiosInstance.post('/login_check', {
         email,
         password,
       });
-
+      // On retourne l'objet renvoyé par l'API, ici toutes les infos de l'user, qui iront dans le state pour affichage dans les pages
       return result.data.user;
     } catch (err: any) {
       const result: string | string[] = err.response.data.errors;
       return thunkAPI.rejectWithValue(result);
-      // Ou ligne suivante sans la ligne 31-32:
+      // Ou ligne suivante sans la ligne 37-39:
       // return thunkAPI.rejectWithValue(err.response.data);
     }
   }

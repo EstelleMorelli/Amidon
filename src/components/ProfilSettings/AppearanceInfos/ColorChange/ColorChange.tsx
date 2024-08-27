@@ -43,6 +43,7 @@ function ColorChange({ changeField }: ColorChangeProps) {
   ): void => {
     event.preventDefault();
     changeField(initialColor.current, 'color');
+    dispatch(modifyUser({ color: initialColor.current }));
   };
 
   return (
@@ -71,8 +72,7 @@ function ColorChange({ changeField }: ColorChangeProps) {
               Cliquer pour changer la couleur d&#39;ombre sur les vignettes des
               produits et de réservation
             </p>
-            <ArrowDown className="colorchange__selector--icon desktop" />
-            <ArrowRight className="colorchange__selector--icon mobile" />
+            <ArrowDown className="colorchange__selector--icon" />
             <div
               className="colorchange__selector--input--box"
               style={{ backgroundColor: color }}

@@ -7,7 +7,7 @@ import {
   actionChangeUserStateInfo,
   actionEmptyUserMsg,
 } from '../../../store/reducers/userReducer';
-import { Check, X } from 'react-feather';
+import { X } from 'react-feather';
 interface PasswordFormProps {
   changeField: (value: string, name: 'password') => void;
 }
@@ -64,7 +64,7 @@ function PasswordChange({ changeField }: PasswordFormProps) {
             required={true}
             search={false}
             edit={true}
-          ></Field>
+          />
           <Field
             fieldDisplayedName="Nouveau mot de passe"
             instructions="Minimum 8 caractères dont 1 majuscule et 1 caractère spécial"
@@ -76,7 +76,7 @@ function PasswordChange({ changeField }: PasswordFormProps) {
             required={true}
             search={false}
             edit={true}
-          ></Field>
+          />
           <Field
             fieldDisplayedName="Confirmer le nouveau mot de passe"
             instructions="Minimum 8 caractères dont 1 majuscule et 1 caractère spécial"
@@ -87,7 +87,7 @@ function PasswordChange({ changeField }: PasswordFormProps) {
             required={true}
             search={false}
             edit={true}
-          ></Field>
+          />
         </div>
         {passwordFitErrorMsg && (
           <p className="errorMsg">
