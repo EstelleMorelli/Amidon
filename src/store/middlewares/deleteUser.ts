@@ -15,9 +15,8 @@ const deleteUser = createAsyncThunk(
       await axiosInstance.delete(`/profil`);
       return await thunkAPI.dispatch(logout());
     } catch (err: any) {
-      const result: string | string[] = err.response.data.errors;
-      console.log(result);
-      return thunkAPI.rejectWithValue(result);
+      // const result: string | string[] = err.response.data.errors;
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   }
 );

@@ -24,8 +24,8 @@ const deleteFollower = createAsyncThunk(
         await thunkAPI.dispatch(getSelfProducts())
       );
     } catch (err: any) {
-      const result: string | string[] = err.response.data.errors;
-      return thunkAPI.rejectWithValue(result);
+      // const result: string | string[] = err.response.data.errors;
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   }
 );
