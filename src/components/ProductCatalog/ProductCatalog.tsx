@@ -37,21 +37,28 @@ function ProductCatalog() {
   const friends = useAppSelector(
     (state) => state.catalogReducer.friendProducts
   );
-
+  // On créé un state local qui garde en mémoire si le filtre de selection sur un giver est activé en stockant son id.  Par défaut il est null.
   const [selectedFriend, setSelectedFriend] = useState<null | number>(null);
+  // state local qui garde en mémoire si le filtre des produits 100% gratuits est activé. Par défaut, il est faux.
   const [pricelessFilter, setPricelessFilter] = useState(false);
+  // state local qui garde en mémoire si le tri des produits par date d'ajout est activé. Par défaut il est vrai.
   const [createdAtSort, setCreatedAtSort] = useState(true);
+  // Fonction de gestion du filtre sur un giver. Elle reçoit en paramètre le giver sur lequel on a cliqué.
   const handleFriendFilter = (friend: IFriendProduct) => {
+    // Si le giver sur lequel on a cliqué est le même qui était déjà stocké dans le state local selectedFriend alors on fait l'action de retirer le filtre.
     if (selectedFriend === friend.id) {
       setSelectedFriend(null);
     } else {
+      // Sinon on remplace le state local par l'id du giver sur lequel on a cliqué
       setSelectedFriend(friend.id);
     }
   };
   // On déclare un tableau de produit à afficher vide, et on va le remplir en fonction des différents tri ou filtres actifs.
   let productsToDisplay = [];
-  // Si le on clic sur une icone d'un ami, cela passe l'id de cet ami en tant que valeur de selectedFriend.
+  // Si on a précedemment cliqué sur une icone d'un giver, cela passe l'id de ce giver en tant que valeur de selectedFriend.
+  // Donc si SelectedFriend n'est pas null,
   if (selectedFriend) {
+    // on remplit le tableau productsToDisplay
     productsToDisplay =
       friends.find((friend) => friend.id === selectedFriend)?.own_products ||
       [];
