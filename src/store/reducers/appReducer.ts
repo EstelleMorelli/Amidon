@@ -18,7 +18,7 @@ interface IAppState {
   };
   image64: string[];
   faq: IQandA[];
-  legals: ILegals[];
+  legalsData: ILegals;
 }
 
 const initialState: IAppState = {
@@ -27,7 +27,7 @@ const initialState: IAppState = {
   pictureZoom: { isPictureZoomOpen: false, currentPicture: '' },
   image64: [],
   faq: [],
-  legals: [],
+  legalsData: { date: '', legals: [] },
 };
 
 export const actionEmptyImage64 = createAction('app/EMPTY_IMAGE64');
@@ -98,7 +98,7 @@ const appReducer = createReducer(initialState, (builder) => {
     })
     .addCase(getLegals.fulfilled, (state, action) => {
       console.log('Action getLegals fullfilled');
-      state.legals = action.payload;
+      state.legalsData = action.payload;
     })
     .addCase(getLegals.pending, () => {
       console.log('Action getLegals pending');

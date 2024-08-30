@@ -9,7 +9,11 @@ import LegalsArticle from './LegalsArticle/LegalsArticle';
 const LegalMentions: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const legals = useAppSelector((state: RootState) => state.appReducer.legals);
+  const legalsData = useAppSelector(
+    (state: RootState) => state.appReducer.legalsData
+  );
+
+  console.log(legalsData, legalsData.legals);
 
   useEffect(() => {
     dispatch(getLegals());
@@ -20,7 +24,7 @@ const LegalMentions: React.FC = () => {
       <h1 className="legalm-title">
         Mentions Légales et Conditions d&#39;Utilisation
       </h1>
-      {legals.map((legal, index) => (
+      {legalsData.legals.map((legal, index) => (
         <LegalsArticle
           key={index}
           number={legal.number}
@@ -30,7 +34,7 @@ const LegalMentions: React.FC = () => {
         />
       ))}
       <p className="legalm-content">
-        <strong>Date de la dernière mise à jour :</strong> 30/08/2024
+        <strong>Date de la dernière mise à jour :</strong> DATE
       </p>
       <Link to="/" className="link">
         Retour à l'accueil

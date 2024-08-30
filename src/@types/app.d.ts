@@ -4,7 +4,10 @@ export interface IQandA {
 }
 
 export interface ILegals {
-  number: number;
-  title: string;
-  article: string;
+  date: string;
+  legals: {
+    number: number;
+    title: string;
+    article: string;
+  }[];
 }
