@@ -13,6 +13,9 @@ function Footer() {
       <Link to="/faq" style={{ color: '#000000' }}>
         <h2 className="footer__faq link">F.A.Q.</h2>
       </Link>
+      <Link to="/mentions-legales" style={{ color: '#000000' }}>
+        <h2 className="footer__legalmentions link">Mentions légales</h2>
+      </Link>
       <p className="footer__credit">
         <span> Marion Leblanc </span>
         <span> Romain Deschaseaux </span>
