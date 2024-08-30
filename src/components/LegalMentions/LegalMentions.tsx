@@ -24,18 +24,21 @@ const LegalMentions: React.FC = () => {
       <h1 className="legalm-title">
         Mentions Légales et Conditions d&#39;Utilisation
       </h1>
-      {legalsData.legals.map((legal, index) => (
-        <LegalsArticle
-          key={index}
-          number={legal.number}
-          title={legal.title}
-          // TODO : voir pour créer l'objet beaucoup plus tôt dans le code cf. doc https://react.dev/reference/react-dom/components/common#dangerously-setting-the-inner-html
-          article={{ __html: legal.article }}
-        />
-      ))}
+      <div className="legalm-articles">
+        {legalsData.legals.map((legal, index) => (
+          <LegalsArticle
+            key={index}
+            number={legal.number}
+            title={legal.title}
+            // TODO : voir pour créer l'objet beaucoup plus tôt dans le code cf. doc https://react.dev/reference/react-dom/components/common#dangerously-setting-the-inner-html
+            article={{ __html: legal.article }}
+          />
+        ))}
+      </div>
       <p className="legalm-content">
-        <strong>Date de la dernière mise à jour :</strong> DATE
+        <strong>Date de la dernière mise à jour :</strong> {legalsData.date}
       </p>
+
       <Link to="/" className="link">
         Retour à l'accueil
       </Link>
