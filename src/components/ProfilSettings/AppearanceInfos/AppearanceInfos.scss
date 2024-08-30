@@ -2,4 +2,12 @@
 
 .appearanceinfos {
   margin-bottom: 1.5rem;
+
+  @media (min-width: 768px) {
+    width: calc(60% - 1.5rem / 2);
+
+    &.form-full {
+      padding-bottom: 3em;
+    }
+  }
 }

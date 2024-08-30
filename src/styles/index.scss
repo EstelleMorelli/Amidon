@@ -74,32 +74,43 @@ h1 {
     inset -4px -4px 6px v.$color-bg-highlight;
 }
 
+.errorMsg,
+.okMsg {
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &--text {
+    margin-left: 0.5em;
+    font-size: 0.9rem;
+  }
+}
+.okMsg {
+  color: green;
+}
+
 .errorMsg {
   color: red;
-  margin-bottom: 0;
 }
 
 .productcards-wrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1em;
+  grid-gap: 3vw;
   margin: 1rem 2rem;
   list-style-type: none;
 
-  @media (min-width: 576px) and (max-width: 950px) {
+  @media (min-width: 576px) {
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 2vw;
     font-size: 0.9em;
   }
   @media (min-width: 950px) {
     grid-template-columns: repeat(6, 1fr);
-    grid-gap: 2vw;
     font-size: 1.5vw;
   }
   @media (min-width: 1150px) {
     grid-template-columns: repeat(7, 1fr);
-    grid-gap: 2vw;
-    font-size: 1.5vw;
   }
 }
 
@@ -153,4 +164,24 @@ h1 {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: v.$color-main-orange;
+}
+
+.link {
+  display: block;
+  color: v.$color-main-orange;
+  text-align: center;
+  margin: 1rem auto;
+  text-decoration: underline;
+}
+
+.friendfilterbutton {
+  border-radius: 5rem;
+  padding-bottom: 0.5rem;
+  font-weight: 600;
+  border: none;
+  &--active {
+    background-color: v.$color-bg;
+    color: v.$color-main-orange;
+    box-shadow: inset 5px 5px 10px 0px grey;
+  }
 }

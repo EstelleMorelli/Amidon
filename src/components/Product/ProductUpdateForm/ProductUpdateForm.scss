@@ -12,8 +12,12 @@ textarea {
   border-radius: 1rem;
   padding: 0.5rem 1rem;
 }
+
+.mainpicture__wrapper {
+  position: relative;
+}
 .product--picture__wrapper {
-  position: static;
+  position: relative;
 }
 
 .deleteImageButton {
@@ -23,4 +27,6 @@ textarea {
   width: 2.5rem;
   height: 2.5rem;
   border: none;
+  top: 0rem;
+  left: 0;
 }

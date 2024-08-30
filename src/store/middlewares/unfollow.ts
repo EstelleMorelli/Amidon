@@ -10,10 +10,15 @@ const unfollow = createAsyncThunk(
   'user/UNFOLLOW',
 
   async (giver_id: number, thunkAPI) => {
-    await axiosInstance.delete(`/user/giver`, {
-      data: { giver_id },
-    });
-    return thunkAPI.dispatch(getProductsCatalog());
+    try {
+      await axiosInstance.delete(`/user/giver`, {
+        data: { giver_id },
+      });
+      return await thunkAPI.dispatch(getProductsCatalog());
+    } catch (err: any) {
+      const result: string | string[] = err.response.data.errors;
+      return thunkAPI.rejectWithValue(result);
+    }
   }
 );
 
