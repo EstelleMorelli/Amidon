@@ -20,16 +20,13 @@ import axios from 'axios';
 
 // export default axiosInstance;
 
-
 // VERSION PROD INFOMANIAK
 
 // on créé une instance axios (comme un duplicata) avec la base url pré configuré pour ne pas la répéter à chaque fois
 const axiosInstance = axios.create({
   baseURL: 'https://amidon.dev-me.fr/Amidon/public/api/',
-<<<<<<< HEAD
   // Permet d'envoyer les cookies dans les requêtes :
-=======
->>>>>>> b7286920d96665ed98605e89c042af09cc1b2d21
+
   withCredentials: true,
 });
 
