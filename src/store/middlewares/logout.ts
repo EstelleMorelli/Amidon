@@ -9,7 +9,7 @@ const logout = createAsyncThunk(
 
   async () => {
     // À DÉCOMMENTER POUR UN USAGE EN LOCAL - COMMENTER POUR INFOMANIAK
-    removeTokenFromAxiosInstance();
+    // removeTokenFromAxiosInstance();
   }
 );
 
