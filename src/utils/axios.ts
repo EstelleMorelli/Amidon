@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 // VERSION LOCALE
 
 // // On créé une instance axios (comme un duplicata) avec la base url pré configuré pour ne pas la répéter à chaque fois
@@ -19,6 +20,7 @@ import axios from 'axios';
 // };
 
 // export default axiosInstance;
+
 
 // VERSION PROD INFOMANIAK
 

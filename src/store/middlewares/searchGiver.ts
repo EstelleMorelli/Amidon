@@ -11,7 +11,6 @@ import { actionEmptySearchedGiver } from '../reducers/userReducer';
 // Notre action asynchrone qui va faire l'appel API
 const searchGiver = createAsyncThunk(
   'user/SEARCH_GIVER',
-
   async (_, thunkAPI) => {
     // On récupère le share_code dans le state qui a été mis à jour en même temps qu'on remplit le champs (champs contrôlé) grâce à la function get.State() appliqué au paramètre thunkAPI de createAsyncThunk() de redux qui nous permet de récupèrer automatique le State
     const state = thunkAPI.getState() as RootState;
