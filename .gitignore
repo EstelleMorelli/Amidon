@@ -24,3 +24,9 @@ dist-ssr
 *.sln
 *.sw?
 .dist/*
+
+#Connexion to back params
+.utils/axios.ts
+.utils/data.ts
+.middlewares/login.ts
+.middlewares/logout.ts

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useAppSelector } from '../../store/hooks-redux';
 import Presentation from '../Presentation/Presentation';
 import ProductCatalog from '../ProductCatalog/ProductCatalog';

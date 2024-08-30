@@ -1,6 +1,9 @@
 // on importe la fonction fournie par Redux Toolkit qui simplifie la gestion des opérations asynchrones dans une application Redux
 import { createAsyncThunk } from '@reduxjs/toolkit';
+<<<<<<< HEAD
 // on importe notre instance axios paramétrée
+=======
+>>>>>>> b7286920d96665ed98605e89c042af09cc1b2d21
 import axiosInstance from '../../utils/axios';
 
 const getProductsCatalog = createAsyncThunk(

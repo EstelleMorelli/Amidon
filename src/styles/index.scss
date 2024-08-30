@@ -96,24 +96,21 @@ h1 {
 .productcards-wrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1em;
+  grid-gap: 3vw;
   margin: 1rem 2rem;
   list-style-type: none;
 
-  @media (min-width: 576px) and (max-width: 950px) {
+  @media (min-width: 576px) {
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 2vw;
     font-size: 0.9em;
   }
   @media (min-width: 950px) {
     grid-template-columns: repeat(6, 1fr);
-    grid-gap: 2vw;
     font-size: 1.5vw;
   }
   @media (min-width: 1150px) {
     grid-template-columns: repeat(7, 1fr);
-    grid-gap: 2vw;
-    font-size: 1.5vw;
   }
 }
 

@@ -33,7 +33,7 @@ function ProductCatalog() {
   const okMsg = useAppSelector((state) => state.catalogReducer.okMsg);
 
   const [friendToDelete, setFriendToDelete] = useState(0);
-
+  // On récupère la liste de nos givers stockés dans le state redux dans une constante qu'on appelle friends.
   const friends = useAppSelector(
     (state) => state.catalogReducer.friendProducts
   );
@@ -58,14 +58,17 @@ function ProductCatalog() {
   // Si on a précedemment cliqué sur une icone d'un giver, cela passe l'id de ce giver en tant que valeur de selectedFriend.
   // Donc si SelectedFriend n'est pas null,
   if (selectedFriend) {
-    // on remplit le tableau productsToDisplay
+    // on remplit le tableau productsToDisplay en recherchant dans le tableau friends extrait du state celui qui possède l'id,
+    // et on retourne ses produits possedés
     productsToDisplay =
       friends.find((friend) => friend.id === selectedFriend)?.own_products ||
       [];
   } else {
-    // la fonction flatMap permet de combiner la fonction map pour parcourir un tableau, et flat pour un aplanir le résultat (avoir un tableau de données plutôt qu'un tableau de tableaux de données)
+    // la fonction flatMap permet de combiner la fonction map pour parcourir un tableau, et flat pour un aplanir le résultat
+    // (avoir un tableau de données plutôt qu'un tableau de tableaux de données)
     productsToDisplay = friends.flatMap((friend) => friend.own_products || []);
   }
+  // Si le filtre des produits gratuits est actif : on remplit le tableau productsToDisplay avec un filtre des produits ayant un prix a 0.
   if (pricelessFilter) {
     productsToDisplay = productsToDisplay.filter(
       (product) => product.price === 0
