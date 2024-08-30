@@ -1,9 +1,12 @@
 import { createReducer, createAction } from '@reduxjs/toolkit';
 import convertBase64 from '../middlewares/convertBase64';
 import getFAQ from '../middlewares/getFAQ';
+import getLegals from '../middlewares/getLegals';
+
 import logout from '../middlewares/logout';
 
-import { IQandA } from '../../@types/app';
+import { IQandA, ILegals } from '../../@types/app';
+
 import register from '../middlewares/register';
 
 interface IAppState {
@@ -15,6 +18,7 @@ interface IAppState {
   };
   image64: string[];
   faq: IQandA[];
+  legals: ILegals[];
 }
 
 const initialState: IAppState = {
@@ -23,6 +27,7 @@ const initialState: IAppState = {
   pictureZoom: { isPictureZoomOpen: false, currentPicture: '' },
   image64: [],
   faq: [],
+  legals: [],
 };
 
 export const actionEmptyImage64 = createAction('app/EMPTY_IMAGE64');
@@ -90,6 +95,16 @@ const appReducer = createReducer(initialState, (builder) => {
     })
     .addCase(getFAQ.rejected, () => {
       console.log('Action getFAQ rejected');
+    })
+    .addCase(getLegals.fulfilled, (state, action) => {
+      console.log('Action getLegals fullfilled');
+      state.legals = action.payload;
+    })
+    .addCase(getLegals.pending, () => {
+      console.log('Action getLegals pending');
+    })
+    .addCase(getLegals.rejected, () => {
+      console.log('Action getLegals rejected');
     })
     .addCase(logout.fulfilled, (state) => {
       state.faq = [];
