@@ -16,8 +16,8 @@ const unfollow = createAsyncThunk(
       });
       return await thunkAPI.dispatch(getProductsCatalog());
     } catch (err: any) {
-      // const result: string | string[] = err.response.data.errors;
-      return thunkAPI.rejectWithValue(err.response.data);
+      const result: string | string[] = err.response.data.errors;
+      return thunkAPI.rejectWithValue(result);
     }
   }
 );

@@ -34,10 +34,8 @@ const login = createAsyncThunk(
       // On retourne l'objet renvoyé par l'API, ici toutes les infos de l'user, qui iront dans le state pour affichage dans les pages
       return result.data.user;
     } catch (err: any) {
-      // const result: string | string[] = err.response.data.errors;
-      // return thunkAPI.rejectWithValue(result);
-      // Ou ligne suivante sans la ligne 37-39:
-      return thunkAPI.rejectWithValue(err.response.data);
+      const result: string | string[] = err.response.data.errors;
+      return thunkAPI.rejectWithValue(result);
     }
   }
 );

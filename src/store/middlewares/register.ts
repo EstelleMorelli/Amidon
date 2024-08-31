@@ -30,8 +30,8 @@ const register = createAsyncThunk('user/REGISTER', async (_, thunkAPI) => {
     return await thunkAPI.dispatch(login());
     // Si on a un échec de la requête, on force un retour qui renvoi la partie data de la réponse (où on a mis les messages d'erreurs et le champs problématique dans l'API)
   } catch (err: any) {
-    // const result: string | string[] = err.response.data.errors;
-    return thunkAPI.rejectWithValue(err.response.data);
+    const result: string | string[] = err.response.data.errors;
+    return thunkAPI.rejectWithValue(result);
   }
 });
 export default register;
