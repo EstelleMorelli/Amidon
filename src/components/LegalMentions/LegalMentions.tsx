@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks-redux';
 import { RootState } from '../../store/store';
 import './LegalMentions.scss';
 import getLegals from '../../store/middlewares/getLegals';
-import { Link } from 'react-router-dom';
 import LegalsArticle from './LegalsArticle/LegalsArticle';
 
-const LegalMentions: React.FC = () => {
+function LegalMentions() {
   const dispatch = useAppDispatch();
 
   const legalsData = useAppSelector(
@@ -44,6 +44,6 @@ const LegalMentions: React.FC = () => {
       </Link>
     </div>
   );
-};
+}
 
 export default LegalMentions;
