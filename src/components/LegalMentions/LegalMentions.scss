@@ -1,9 +1,25 @@
-.legalm-title {
-  font-size: 2rem;
+.legalm {
+  &-title {
+    font-size: 2rem;
+  }
+
+  &-subtitle {
+    margin: 0 0 0 0.5em;
+  }
+
+  &-content {
+    margin: 0 0 1em;
+  }
+
+  &-container {
+    text-align: justify;
+  }
+
+  &-articles {
+    margin: 1rem 0;
+  }
 }
-.legalm-subtitle {
-  margin-bottom: 0rem;
-}
-.legalm-container {
-  text-align: justify;
+
+h3 {
+  margin: 0 0 0 1.5em;
 }
