@@ -1,74 +1,102 @@
 @use '../../styles/variables' as v;
 .product {
   text-align: center;
-}
-.product--pictures {
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  overflow-x: scroll;
-}
 
-.product--pictures__item {
-  padding: 0.2rem;
-  overflow-y: hidden;
-  border: none;
-  background-color: v.$color-bg;
-  height: 7rem;
-  width: 7rem;
-  img {
+  &--owner {
+    display: flex;
+    justify-content: center;
     margin: auto;
-    object-fit: cover;
-    height: 7rem;
-    width: 7rem;
+
+    &__picture {
+      width: 7rem;
+      height: 7rem;
+      object-fit: cover;
+      text-align: center;
+      padding: 0.5rem;
+      border-radius: 50%;
+    }
+
+    &__name {
+      display: flex;
+      align-items: center;
+      padding-top: 1rem;
+      font-weight: bold;
+      color: v.$color-brown;
+      font-size: x-large;
+    }
+  }
+
+  &--picture__main {
+    max-height: 15rem;
+    object-fit: contain;
+    margin: auto;
     border-radius: 1rem;
-  }
-}
+    @media (min-width: 576px) {
+      max-height: 50vh;
+    }
 
-.product--picture__main {
-  max-height: 15rem;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 1rem;
-}
+    &__button {
+      background-color: transparent;
+      border: none;
+    }
+  }
 
-.product--owner {
-  display: flex;
-  justify-content: space-around;
-  margin: auto;
-  &__picture {
-    width: 7rem;
-    height: 7rem;
-    object-fit: cover;
-    text-align: center;
-    padding: 0.5rem;
-    border-radius: 50%;
-  }
-  &__name {
-    text-align: center;
-    padding-top: 1rem;
-    font-weight: bold;
-    color: v.$color-brown;
-    font-size: x-large;
-  }
-}
+  &--pictures {
+    &__wrapper {
+      overflow-x: auto;
+      overflow-x: auto;
+      // margin: auto;
+    }
 
-.product__deleteButton {
-  &.button-orange-simple {
-    background-color: red;
-    display: block;
-    margin: auto;
+    &__flexbox {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      @media (min-width: 576px) {
+        flex-direction: column;
+        max-height: 50vh;
+      }
+    }
+
+    &__item {
+      position: relative;
+      width: fit-content;
+      // &__button {
+      //   display: inline;
+      // }
+      &__img {
+        width: 40vw;
+        max-width: 7rem;
+      }
+
+      img {
+        border-radius: 1rem;
+        padding: 0.2rem;
+        width: 40vw;
+        max-width: 7rem;
+        height: 40vw;
+        max-height: 7rem;
+        object-fit: cover;
+      }
+    }
   }
-  &--text {
-    display: inline-block;
-    text-align: center;
-    text-transform: uppercase;
-  }
-  &--icon {
-    display: inline-block;
-    vertical-align: middle;
-    height: 1 em;
-    padding: 0;
-    margin: 0.4em;
+  &__deleteButton {
+    &.button-orange-simple {
+      background-color: red;
+      display: block;
+      margin: auto;
+    }
+    &--text {
+      display: inline-block;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    &--icon {
+      display: inline-block;
+      vertical-align: middle;
+      height: 1 em;
+      padding: 0;
+      margin: 0.4em;
+    }
   }
 }

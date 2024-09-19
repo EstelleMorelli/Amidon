@@ -55,16 +55,16 @@ function Product({ changeField }: Props) {
     <div className="product">
       <h4> Produit proposé par : </h4>
       <div className="product--owner">
-        <p className="product--owner__name">
-          {product.owner.firstname} {product.owner.lastname}
-        </p>
         {product.owner.picture && (
           <img
             className="product--owner__picture"
             src={`${baseUserPictureURL}/${product.owner.picture}`}
             alt="ami"
           />
-        )}
+        )}{' '}
+        <p className="product--owner__name">
+          {product.owner.firstname} {product.owner.lastname}
+        </p>
       </div>
       <div className="product--product-infos">
         {connectedUserId === product.owner.id ? (
