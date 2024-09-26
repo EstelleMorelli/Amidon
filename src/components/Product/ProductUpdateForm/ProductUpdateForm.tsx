@@ -107,55 +107,73 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
   };
 
   return (
-    <div className="productupdateform">
-      {medias.length !== 0 && (
-        <div className="mainpicture__wrapper">
-          <button
-            type="button"
-            data-url={medias[0].url}
-            className="deleteImageButton"
-            onClick={() => {
-              handlePictureDelete(medias[0].url!);
-            }}
-          >
-            <X />
-          </button>
-          <img
-            className="product--picture__main"
-            key={medias[0].url}
-            src={`${baseProductPictureURL}/${medias[0].url}`}
-            alt=""
-          />
+    <div className="productupdateform fixedproductinfos">
+      <div className="fixedproductinfos__pictures">
+        {medias.length !== 0 && (
+          <div className="mainpicture__wrapper">
+            <button
+              type="button"
+              data-url={medias[0].url}
+              className="deleteImageButton"
+              onClick={() => {
+                handlePictureDelete(medias[0].url!);
+              }}
+            >
+              <X />
+            </button>
+            <button
+              className="product--picture__main__button"
+              type="button"
+              key={medias[0].url}
+              onClick={() => handlePictureZoom(medias[0].url!)}
+            >
+              <img
+                className="product--picture__main"
+                key={medias[0].url}
+                src={`${baseProductPictureURL}/${medias[0].url}`}
+                alt=""
+              />
+            </button>
+          </div>
+        )}
+        <div className="product--pictures__wrapper">
+          <div className="product--pictures__flexbox">
+            {medias.slice(1).length !== 0 &&
+              medias.slice(1).map((picture) => (
+                <div key={picture.url} className="product--picture__wrapper">
+                  <button
+                    type="button"
+                    data-url={picture.url}
+                    className="deleteImageButton"
+                    onClick={(event) => {
+                      handlePictureDelete(event.currentTarget.dataset.url!);
+                    }}
+                  >
+                    <X />
+                  </button>
+                  <div
+                    className="product--pictures__item__button"
+                    onClick={() => handlePictureZoom(picture.url!)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        handlePictureZoom(picture.url!);
+                      }
+                    }}
+                  >
+                    <div className="product--pictures__item__img">
+                      <img
+                        src={`${baseProductPictureURL}/${picture.url}`}
+                        alt="détail du produit"
+                        style={{ display: 'block' }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
         </div>
-      )}
-      <div className="product--pictures">
-        {medias.slice(1).length !== 0 &&
-          medias.slice(1).map((picture) => (
-            <div key={picture.url} className="product--picture__wrapper">
-              <button
-                type="button"
-                data-url={picture.url}
-                className="deleteImageButton"
-                onClick={(event) => {
-                  handlePictureDelete(event.currentTarget.dataset.url!);
-                }}
-              >
-                <X />
-              </button>
-              <button
-                className="product--pictures__item"
-                type="button"
-                key={picture.url}
-                onClick={() => handlePictureZoom(picture.url!)}
-              >
-                <img
-                  src={`${baseProductPictureURL}/${picture.url}`}
-                  alt="détail du produit"
-                  style={{ display: 'block' }}
-                />
-              </button>
-            </div>
-          ))}
       </div>
       {isPictureZoomOpen && <PictureZoom picture={currentPictureForZoom} />}
       {actionMessage && <p style={{ color: 'green' }}> {actionMessage} </p>}
@@ -256,7 +274,6 @@ function ProductUpdateForm({ changeField, productId, medias }: Props) {
         <button type="submit" className="button-orange-simple">
           Valider les modifications
         </button>
-
       </form>
     </div>
   );

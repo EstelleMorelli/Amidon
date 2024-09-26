@@ -2,6 +2,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 // TODO! À DÉCOMMENTER POUR UN USAGE EN LOCAL - COMMENTER POUR INFOMANIAK
 import { removeTokenFromAxiosInstance } from '../../utils/axios';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1704eb3e7dd33298826252ac63146f32c6a70e6e
 
 // Notre action asynchrone qui va faire l'appel API
 const logout = createAsyncThunk(
