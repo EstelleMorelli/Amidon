@@ -1,15 +1,1 @@
 @use '../../../styles/variables' as v;
-
-.fixedproductinfos {
-  &__pictures {
-    width: fit-content;
-    margin: auto;
-    @media (min-width: 576px) {
-      display: flex;
-    }
-
-    &--title {
-      font-size: 5vw;
-    }
-  }
-}

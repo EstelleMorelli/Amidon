@@ -68,13 +68,11 @@ function Product({ changeField }: Props) {
       </div>
       <div className="product--product-infos">
         {connectedUserId === product.owner.id ? (
-          <div>
-            <ProductUpdateForm
-              changeField={changeField}
-              productId={idNumber}
-              medias={product.media}
-            />
-          </div>
+          <ProductUpdateForm
+            changeField={changeField}
+            productId={idNumber}
+            medias={product.media}
+          />
         ) : (
           <FixedProductInfos product={product} medias={product.media} />
         )}
