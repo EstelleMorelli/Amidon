@@ -1,4 +1,18 @@
 @use '../../styles/variables' as v;
+.fixedproductinfos {
+  &__pictures {
+    width: fit-content;
+    margin: auto;
+    @media (min-width: 576px) {
+      display: flex;
+    }
+
+    &--title {
+      font-size: 5vw;
+    }
+  }
+}
+
 .product {
   text-align: center;
 
@@ -61,22 +75,20 @@
     &__item {
       position: relative;
       width: fit-content;
-      // &__button {
-      //   display: inline;
-      // }
+
       &__img {
         width: 40vw;
         max-width: 7rem;
-      }
 
-      img {
-        border-radius: 1rem;
-        padding: 0.2rem;
-        width: 40vw;
-        max-width: 7rem;
-        height: 40vw;
-        max-height: 7rem;
-        object-fit: cover;
+        & img {
+          border-radius: 1rem;
+          padding: 0.2rem;
+          width: 40vw;
+          max-width: 7rem;
+          height: 40vw;
+          max-height: 7rem;
+          object-fit: cover;
+        }
       }
     }
   }
