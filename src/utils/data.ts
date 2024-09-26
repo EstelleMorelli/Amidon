@@ -10,6 +10,8 @@ export const baseProductPictureURL =
   'http://localhost/Spe/projet-4-aide-o-tri-back/public/assets/images/products';
 // 'http://amidonbacknem/assets/images/products';
 
+
+
 // VERSION PROD INFOMANIAK
 
 // export const baseUserPictureURL =
