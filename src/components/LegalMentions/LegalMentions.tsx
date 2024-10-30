@@ -1,4 +1,4 @@
-import './LegalMentions.scss';
+bimport './LegalMentions.scss';
 
 function LegalMentions() {
   return (
@@ -19,13 +19,14 @@ function LegalMentions() {
         utilisateurs, les échanges se faisant en main propre.
       </p>
 
-      <h2 className="legalm-subtitle">2. Propriétaire de l&#39;Application </h2>
+      <h2 className="legalm-subtitle">2. Propriétaire de l&#39;Application et hébergeur</h2>
       <p className="legalm-content">
         {' '}
         Les proprétaires de l&#39;application sont Marion LEBLANC, Romain
         DESCHASEAUX, Yoan SALANGROS et Estelle MORELLI
       </p>
       <p>Email : amidon.contact@gmail.com</p>
+      <p>Ce site web est hébergé par Infomaniak Network SA, Rue Eugène Marziano 25, 1227 Les Acacias (GE)</p>
 
       <h2 className="legalm-subtitle">
         {' '}
