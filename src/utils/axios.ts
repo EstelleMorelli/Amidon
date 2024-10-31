@@ -1,4 +1,4 @@
-// VERSION LOCALE
+// TODO! VERSION LOCALE
 import axios from 'axios';
 
 // On crée une instance axios (comme un duplicata) avec la base url pré configuré pour ne pas la répéter à chaque fois
@@ -20,7 +20,7 @@ export const removeTokenFromAxiosInstance = () => {
 
 export default axiosInstance;
 
-// VERSION PROD INFOMANIAK
+// TODO! VERSION PROD INFOMANIAK
 // import axios from 'axios';
 
 // // On crée une instance axios (comme un duplicata)
