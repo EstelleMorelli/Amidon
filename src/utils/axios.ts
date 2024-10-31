@@ -1,7 +1,7 @@
 // VERSION LOCALE
 // import axios from 'axios';
 
-// On crée une instance axios (comme un duplicata) avec la base url pré configuré pour ne pas la répéter à chaque fois
+// // On crée une instance axios (comme un duplicata) avec la base url pré configuré pour ne pas la répéter à chaque fois
 // export const axiosInstance = axios.create({
 //   // baseURL: 'http://amidon.yoan80490-server.eddi.cloud/api/',
 //   // baseURL: 'http://localhost/Spe/projet-4-aide-o-tri-back/public/api/',
