@@ -1,4 +1,4 @@
-# 📦 React Modele Vite
+# 📦 React Modele Vite : fichier d'installation par défaut du modèle O'Clock
 
 Bienvenue dans ce modèle/template de projet React !
 
