@@ -40,7 +40,6 @@ function PasswordChange({ changeField }: PasswordFormProps) {
     dispatch(actionEmptyUserMsg());
     if (newPassword === confirmationPassword) {
       const infos = { password: oldPassword, newPassword };
-      console.log(infos);
       setPasswordFitErrorMsg('');
       dispatch(modifyUser(infos));
       setOldPassword('');

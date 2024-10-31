@@ -13,8 +13,6 @@ function LegalMentions() {
     (state: RootState) => state.appReducer.legalsData
   );
 
-  console.log(legalsData, legalsData.legals);
-
   useEffect(() => {
     dispatch(getLegals());
   }, [dispatch]);
