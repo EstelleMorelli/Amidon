@@ -3,7 +3,7 @@
 .footer {
   text-align: center;
   font-size: 0.8rem;
-  margin-bottom: 6rem;
+  padding: 0.5em 0;
 
   &__unlogged {
     margin-bottom: 0;
@@ -13,12 +13,17 @@
     margin-bottom: 0;
   }
 
-  &__faq {
-    font-size: 1em;
+  &__links {
+    display: flex;
+    justify-content: center;
   }
-  &__legalmentions {
-    font-size: 1em;
+
+  & .link {
+    font-size: min(3vw, 1em);
+    padding: 0 min(2vw, 1em);
+    margin: 0.5em 0;
   }
+
   &__credit {
     // TODO : Réduire la taille de text et la margin des span en fonction de la largeur de l'écran ?
     font-size: 0.7em;
@@ -31,6 +36,13 @@
 
     & span {
       margin: 0 0.4em;
+    }
+
+    &__intro {
+      display: block;
+      @media (min-width: 576px) {
+        display: inline;
+      }
     }
   }
 }
