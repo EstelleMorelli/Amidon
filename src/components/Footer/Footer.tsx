@@ -1,4 +1,5 @@
-import './Footer.scss'; //Import du scss de la page
+import './Footer.scss';
+
 // Import des éléments de nos dépendances installées :
 import { Link } from 'react-router-dom';
 

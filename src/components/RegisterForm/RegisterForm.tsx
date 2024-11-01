@@ -207,6 +207,31 @@ function RegisterForm({ changeField }: LoginFormProps) {
             className="registerform__stayconnected--box"
           />
         </p> */}
+        <div className="registerform__rgpd">
+          <div className="registerform_rgpd_text">
+            Les propriétaires de ce site web traitent les données recueillies
+            pour garantir le bon fonctionnement du site et des fonctionnalités
+            de mise en relation entre utilisateurs. Les données facultatives
+            sont collectées pour améliorer l'expérience d'utilisation de site
+            web. Pour en savoir plus sur la gestion de vos données personnelles
+            et pour exercer vos droits, reportez-vous à la page "Politique de
+            confidentialité" sur ce
+            <Link to="/politique-confidentialite" style={{ color: '#000000' }}>
+              <span className="link">lien</span>
+            </Link>
+            .
+            <span>
+              <br />
+            </span>
+          </div>
+          <div className="registerform__rgpd__check">
+            <input type="checkbox" id="rgpd" name="rgpd" required />
+            <label htmlFor="rgpd">
+              Je note avoir pris connaissance de l'existence de la politique de
+              condidentialité.
+            </label>
+          </div>
+        </div>
         <button type="submit" className="button-orange-simple">
           VALIDER
         </button>
