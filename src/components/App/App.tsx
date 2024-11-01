@@ -33,6 +33,7 @@ import {
 import AddFriendModal from '../AddFriendModal/AddFriendModal';
 import { actionChangeProductStateInfo } from '../../store/reducers/catalogReducer';
 import LegalMentions from '../LegalMentions/LegalMentions';
+import Rgpd from '../Rgpd/Rgpd';
 
 function App() {
   // On récupère l'élément booléen "logged" du state qui nous permet de savoir si on est connecté ou pas
@@ -129,6 +130,7 @@ function App() {
         )}
         <Route path="/faq" element={<FAQ />} />
         <Route path="/mentions-legales" element={<LegalMentions />} />
+        <Route path="/politique-confidentialite" element={<Rgpd />} />
         <Route path="/*" element={<Error />} />
       </Routes>
       {isAddFriendModalOpen && (

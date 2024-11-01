@@ -45,6 +45,28 @@
   //   }
   // }
 
+  &__rgpd {
+    font-size: 0.5em;
+
+    @media (min-width: 576px) {
+      font-size: 0.75em;
+    }
+
+    & .link {
+      display: inline;
+      padding-left: 0.5em;
+    }
+
+    &__check {
+      font-size: 1.25em;
+
+      & input {
+        margin-right: 0.5em;
+        vertical-align: middle;
+      }
+    }
+  }
+
   & button {
     display: block;
     margin: 0.5rem auto 0;
