@@ -1,3 +1,8 @@
+# FICHIERS AVEC DES DIFFÉRENCES DEV LOCAL / PROD INFOMANIAK :
+- Paramètres Axios : [/src/utils/axios.ts](https://github.com/EstelleMorelli/Amidon/blob/master/src/utils/axios.ts)
+- Chemin data pour images : [/src/utils/data.ts](https://github.com/EstelleMorelli/Amidon/blob/master/src/utils/data.ts)
+- Middleware Login : [/src/store/middlewares/login.ts](https://github.com/EstelleMorelli/Amidon/blob/master/src/store/middlewares/login.ts)
+
 # INSTALLATION DU DOSSIER DU FRONT SUR SON ORDINATEUR POUR VISION LOCALHOST DE LA VM :
 
 <details>

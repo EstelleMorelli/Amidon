@@ -10,8 +10,8 @@ export const baseProductPictureURL =
   'http://amidonbacknem/assets/images/products';
 
 // TODO! VERSION PROD INFOMANIAK
-// export const baseUserPictureURL =
-//   'https://amidon.dev-me.fr/Amidon/public/assets/images/users';
+// // export const baseUserPictureURL =
+// //   'https://amidon.dev-me.fr/Amidon/public/assets/images/users';
 
-// export const baseProductPictureURL =
-// 'https://amidon.dev-me.fr/Amidon/public/assets/images/products';
+// // export const baseProductPictureURL =
+// // 'https://amidon.dev-me.fr/Amidon/public/assets/images/products'
