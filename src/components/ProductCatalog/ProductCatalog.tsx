@@ -17,6 +17,7 @@ import DeleteWarningMessage from '../DeleteWarningModal/DeleteWarningModal';
 import { actionToggleIsWarningMessage } from '../../store/reducers/appReducer';
 import { actionEmptyCatalogMsg } from '../../store/reducers/catalogReducer';
 import { actionEmptyUserMsg } from '../../store/reducers/userReducer';
+import AvailableFilterButton from './AvailableFilterButton/AvailableFilterButton';
 
 function ProductCatalog() {
   const dispatch = useAppDispatch();
@@ -41,6 +42,8 @@ function ProductCatalog() {
   const [selectedFriend, setSelectedFriend] = useState<null | number>(null);
   // state local qui garde en mémoire si le filtre des produits 100% gratuits est activé. Par défaut, il est faux.
   const [pricelessFilter, setPricelessFilter] = useState(false);
+  // state local qui garde en mémoire si le filtre des produits 100% disponibles est activé. Par défaut, il est faux.
+  const [availableFilter, setAvailableFilter] = useState(false);
   // state local qui garde en mémoire si le tri des produits par date d'ajout est activé. Par défaut il est vrai.
   const [createdAtSort, setCreatedAtSort] = useState(true);
   // Fonction de gestion du filtre sur un giver. Elle reçoit en paramètre le giver sur lequel on a cliqué.
@@ -166,16 +169,21 @@ function ProductCatalog() {
         ))}
       </div>
       <div className="filters">
-        <DateFilterButton
-          setCreatedAtSort={setCreatedAtSort}
-          createdAtSort={createdAtSort}
+        <AvailableFilterButton
+          setAvailableFilter={setAvailableFilter}
+          availableFilter={availableFilter}
         />
-        {/* Bouton pour trier par date */}
+        {/* Bouton pour filtrer les produits disponibles */}
         <PricelessFilterButton
           setPricelessFilter={setPricelessFilter}
           pricelessFilter={pricelessFilter}
         />
         {/* Bouton pour filtrer les produits gratuits */}
+        <DateFilterButton
+          setCreatedAtSort={setCreatedAtSort}
+          createdAtSort={createdAtSort}
+        />
+        {/* Bouton pour trier par date */}
       </div>
       <div className="productcards-wrapper">
         {productsToDisplay.map((product) => (
